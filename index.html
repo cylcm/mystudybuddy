@@ -114,8 +114,24 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .spinner{display:inline-block;width:15px;height:15px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
 
 /* ─── RESULT BOX ─── */
-.result-box{background:#f8f9ff;border:1.5px solid #c5d0f5;border-radius:12px;padding:14px;margin-top:12px;line-height:1.7;font-size:13px;white-space:pre-wrap;display:none;}
+.result-box{background:#f8f9ff;border:1.5px solid #c5d0f5;border-radius:12px;padding:14px;margin-top:12px;line-height:1.7;font-size:13px;display:none;overflow:hidden;}
 .result-box.show{display:block;animation:fadeUp .3s ease;}
+/* Styled result sections */
+.res-section{margin-bottom:12px;}
+.res-section:last-child{margin-bottom:0;}
+.res-label{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:4px;}
+.res-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;font-size:13px;line-height:1.6;}
+.res-card.correct{background:#e6fff3;border-color:#80e0b0;color:#006b38;}
+.res-card.warn{background:#fff8e0;border-color:#ffd080;color:#8a5c00;}
+.res-card.info{background:#e8f4ff;border-color:#90caf9;color:#1565c0;}
+.res-card.tip{background:#f3e5f5;border-color:#ce93d8;color:#6a1b9a;}
+.res-highlight{background:linear-gradient(135deg,#f0f4ff,#e8eeff);border-left:4px solid var(--accent);padding:10px 13px;border-radius:0 10px 10px 0;font-weight:700;font-size:14px;margin-bottom:8px;}
+.res-badge{display:inline-block;padding:2px 10px;border-radius:50px;font-size:10px;font-weight:800;margin-right:4px;margin-bottom:4px;}
+.res-badge.green{background:#e6fff3;color:#007a40;border:1px solid #80e0b0;}
+.res-badge.red{background:#fff0f4;color:#cc1144;border:1px solid #ffaacc;}
+.res-badge.blue{background:#e8f4ff;color:#1565c0;border:1px solid #90caf9;}
+.res-badge.purple{background:#f3e5f5;color:#6a1b9a;border:1px solid #ce93d8;}
+.res-divider{border:none;border-top:1.5px dashed var(--border);margin:10px 0;}
 
 /* ─── FLEX/GRID helpers ─── */
 .flex-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;}
@@ -591,7 +607,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         </div>
         <div id="pos-result" style="display:none;margin-top:10px;">
           <div id="pos-tagged" style="line-height:2.4;font-size:14px;background:#f8f9ff;border-radius:12px;padding:14px;border:1.5px solid #c5d0f5;"></div>
-          <div id="pos-explanation" class="result-box show" style="margin-top:10px;white-space:normal;"></div>
+          <div id="pos-explanation" class="result-box" style="margin-top:10px;"></div>
         </div>
       </div>
 
@@ -1353,7 +1369,7 @@ let fibHistory=[],currentFIBSession=null;
 let ttList=[],ttHistory=[],selectedTT=null;
 let sudokuPuzzle=[],sudokuSolution=[],sudokuSelected=null,sudokuErrors=0,sudokuTimer=0,sudokuTimerInterval=null;
 // Language
-let currentLang='chinese',langSessions={chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},langHistory={chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},transHistory=[],readHistory=[];
+let currentLang='chinese',langSessions={english:{},chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},langHistory={english:[],chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},transHistory=[],readHistory=[];
 // Explain
 let explainHistory=[];
 // Plan
@@ -1445,6 +1461,7 @@ const DEFAULT_SUBJECTS={
 };
 
 const LANG_CONFIG={
+  english:{flag:'🇬🇧',name:'English',code:'en',tts:'en-GB'},
   chinese:{flag:'🇨🇳',name:'Mandarin Chinese',code:'zh',tts:'zh-CN'},
   cantonese:{flag:'🇭🇰',name:'Cantonese',code:'yue',tts:'zh-HK'},
   japanese:{flag:'🇯🇵',name:'Japanese',code:'ja',tts:'ja-JP'},
@@ -1454,6 +1471,7 @@ const LANG_CONFIG={
   malay:{flag:'🇲🇾',name:'Malay',code:'ms',tts:'ms-MY'}
 };
 const LANG_CATEGORIES={
+  english:['Vocabulary Building','Grammar & Usage','Idioms & Phrases','Reading Comprehension','Creative Writing','Business English','Academic English','Pronunciation','Spelling & Phonics','Conversation','Synonyms & Antonyms','Sentence Structure','Story Telling','Literature','Debate & Discussion'],
   chinese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Time','Emotions','Sports','Hobbies','Body Parts'],
   cantonese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Time','Emotions','Sports','Hobbies','Daily Life'],
   japanese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Seasons','Time','Politeness','Daily Life','Nature'],
@@ -1780,6 +1798,73 @@ function mdToHtml(md,cls='explain-rendered'){
   return `<div class="${cls}">${h}</div>`;
 }
 // ══════════════════════════════════════════════
+// SHARED STYLED OUTPUT RENDERER
+// Converts plain AI text into consistent styled cards
+// ══════════════════════════════════════════════
+function renderStyledResult(rawText, targetEl){
+  if(!targetEl)return;
+  if(!rawText||!rawText.trim()){targetEl.innerHTML='<div class="res-card warn">No content returned. Please try again.</div>';return;}
+
+  const text = rawText.trim();
+
+  // If it's JSON — convert to styled cards
+  if(text.startsWith('[') || text.startsWith('{')){
+    try{
+      const parsed = JSON.parse(text);
+      const items = Array.isArray(parsed) ? parsed : [parsed];
+      targetEl.innerHTML = items.map(item=>{
+        const entries = Object.entries(item);
+        return '<div class="res-card" style="margin-bottom:8px;">'
+          + entries.map(([k,v])=>`<div style="margin-bottom:4px;"><span class="res-badge blue">${escHtml(k)}</span> ${escHtml(String(v))}</div>`).join('')
+          + '</div>';
+      }).join('');
+      return;
+    }catch(e){/* fall through to text rendering */}
+  }
+
+  // Split on common section markers (emoji headers, numbered sections, dashes)
+  const lines = text.split(/\r?\n/);
+  let html = '';
+  let currentSection = '';
+  let inSection = false;
+
+  const sectionEmojis = /^(✅|❌|🔍|📚|⭐|💡|📝|🎯|🔄|↔️|📖|🌟|🗣️|🧠|🏅|🔑|💬|📌|🚀|✨|🎉|👍|👎|⚠️|🔢|🌍|🎭|📊)/;
+  const numberedHeader = /^\d+[\)\.]\s*[✅❌🔍📚⭐💡📝🎯🔄↔️📖🌟🗣️🧠]/;
+  const dashHeader = /^[-─—]+\s*.+\s*[-─—]+$/;
+
+  lines.forEach((line, idx) => {
+    const t = line.trim();
+    if(!t){
+      if(currentSection){
+        html += `<div class="res-card" style="margin-bottom:8px;white-space:pre-wrap;">${escHtml(currentSection.trim())}</div>`;
+        currentSection = '';
+      }
+      return;
+    }
+
+    // Detect section headers
+    const isHeader = sectionEmojis.test(t) || numberedHeader.test(t) || dashHeader.test(t) || /^#{1,3}\s/.test(t);
+    if(isHeader && currentSection){
+      html += `<div class="res-card" style="margin-bottom:8px;white-space:pre-wrap;">${escHtml(currentSection.trim())}</div>`;
+      currentSection = '';
+    }
+
+    if(isHeader){
+      const clean = t.replace(/^#{1,3}\s*/,'').replace(/^[-─—]+\s*/,'').replace(/\s*[-─—]+$/,'');
+      html += `<div class="res-highlight" style="margin-bottom:6px;">${escHtml(clean)}</div>`;
+    } else {
+      currentSection += (currentSection ? '\n' : '') + t;
+    }
+  });
+
+  if(currentSection.trim()){
+    html += `<div class="res-card" style="margin-bottom:8px;white-space:pre-wrap;">${escHtml(currentSection.trim())}</div>`;
+  }
+
+  targetEl.innerHTML = html || `<div class="res-card" style="white-space:pre-wrap;">${escHtml(text)}</div>`;
+}
+
+// ══════════════════════════════════════════════
 // SMART QUIZ
 // ══════════════════════════════════════════════
 async function generateQuiz(){
@@ -1878,14 +1963,88 @@ function renderWordTags(){document.getElementById('word-tags-container').innerHT
 async function generateSentences(){
   if(!words.length){showToast('Please add at least one word');return;}
   setLoading('sentence-gen-btn','sentence-gen-icon',true,'✨');
-  try{const result=await callClaude(`English teacher for 11-16yr students. For these words: ${words.join(', ')}. For EACH word: 1) Example sentence 2) Grammar role 3) Two synonyms with example sentences. Be educational.`,1500,true);const box=document.getElementById('sentences-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Sentence builder: '+words.join(', '));}catch(e){showToast('❌ '+e.message);}
+  try{
+    const raw=await callClaude(`You are an English teacher for students aged 11-16. For each of these words: ${words.join(', ')} — provide structured info.
+Return ONLY a JSON array (no markdown, no extra text):
+[{"word":"happy","partOfSpeech":"adjective","definition":"Feeling or showing pleasure","exampleSentence":"She was happy to see her friend.","synonyms":["joyful","content"],"antonym":"sad","tip":"Use 'happy' for general joy; 'joyful' for intense happiness"}]
+One object per word. Keep language simple and age-appropriate.`,Math.max(1000,words.length*200),true);
+    const parsed=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
+    const box=document.getElementById('sentences-result');
+    box.classList.add('show');
+    box.innerHTML=parsed.map(item=>`
+      <div style="background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(91,94,244,.06);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+          <span style="font-size:1.3rem;font-weight:900;color:var(--accent);">${escHtml(item.word||'')}</span>
+          <span class="res-badge blue">${escHtml(item.partOfSpeech||'')}</span>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📖 Definition</div>
+          <div class="res-card">${escHtml(item.definition||'')}</div>
+        </div>
+        <div class="res-section">
+          <div class="res-label">📝 Example Sentence</div>
+          <div class="res-card info" style="font-style:italic;">"${escHtml(item.exampleSentence||'')}"
+            <button class="speak-btn" onclick="speakText('${(item.exampleSentence||'').replace(/'/g,"\'").replace(/"/g,'\"')}','en')" style="margin-left:6px;vertical-align:middle;">🔊</button>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div class="res-section">
+            <div class="res-label">🔄 Synonyms</div>
+            <div class="res-card correct">${(item.synonyms||[]).map(s=>`<span class="res-badge green">${escHtml(s)}</span>`).join(' ')}</div>
+          </div>
+          <div class="res-section">
+            <div class="res-label">↔️ Antonym</div>
+            <div class="res-card" style="background:#fff0f4;border-color:#ffaacc;"><span class="res-badge red">${escHtml(item.antonym||'—')}</span></div>
+          </div>
+        </div>
+        ${item.tip?`<div class="res-section"><div class="res-label">💡 Usage Tip</div><div class="res-card tip">${escHtml(item.tip)}</div></div>`:''}
+      </div>
+    `).join('');
+    addHistory('grammar','Sentence builder: '+words.join(', '));
+  }catch(e){showToast('❌ '+e.message);}
   setLoading('sentence-gen-btn','sentence-gen-icon',false,'✨');
 }
 async function checkGrammar(){
   if(!requireField('grammar-check-input','⚠️ Please enter a sentence'))return;
   const text=document.getElementById('grammar-check-input').value.trim();
   setLoading('grammar-check-btn','grammar-check-icon',true,'🔍');
-  try{const result=await callClaude(`Grammar teacher for 11-15yr students. Analyse: "${text}". Provide: 1) ✅ CORRECTED VERSION 2) 🔍 ERRORS FOUND 3) 📚 GRAMMAR TIP 4) ⭐ IMPROVED VERSION. Be encouraging.`,1000,true);const box=document.getElementById('grammar-check-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Grammar check');}catch(e){showToast('❌ '+e.message);}
+  try{
+    const raw=await callClaude(`You are a grammar teacher for students aged 11-15. Analyse this sentence: "${text.replace(/"/g,"'")}"
+Return ONLY a JSON object (no markdown):
+{"corrected":"The corrected sentence","errors":[{"original":"wrong part","fix":"correct part","rule":"Grammar rule name"}],"tip":"One concise grammar tip","improved":"A more sophisticated version","encouragement":"Short encouraging comment"}`,1000,true);
+    const item=JSON.parse(raw.replace(/\`\`\`json|\`\`\`/g,'').trim());
+    const box=document.getElementById('grammar-check-result');
+    box.classList.add('show');
+    box.innerHTML=`
+      <div class="res-section">
+        <div class="res-label">✅ Corrected Version</div>
+        <div class="res-card correct" style="font-size:14px;font-weight:700;">"${escHtml(item.corrected||text)}"
+          <button class="speak-btn" onclick="speakText('${(item.corrected||'').replace(/'/g,"\'")}','en')" style="margin-left:6px;">🔊</button>
+        </div>
+      </div>
+      ${(item.errors&&item.errors.length)?`
+      <div class="res-section">
+        <div class="res-label">🔍 Errors Found (${item.errors.length})</div>
+        ${item.errors.map(e=>`<div class="res-card" style="margin-bottom:6px;border-left:4px solid var(--accent2);">
+          <span style="text-decoration:line-through;color:var(--accent2);">"${escHtml(e.original||'')}"</span>
+          → <strong>"${escHtml(e.fix||'')}"</strong>
+          <div style="font-size:11px;color:var(--text3);margin-top:3px;">Rule: ${escHtml(e.rule||'')}</div>
+        </div>`).join('')}
+      </div>`:`<div class="res-card correct" style="margin-bottom:8px;">✅ No grammar errors found!</div>`}
+      <div class="res-section">
+        <div class="res-label">📚 Grammar Tip</div>
+        <div class="res-card tip">${escHtml(item.tip||'')}</div>
+      </div>
+      <div class="res-section">
+        <div class="res-label">⭐ Improved Version</div>
+        <div class="res-card info" style="font-style:italic;">"${escHtml(item.improved||'')}"
+          <button class="speak-btn" onclick="speakText('${(item.improved||'').replace(/'/g,"\'")}','en')" style="margin-left:6px;">🔊</button>
+        </div>
+      </div>
+      ${item.encouragement?`<div class="res-card" style="background:linear-gradient(135deg,#f5f0ff,#ffe8f5);border-color:#ce93d8;text-align:center;font-weight:700;">🌟 ${escHtml(item.encouragement)}</div>`:''}
+    `;
+    addHistory('grammar','Grammar check');
+  }catch(e){showToast('❌ '+e.message);}
   setLoading('grammar-check-btn','grammar-check-icon',false,'🔍');
 }
 let synonymBatch=[];
@@ -1920,12 +2079,35 @@ function renderSynonymGrid(){
 function showSynonymDetail(idx){
   const item=synonymBatch[idx];if(!item)return;
   const box=document.getElementById('synonym-result');
-  box.innerHTML=`<div style="font-size:15px;font-weight:900;color:var(--accent);margin-bottom:8px;">${escHtml(item.word)} <span style="font-size:10px;background:var(--surface2);border-radius:50px;padding:2px 8px;color:var(--text2);">${escHtml(item.type||'')}</span> <button class="speak-btn" onclick="speakText('${escHtml(item.word)}','en')" style="margin-left:4px;">🔊</button></div>
-<div style="margin-bottom:6px;"><strong>📖 Meaning:</strong> ${escHtml(item.meaning||'')}</div>
-<div style="margin-bottom:6px;"><strong>🔄 Synonym:</strong> <span style="color:var(--accent3);">${escHtml(item.synonym||'—')}</span></div>
-<div style="margin-bottom:6px;"><strong>↔️ Antonym:</strong> <span style="color:var(--accent2);">${escHtml(item.antonym||'—')}</span></div>
-<div><strong>📝 Example:</strong> <em style="color:var(--text2);">${escHtml(item.example||'')}</em> <button class="speak-btn" onclick="speakText('${escHtml(item.example||'')}','en')" style="margin-left:4px;">🔊</button></div>`;
   box.classList.add('show');
+  box.innerHTML=`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;">
+      <span style="font-size:1.5rem;font-weight:900;color:var(--accent);">${escHtml(item.word||'')}</span>
+      <span class="res-badge blue">${escHtml(item.type||'word')}</span>
+      <button class="speak-btn" onclick="speakText('${(item.word||'').replace(/'/g,"\'")}','en')" title="Hear pronunciation">🔊</button>
+    </div>
+    <div class="res-section">
+      <div class="res-label">📖 Meaning</div>
+      <div class="res-card">${escHtml(item.meaning||'—')}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+      <div class="res-section">
+        <div class="res-label">🔄 Synonym</div>
+        <div class="res-card correct" style="text-align:center;font-weight:800;">${escHtml(item.synonym||'—')}</div>
+      </div>
+      <div class="res-section">
+        <div class="res-label">↔️ Antonym</div>
+        <div class="res-card red" style="text-align:center;font-weight:800;background:#fff0f4;border-color:#ffaacc;color:#cc1144;">${escHtml(item.antonym||'—')}</div>
+      </div>
+    </div>
+    <div class="res-section">
+      <div class="res-label">📝 Example Usage</div>
+      <div class="res-card info" style="font-style:italic;">
+        "${escHtml(item.example||'—')}"
+        <button class="speak-btn" onclick="speakText('${(item.example||'').replace(/'/g,"\'")}','en')" style="margin-left:6px;vertical-align:middle;">🔊</button>
+      </div>
+    </div>
+  `;
 }
 function initSynonymCategoryListener(){
   const catSel=document.getElementById('synonym-category');
@@ -1953,7 +2135,7 @@ async function identifyPOS(){
     document.getElementById('pos-result').style.display='block';
     // Also get explanation
     const explanation=await callClaude(`For the sentence: "${text}"\nBriefly explain the grammatical structure in simple terms for a secondary school student. Mention subject, predicate, objects if present. Keep it under 100 words.`,300);
-    document.getElementById('pos-explanation').textContent=explanation;
+    const posBox=document.getElementById('pos-explanation');if(posBox){posBox.classList.add('show');renderStyledResult(explanation,posBox);}
     addHistory('grammar','Parts of Speech: "'+text.substring(0,30)+'"');
     autoCompletePlanTask('Word Wizards','Parts of Speech');
   }catch(e){showToast('❌ '+e.message);}
@@ -2389,10 +2571,18 @@ function renderLangPanel(){
         <div><label>Category</label><select id="lang-cat-${currentLang}" style="margin-bottom:0;font-size:15px;" onchange="syncLangTopic()"><option value="">— Select —</option>${cats.map(c=>`<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('')}</select></div>
         <div><label>Custom Topic</label><input type="text" id="lang-topic-${currentLang}" placeholder="or type here..." style="margin-bottom:0;" /></div>
         <div><label>Type</label><select id="lang-type-${currentLang}" style="margin-bottom:0;font-size:15px;">
-          <option value="vocabulary with pronunciation">Vocabulary + Pronunciation</option>
-          <option value="basic sentences and phrases">Sentences &amp; Phrases</option>
-          <option value="a short story with translation">Mini Story</option>
-          <option value="common questions and answers">Q&amp;A Conversation</option>
+          ${currentLang==='english'?`
+            <option value="vocabulary building with definitions and examples">Vocabulary Building</option>
+            <option value="grammar rules with examples">Grammar & Usage</option>
+            <option value="idioms and common phrases">Idioms & Phrases</option>
+            <option value="reading comprehension passage">Reading Comprehension</option>
+            <option value="creative writing prompts and examples">Creative Writing</option>
+          `:`
+            <option value="vocabulary with pronunciation">Vocabulary + Pronunciation</option>
+            <option value="basic sentences and phrases">Sentences &amp; Phrases</option>
+            <option value="a short story with translation">Mini Story</option>
+            <option value="common questions and answers">Q&amp;A Conversation</option>
+          `}
         </select></div>
         <div style="display:flex;gap:6px;align-items:flex-end;">
           <button class="btn btn-primary" onclick="learnLanguage()" id="lang-learn-btn" style="flex:1;justify-content:center;"><span id="lang-learn-icon">${cfg.flag}</span> Learn</button>
@@ -2997,9 +3187,28 @@ async function generateCultureNote(forceRefresh=false){
   const cfg=LANG_CONFIG[currentLang];
   setLoading('culture-gen-btn','culture-gen-icon',true,'🏮');
   try{
-    const result=await callClaude('Write a short, interesting cultural note (150-200 words) about '+cat+' in '+cfg.name+' culture. Make it engaging and educational for students aged 8-16. Include 2-3 key facts.',600);
-    const box=document.getElementById('culture-result');if(box){box.textContent=result;box.classList.add('show');}
-    document.getElementById('culture-note-body').value=result;document.getElementById('culture-note-title').value=cat+' — '+cfg.name;
+    const raw=await callClaude('Write a cultural note about "'+cat+'" in '+cfg.name+' culture for students aged 8-16. Return ONLY a JSON object: {"headline":"Catchy one-liner","overview":"2-3 sentence intro","facts":["fact 1","fact 2","fact 3"],"funFact":"One surprising fun fact","didYouKnow":"A bonus interesting point"}',700,true);
+    const item=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const box=document.getElementById('culture-result');
+    if(box){
+      box.classList.add('show');
+      box.innerHTML=`
+        <div class="res-highlight">${cfg.flag} ${escHtml(item.headline||cat+' — '+cfg.name)}</div>
+        <div class="res-card" style="margin-bottom:8px;">${escHtml(item.overview||'')}</div>
+        <div class="res-section">
+          <div class="res-label">🔑 Key Facts</div>
+          ${(item.facts||[]).map((f,i)=>`<div class="res-card" style="margin-bottom:5px;border-left:4px solid var(--accent${i%2===0?'':'3'});">
+            <span class="res-badge blue">${i+1}</span> ${escHtml(f)}
+          </div>`).join('')}
+        </div>
+        ${item.funFact?`<div class="res-section"><div class="res-label">🎉 Fun Fact</div><div class="res-card tip">${escHtml(item.funFact)}</div></div>`:''}
+        ${item.didYouKnow?`<div class="res-section"><div class="res-label">💡 Did You Know?</div><div class="res-card info">${escHtml(item.didYouKnow)}</div></div>`:''}
+      `;
+    }
+    // Also populate the note fields for saving
+    const plainText=[item.headline,item.overview,...(item.facts||[]),item.funFact,item.didYouKnow].filter(Boolean).join('\n\n');
+    document.getElementById('culture-note-body').value=plainText;
+    document.getElementById('culture-note-title').value=cat+' — '+cfg.name;
   }catch(e){showToast('❌ '+e.message);}
   setLoading('culture-gen-btn','culture-gen-icon',false,'🏮');
 }
@@ -3070,8 +3279,27 @@ async function getPronFeedback(){
   if(!confirm('Get AI pronunciation feedback? This uses 1 API call.'))return;
   const btn=document.getElementById('pron-api-btn');btn.disabled=true;btn.textContent='⏳...';
   try{
-    const result=await callClaude('Language teacher giving pronunciation feedback. Target phrase: "'+phrase+'" in '+LANG_CONFIG[currentLang]?.name+'. Student said: "'+transcript+'". Provide: 1) Similarity score 2) Specific pronunciation tips 3) Key sounds to work on 4) Encouragement. Keep it brief and encouraging.',500);
-    const box=document.getElementById('pron-api-result');box.textContent=result;box.classList.add('show');
+    const raw=await callClaude('Language teacher. Target phrase: "'+phrase+'" in '+LANG_CONFIG[currentLang]?.name+'. Student said: "'+transcript+'". Return ONLY a JSON object: {"score":75,"scoreLabel":"Good effort!","matchedParts":"What they got right","improveTips":["tip 1","tip 2"],"keySounds":"Key sounds to practise","encouragement":"Short motivating message"}',500,true);
+    const item=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const box=document.getElementById('pron-api-result');
+    box.classList.add('show');
+    const scoreCol=item.score>=80?'var(--accent3)':item.score>=55?'var(--accent4)':'var(--accent2)';
+    box.innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+        <div style="font-size:2rem;font-weight:900;color:${scoreCol};">${item.score||0}%</div>
+        <div>
+          <div style="font-weight:800;">${escHtml(item.scoreLabel||'')}</div>
+          <div style="font-size:11px;color:var(--text3);">Pronunciation score</div>
+        </div>
+        <div style="flex:1;background:#e0e8ff;border-radius:50px;height:8px;min-width:80px;">
+          <div style="width:${Math.min(100,item.score||0)}%;height:100%;border-radius:50px;background:${scoreCol};transition:width .5s;"></div>
+        </div>
+      </div>
+      ${item.matchedParts?`<div class="res-section"><div class="res-label">✅ What You Got Right</div><div class="res-card correct">${escHtml(item.matchedParts)}</div></div>`:''}
+      ${(item.improveTips&&item.improveTips.length)?`<div class="res-section"><div class="res-label">🎯 Tips to Improve</div>${item.improveTips.map(t=>`<div class="res-card" style="margin-bottom:5px;border-left:4px solid var(--accent4);">${escHtml(t)}</div>`).join('')}</div>`:''}
+      ${item.keySounds?`<div class="res-section"><div class="res-label">🔊 Key Sounds to Practise</div><div class="res-card info">${escHtml(item.keySounds)}</div></div>`:''}
+      ${item.encouragement?`<div class="res-card tip" style="text-align:center;font-weight:700;">🌟 ${escHtml(item.encouragement)}</div>`:''}
+    `;
   }catch(e){showToast('❌ '+e.message);}
   btn.disabled=false;btn.innerHTML='🤖 Get AI Feedback <span style="font-size:9px;">(1 API call)</span>';
 }
@@ -3183,19 +3411,123 @@ function buildLangHistHtml(lang){
   return html+'</div>';
 }
 async function learnLanguage(){
-  const cfg=LANG_CONFIG[currentLang];const topicEl=document.getElementById('lang-topic-'+currentLang);const catEl=document.getElementById('lang-cat-'+currentLang);const topic=(topicEl&&topicEl.value.trim())||(catEl&&catEl.value)||'everyday vocabulary';const typeEl=document.getElementById('lang-type-'+currentLang);const type=typeEl?typeEl.value:'vocabulary with pronunciation';
+  const cfg=LANG_CONFIG[currentLang];
+  const topicEl=document.getElementById('lang-topic-'+currentLang);
+  const catEl=document.getElementById('lang-cat-'+currentLang);
+  const topic=(topicEl&&topicEl.value.trim())||(catEl&&catEl.value)||'everyday vocabulary';
+  const typeEl=document.getElementById('lang-type-'+currentLang);
+  const type=typeEl?typeEl.value:'vocabulary with pronunciation';
   setLoading('lang-learn-btn','lang-learn-icon',true,cfg.flag);
-  const prompt=`You are a ${cfg.name} language teacher for English-speaking students aged 11-16.\nTeach: ${type} about the topic: "${topic}" in ${cfg.name}.\nFormatting: Use # for title, ## for sections. For vocabulary: markdown table with columns: Native|Pronunciation|English.\n${cfg.code==='zh'?'Include Pinyin.':cfg.code==='ja'?'Include Hiragana and Romaji.':'Include pronunciation guides.'}\nInclude 8-10 vocabulary items or 6+ conversation exchanges. Add cultural note at end.`;
+
+  // Build pronunciation guide instruction per language
+  const pronGuide=
+    cfg.code==='zh'?'Include Pinyin romanization for every word.':
+    cfg.code==='yue'?'Include Jyutping romanization (Cantonese phonetic system) for every word.':
+    cfg.code==='ja'?'Include Hiragana and Romaji for every word.':
+    cfg.code==='ko'?'Include Romanization (Revised Romanization of Korean) for every word.':
+    cfg.code==='en'?'Provide British English pronunciation guide using simple phonetics (e.g. "hel-OH").':
+    'Include romanized pronunciation guide for every word.';
+
+  // English gets a tailored prompt; all others use the foreign language template
+  const isEnglish=cfg.code==='en';
+  const prompt=isEnglish
+    ? `You are an expert English language teacher for students aged 11-16.
+Teach ${type} about the topic: "${topic}" in English.
+IMPORTANT: Respond ONLY in clean Markdown — NO JSON, NO code blocks, NO triple backticks.
+Format:
+# [Emoji] [Topic Title]
+## 📖 Key Vocabulary
+Use a markdown table with columns: Word | Pronunciation | Meaning | Example Sentence
+## 📝 Examples & Usage
+Show 6-8 example sentences or dialogues demonstrating the topic.
+## 💡 Grammar / Usage Tips
+Provide 3-4 practical tips.
+## 🌟 Quick Summary
+Brief bullet-point summary.
+${pronGuide}
+Add a fun fact or cultural note at the end. Do NOT use JSON format at all.`
+    : `You are a ${cfg.name} language teacher for English-speaking students aged 11-16.
+Teach ${type} about the topic: "${topic}" in ${cfg.name}.
+IMPORTANT: Respond ONLY in clean Markdown — NO JSON, NO code blocks, NO triple backticks.
+Format:
+# [Emoji] [Topic Title]
+## 📖 Vocabulary
+Use a markdown table with columns: ${cfg.name} | Pronunciation | English Meaning
+## 💬 Example Phrases
+Show 4-6 natural phrases or short dialogues with English translation.
+## 🎯 Practice Tips
+Provide 2-3 practical tips for learning this topic.
+${pronGuide}
+Add a short cultural note at the end. Do NOT output JSON format under any circumstances.`;
+
   try{
-    const result=await callClaude(prompt,1800,true);const html=mdToLangHtml(result,cfg.code);
-    const richEl=document.getElementById('lang-rich-'+currentLang);const rendEl=document.getElementById('lang-rendered-'+currentLang);
-    if(richEl)richEl.style.display='block';if(rendEl){rendEl.innerHTML=html;const btn=document.createElement('div');btn.style.cssText='margin-bottom:10px;display:flex;align-items:center;gap:8px;';btn.innerHTML=`<button class="btn btn-secondary btn-sm" onclick="speakText('${topic.replace(/'/g,"\\'")}','${cfg.code}')">🔊 Hear topic</button><span style="font-size:10px;color:var(--text3);">Tap 🔊 on any row</span>`;rendEl.insertBefore(btn,rendEl.firstChild);}
-    const sess=langSessions[currentLang]||{};sess.rawResult=result;sess.topic=topic;sess.type=type;langSessions[currentLang]=sess;ls_set(KEYS.langSess,JSON.stringify(langSessions));
-    saveLangHistEntry(currentLang,topic,type,result);addHistory('lang',cfg.name+': '+topic);autoCompletePlanTask('Language Corner',cfg.name);
+    const result=await callClaude(prompt,1800,true);
+    // Safety check: if result looks like JSON, wrap it nicely instead of rendering raw
+    const trimmed=result.trim();
+    const looksLikeJson=trimmed.startsWith('[') || trimmed.startsWith('{');
+    let html;
+    if(looksLikeJson){
+      // Parse and render as a table gracefully
+      try{
+        const parsed=JSON.parse(trimmed);
+        const items=Array.isArray(parsed)?parsed:[parsed];
+        const tableRows=items.map(item=>{
+          const keys=Object.keys(item);
+          return '<tr>'+keys.map(k=>`<td><strong>${escHtml(String(k))}:</strong> ${escHtml(String(item[k]))}</td>`).join('')+'</tr>';
+        }).join('');
+        html=`<div class="lang-rich-rendered"><h1>${cfg.flag} ${escHtml(topic)}</h1><table><tbody>${tableRows}</tbody></table></div>`;
+      }catch(e2){
+        // Not valid JSON either — just show as preformatted text
+        html=`<div class="lang-rich-rendered"><pre style="white-space:pre-wrap;font-size:13px;">${escHtml(trimmed)}</pre></div>`;
+      }
+    } else {
+      html=mdToLangHtml(result,cfg.code);
+    }
+
+    const richEl=document.getElementById('lang-rich-'+currentLang);
+    const rendEl=document.getElementById('lang-rendered-'+currentLang);
+    if(richEl)richEl.style.display='block';
+    if(rendEl){
+      rendEl.innerHTML=html;
+      // Add speak + hint bar
+      const btn=document.createElement('div');
+      btn.style.cssText='margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
+      btn.innerHTML=`<button class="btn btn-secondary btn-sm" onclick="speakText('${topic.replace(/'/g,"\'")}','${cfg.code}')">🔊 Hear topic</button><span style="font-size:10px;color:var(--text3);">Tap 🔊 on any table row to hear pronunciation</span>`;
+      rendEl.insertBefore(btn,rendEl.firstChild);
+    }
+    const sess=langSessions[currentLang]||{};
+    sess.rawResult=result;sess.topic=topic;sess.type=type;
+    langSessions[currentLang]=sess;
+    ls_set(KEYS.langSess,JSON.stringify(langSessions));
+    saveLangHistEntry(currentLang,topic,type,result);
+    addHistory('lang',cfg.name+': '+topic);
+    autoCompletePlanTask('Language Corner',cfg.name);
   }catch(e){showToast('❌ '+e.message);}
   setLoading('lang-learn-btn','lang-learn-icon',false,cfg.flag);
 }
 function mdToLangHtml(md,langCode){
+  // Safety: if response is pure JSON, don't render it raw
+  const trimmed=(md||'').trim();
+  if((trimmed.startsWith('[') || trimmed.startsWith('{'))){
+    try{
+      const parsed=JSON.parse(trimmed);
+      const items=Array.isArray(parsed)?parsed:[parsed];
+      if(items.length===0)return '<div class="lang-rich-rendered"><p>No content returned.</p></div>';
+      // Convert JSON array to a markdown-style table
+      const keys=Object.keys(items[0]);
+      let tableHtml='<table><thead><tr>'+keys.map(k=>'<th>'+escHtml(k)+'</th>').join('')+'</tr></thead><tbody>';
+      items.forEach(item=>{
+        const cells=keys.map(k=>String(item[k]||''));
+        // First cell gets speak button
+        const native=cells[0];
+        const speakBtn=`<button class="speak-btn" data-text="${native.replace(/"/g,'&quot;')}" data-lang="${langCode}" onclick="speakBtn(this,this.dataset.text,this.dataset.lang)">🔊</button>`;
+        tableHtml+='<tr><td><span style="font-size:1.05rem;font-weight:900;">'+escHtml(native)+'</span> '+speakBtn+'</td>'+cells.slice(1).map(v=>'<td>'+escHtml(v)+'</td>').join('')+'</tr>';
+      });
+      tableHtml+='</tbody></table>';
+      return '<div class="lang-rich-rendered">'+tableHtml+'</div>';
+    }catch(e){/* not valid JSON, fall through to markdown */}
+  }
+
   let h=md.replace(/^### (.+)$/gm,'<h3>$1</h3>').replace(/^## (.+)$/gm,'<h2>$1</h2>').replace(/^# (.+)$/gm,'<h1>$1</h1>').replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/^---$/gm,'<hr>');
   h=h.replace(/((?:\|.+\|\s*\n)+)/gm,function(tb){
     const rows=tb.trim().split('\n').filter(r=>r.trim()&&!r.match(/^\|[-|: ]+\|$/));if(!rows.length)return tb;
@@ -3213,12 +3545,12 @@ function mdToLangHtml(md,langCode){
 function speakText(text,lang){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[lang]||'en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
 function speakBtn(btn,text,langCode){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}if(btn.classList.contains('speaking')){window.speechSynthesis.cancel();btn.classList.remove('speaking');btn.textContent='🔊';return;}document.querySelectorAll('.speak-btn.speaking').forEach(b=>{b.classList.remove('speaking');b.textContent='🔊';});btn.classList.add('speaking');btn.textContent='⏹';const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[langCode]||'en-GB';u.rate=0.8;u.onend=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};u.onerror=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};window.speechSynthesis.speak(u);}
 // Lang History
-function loadLangHistory(){const r=ls_get(KEYS.langHist);if(r)try{langHistory=Object.assign({chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},JSON.parse(r));}catch(e){}}
+function loadLangHistory(){const r=ls_get(KEYS.langHist);if(r)try{langHistory=Object.assign({english:[],chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},JSON.parse(r));}catch(e){}}
 function saveLangHistEntry(lang,topic,type,rawResult){if(!langHistory[lang])langHistory[lang]=[];const entry={id:Date.now(),topic,type,rawResult:rawResult.slice(0,2000),date:new Date().toLocaleDateString()};langHistory[lang].unshift(entry);if(langHistory[lang].length>5)langHistory[lang]=langHistory[lang].slice(0,5);ls_set(KEYS.langHist,JSON.stringify(langHistory));}
 function deleteLangHistItem(lang,id){if(!langHistory[lang])return;langHistory[lang]=langHistory[lang].filter(e=>e.id!==id);ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Removed');}
 function clearAllLangHistory(lang){if(!confirm('Clear all sessions for this language?'))return;langHistory[lang]=[];ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Cleared');}
 function recallLangHistory(lang,id){const e=(langHistory[lang]||[]).find(x=>x.id===id);if(!e)return;const cfg=LANG_CONFIG[lang];const rich=document.getElementById('lang-rich-'+lang);const rend=document.getElementById('lang-rendered-'+lang);if(rich)rich.style.display='block';if(rend)rend.innerHTML=mdToLangHtml(e.rawResult,cfg.code);showToast('📖 Loaded: '+e.topic);}
-function loadLangSessions(){const r=ls_get(KEYS.langSess);if(r)try{langSessions=Object.assign({chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},JSON.parse(r));}catch(e){}}
+function loadLangSessions(){const r=ls_get(KEYS.langSess);if(r)try{langSessions=Object.assign({english:{},chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},JSON.parse(r));}catch(e){}}
 // Translate
 function loadTransHistory(){const r=ls_get(KEYS.transHist);if(r)try{transHistory=JSON.parse(r);}catch(e){}renderTransHistoryList();}
 function saveTransHistory(from,to,input,result){
@@ -3280,9 +3612,17 @@ async function generateReadAloud(forceRefresh=false){
   const topic=document.getElementById('ra-topic')?.value.trim()||'Nature';
   const format=document.getElementById('ra-format')?.value||'story';
   const difficulty=document.getElementById('ra-difficulty')?.value||'intermediate';
+  const cfg=LANG_CONFIG[currentLang];
+  const isEnglish=cfg.code==='en';
   setLoading('ra-gen-btn','ra-gen-icon',true,'📖');
   try{
-    const raw=await callClaude('Generate exactly 20 short '+difficulty+'-level '+format+'s in '+LANG_CONFIG[currentLang].name+' about "'+topic+'". Each 80-120 words.\nReturn ONLY a JSON array (no markdown):\n[{"title":"Title","content":"Full text here","summary":"One sentence"}]\nExactly 20 items.',4500);
+    // For non-English, request translation alongside content
+    const transField=isEnglish?'':', "translation":"English translation of the content"';
+    const transNote=isEnglish?'':'Each item must include an English translation in the "translation" field.';
+    const raw=await callClaude(
+      'Generate exactly 20 short '+difficulty+'-level '+format+'s in '+cfg.name+' about "'+topic+'". Each 80-120 words.\n'+transNote+'\nReturn ONLY a JSON array (no markdown, no code fences):\n[{"title":"Title","content":"Full '+cfg.name+' text here","summary":"One sentence in English"'+transField+'}]\nExactly 20 items.',
+      4500,true
+    );
     const stories=JSON.parse(raw.replace(/```json|```/g,'').trim());
     renderStoriesList(stories);
     const entry={id:Date.now(),topic,format,difficulty,stories,count:stories.length,date:new Date().toLocaleDateString()};
@@ -3299,11 +3639,27 @@ function renderStoriesList(stories){
 function selectStory(idx){
   document.querySelectorAll('.story-card').forEach((c,i)=>c.classList.toggle('selected',i===idx));
   const story=window._currentStories[idx];if(!story)return;
+  const cfg=LANG_CONFIG[currentLang];
+  const isEnglish=cfg.code==='en';
   const panel=document.getElementById('ra-narration-panel');
   panel.style.display='block';
+
+  // Build English translation block if non-English and translation exists
+  const hasTranslation=!isEnglish&&(story.translation||story.t);
+  const translationHtml=hasTranslation
+    ? `<div style="margin-top:14px;background:linear-gradient(135deg,#f0f8ff,#e8f4ff);border:1.5px solid #90caf9;border-radius:12px;padding:14px;">
+        <div style="font-size:11px;font-weight:900;color:#1565c0;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+          🇬🇧 English Translation
+          <button class="speak-btn" onclick="speakEnTranslation()" title="Listen to English translation" style="width:24px;height:24px;font-size:11px;">🔊</button>
+        </div>
+        <div id="ra-english-translation" style="font-size:13px;line-height:1.7;color:#1a237e;">${escHtml(story.translation||story.t||'')}</div>
+      </div>`
+    : '';
+
   panel.innerHTML=`<div class="narration-panel">
-  <div class="narration-title">📖 ${escHtml(story.title)} <span style="font-size:10px;background:#e6fff3;color:#007a40;border:1px solid #80e0b0;border-radius:50px;padding:2px 9px;font-weight:800;margin-left:6px;">🔒 Local · Free · No API</span></div>
+  <div class="narration-title">📖 ${escHtml(story.title)} <span style="font-size:10px;background:#e6fff3;color:#007a40;border:1px solid #80e0b0;border-radius:50px;padding:2px 9px;font-weight:800;margin-left:6px;">🔒 Local · Free · No API</span>${!isEnglish?`<span style="font-size:10px;background:#e8f4ff;color:#1565c0;border:1px solid #90caf9;border-radius:50px;padding:2px 9px;font-weight:800;margin-left:4px;">${cfg.flag} ${cfg.name}</span>`:''}</div>
   <div class="narration-text" id="narration-text">${escHtml(story.content)}</div>
+  ${translationHtml}
   <div class="narration-controls">
     <button class="btn btn-primary btn-sm" onclick="startNarration()">▶ Read Aloud</button>
     <button class="btn btn-secondary btn-sm" onclick="stopNarration()">⏹ Stop</button>
@@ -3366,6 +3722,15 @@ function startNarration(){
   narrationUtterance=u;window.speechSynthesis.speak(u);
 }
 function stopNarration(){if(window.speechSynthesis)window.speechSynthesis.cancel();document.querySelectorAll('.narration-word').forEach(s=>s.classList.remove('active'));}
+function speakEnTranslation(){
+  const el=document.getElementById('ra-english-translation');
+  if(!el){showToast('No translation available');return;}
+  if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(el.textContent||'');
+  u.lang='en-GB';u.rate=0.9;
+  window.speechSynthesis.speak(u);
+}
 // ══════════════════════════════════════════════
 // EXPLAIN IT
 // ══════════════════════════════════════════════

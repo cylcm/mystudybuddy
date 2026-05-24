@@ -219,8 +219,9 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .lang-rich-rendered tr:nth-child(even) td,.explain-rendered tr:nth-child(even) td{background:#f5f7ff;}
 .lang-rich-rendered ul,.explain-rendered ul{margin:6px 0 10px 0;list-style:none;}
 .lang-rich-rendered ul li,.explain-rendered ul li{padding:5px 10px 5px 8px;margin-bottom:4px;border-radius:7px;background:var(--surface2);border-left:3px solid var(--accent5);}
-.speak-btn{background:var(--accent5);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:12px;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;vertical-align:middle;touch-action:manipulation;}
-.speak-btn.speaking{background:var(--accent3);animation:pulse-speak .5s ease infinite alternate;}
+.speak-btn{background:linear-gradient(135deg,#0099e6,#38b2f8);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:13px;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;vertical-align:middle;touch-action:manipulation;color:#fff;box-shadow:0 2px 8px rgba(0,153,230,.4);}
+.speak-btn:hover{background:linear-gradient(135deg,#0077cc,#0099e6);transform:scale(1.1);}
+.speak-btn.speaking{background:linear-gradient(135deg,#00c96b,#43e97b);animation:pulse-speak .5s ease infinite alternate;box-shadow:0 2px 8px rgba(0,201,107,.5);}
 
 /* ─── READ ALOUD ─── */
 .story-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;transition:all .2s;}
@@ -323,6 +324,22 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .pos-legend{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;}
 .pos-leg-item{font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;}
 
+/* ─── TOKEN USAGE BAR ─── */
+#token-usage-bar{position:fixed;bottom:0;left:0;right:0;z-index:1050;background:linear-gradient(90deg,#1a1a2e,#2d2d5e);color:#fff;padding:5px 14px;font-size:10px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:2px solid var(--accent);}
+#token-usage-bar.hidden{display:none;}
+.tok-pill{background:rgba(255,255,255,.15);border-radius:50px;padding:2px 10px;font-size:10px;white-space:nowrap;}
+.tok-pill.warn{background:rgba(255,140,0,.4);}
+.tok-pill.danger{background:rgba(255,77,141,.4);}
+.tok-prog-track{flex:1;min-width:60px;background:rgba(255,255,255,.15);border-radius:50px;height:6px;overflow:hidden;}
+.tok-prog-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#43e97b,#38b2f8);transition:width .5s;}
+.tok-prog-fill.warn{background:linear-gradient(90deg,#ff8c00,#ffcc00);}
+.tok-prog-fill.danger{background:linear-gradient(90deg,#ff4d8d,#ff8c00);}
+/* Token info in profile */
+.token-profile-card{background:linear-gradient(135deg,#1a1a2e,#2d2d5e);color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:14px;}
+.token-profile-card h3{font-size:13px;font-weight:900;margin-bottom:10px;opacity:.9;}
+.token-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;}
+.token-row .lbl{opacity:.75;}
+.token-row .val{font-weight:900;font-size:13px;}
 /* ─── ANIMATIONS ─── */
 @keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -352,7 +369,34 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   .tabs-row1,.tabs-row2{flex-wrap:wrap;overflow-x:visible;justify-content:center;}
   .plan-weekly-grid{grid-template-columns:repeat(7,1fr);}
 }
-@media(max-height:500px) and (orientation:landscape){
+@media(max-width:640px){
+  .wrapper{padding:10px 8px 90px;}
+  .grid-2{grid-template-columns:1fr!important;}
+  .grid-explain{grid-template-columns:1fr!important;}
+  .plan-add-row{grid-template-columns:1fr!important;}
+  select,input[type=text],input[type=date],textarea{font-size:16px!important;}
+  .mod-tabs{gap:4px;}
+  .mod-tab{padding:6px 9px;font-size:10px;}
+  .plan-weekly-grid{grid-template-columns:repeat(4,1fr)!important;}
+  #plan-view-effort .grid-2{display:flex;flex-direction:column;}
+  .effort-step-box{padding:10px!important;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .btn{font-size:12px;padding:9px 12px;}
+  .score-bar{font-size:11px;}
+  .sudoku-grid{max-width:100%!important;}
+  .sudoku-cell{min-height:24px;font-size:11px!important;}
+  #token-usage-bar{flex-wrap:wrap;gap:5px;}
+  /* Flashcard mobile */
+  #fc-card{min-height:180px!important;}
+  #fc-front,#fc-back{min-height:180px!important;padding:16px!important;}
+  #fc-img{font-size:3rem!important;}
+  #fc-word{font-size:1.3rem!important;}
+  /* Vocab match mobile */
+  .vm-item{padding:8px 6px!important;font-size:12px!important;}
+  .vm-emoji{font-size:1.8rem!important;}
+  #vm-score-bar{border-radius:10px!important;padding:8px 10px!important;}
+}
+
   .header h1{font-size:1.3rem;}
   .header p,.header-profile{display:none;}
   .wrapper{padding-top:8px;}
@@ -391,6 +435,10 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   </div>
   <span id="api-saved">✅ Saved to this device</span>
   <div style="font-size:10px;opacity:.75;">Key stays on this device only.</div>
+  <div style="font-size:10px;opacity:.85;background:rgba(255,255,255,.15);border-radius:7px;padding:5px 9px;margin-top:2px;">
+    💾 <strong>Cache ON</strong> for Quiz, Flash, Explain, Grammar, Language<br>
+    ⚡ <strong>Parallel batch</strong> for multi-item generation
+  </div>
 </div>
 <!-- PROFILE ICON -->
 <div id="profile-icon-btn" onclick="openProfile()" title="Profile"><span id="profile-icon-av">🧑</span></div>
@@ -425,18 +473,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <h2>🧠 Smart Quiz Generator</h2>
       <div class="quiz-setup">
         <div><label>Level</label>
-          <select id="quiz-level" style="margin-bottom:0;" onchange="updateSubjectDropdowns()">
-            <option value="Kinder 1">Kinder 1</option><option value="Kinder 2">Kinder 2</option>
-            <option value="Primary 1">Primary 1</option><option value="Primary 2">Primary 2</option>
-            <option value="Primary 3">Primary 3</option><option value="Primary 4">Primary 4</option>
-            <option value="Kinder 1">Kinder 1</option><option value="Kinder 2">Kinder 2</option>
-            <option value="Primary 1">Primary 1</option><option value="Primary 2">Primary 2</option>
-            <option value="Primary 3">Primary 3</option><option value="Primary 4">Primary 4</option>
-            <option value="Primary 5">Primary 5</option><option value="Primary 6">Primary 6</option>
-            <option value="Secondary 1">Secondary 1</option><option value="Secondary 2">Secondary 2</option>
-            <option value="Secondary 3">Secondary 3</option><option value="Secondary 4">Secondary 4</option>
-            <option value="Secondary 5">Secondary 5</option>
-          </select></div>
+          <select id="quiz-level" style="margin-bottom:0;" onchange="updateSubjectDropdowns()"></select></div>
         <div><label>Subject</label><select id="quiz-subject" style="margin-bottom:0;"></select></div>
         <div><label>Questions</label>
           <select id="quiz-count" style="margin-bottom:0;">
@@ -471,6 +508,8 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           <div class="stat-card"><div class="stat-number" id="sum-pct" style="color:var(--accent)">0%</div><div class="stat-label">Score</div></div>
         </div>
         <button class="btn btn-primary" onclick="resetQuiz()">🔄 New Quiz</button>
+        <button class="btn btn-secondary" id="quiz-review-btn" onclick="reviewQuizAnswers()" style="margin-top:8px;">📋 Review Answers</button>
+        <div id="quiz-review-area" style="display:none;margin-top:12px;"></div>
       </div>
     </div>
   </div>
@@ -511,11 +550,31 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
       <!-- Word Replacer -->
       <div id="grammar-synonyms" style="display:none;">
-        <label>Enter a word to find replacements:</label>
-        <div style="display:flex;gap:7px;">
-          <input type="text" id="synonym-input" placeholder="e.g. happy, big..." style="margin-bottom:0;flex:1;min-width:0;" />
-          <button class="btn btn-primary btn-sm" id="synonym-btn" onclick="getSynonyms()"><span id="synonym-icon">🔄</span> Find</button>
+        <div style="margin-bottom:10px;">
+          <label>Category</label>
+          <select id="synonym-category" style="margin-bottom:8px;font-size:15px;">
+            <option value="Emotions">😊 Emotions (happy, sad, angry...)</option>
+            <option value="Size & Quantity">📏 Size & Quantity (big, small, many...)</option>
+            <option value="Movement">🏃 Movement (walk, run, jump...)</option>
+            <option value="Appearance">✨ Appearance (beautiful, bright, dark...)</option>
+            <option value="Time">⏰ Time (fast, slow, early, late...)</option>
+            <option value="Thinking">🧠 Thinking (smart, curious, creative...)</option>
+            <option value="Nature">🌿 Nature (cold, hot, wet, dry...)</option>
+            <option value="Communication">💬 Communication (say, speak, shout...)</option>
+            <option value="Opinion">🗣️ Opinion (good, bad, important...)</option>
+            <option value="Custom">✏️ Custom word</option>
+          </select>
+          <div id="synonym-custom-wrap" style="display:none;">
+            <label>Enter a word</label>
+            <input type="text" id="synonym-input" placeholder="e.g. happy, big..." style="margin-bottom:0;" />
+          </div>
         </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
+          <button class="btn btn-primary btn-sm" id="synonym-btn" onclick="getSynonyms()"><span id="synonym-icon">🔄</span> Get 20 Words</button>
+          <button class="btn btn-secondary btn-sm" id="synonym-refresh-btn" onclick="getSynonyms(true)">🔄 Refresh with API$</button>
+          <span style="font-size:10px;color:var(--text3);">Fetches 20 words · click word for details</span>
+        </div>
+        <div id="synonym-words-grid" style="display:none;margin-bottom:10px;"></div>
         <div class="result-box" id="synonym-result"></div>
       </div>
 
@@ -599,6 +658,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
             <button class="btn btn-secondary btn-sm" onclick="endSpellingPractice()">✕ End</button>
           </div>
         </div>
+      </div><!-- end grammar-spelling -->
       <!-- FLASHCARDS -->
       <div id="grammar-flashcards" style="display:none;">
         <div class="grid-2" style="margin-bottom:10px;">
@@ -609,7 +669,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           </select></div>
           <div style="display:flex;align-items:flex-end;gap:6px;">
             <button class="btn btn-primary btn-sm" onclick="generateFlashcards(false)" id="fc-gen-btn" style="flex:1;"><span id="fc-gen-icon">🃏</span> Generate</button>
-            <button class="btn btn-secondary btn-sm" onclick="generateFlashcards(true)" title="New API call">🔄</button>
+            <button class="btn btn-secondary btn-sm" onclick="generateFlashcards(true)" title="Refresh with API$">🔄 API$</button>
           </div>
         </div>
         <!-- Flashcard display -->
@@ -622,18 +682,18 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <button class="btn btn-secondary btn-sm" onclick="navFC(1)">▶</button>
             </div>
           </div>
-          <div id="fc-card-wrap" style="-webkit-perspective:800px;perspective:800px;cursor:pointer;" onclick="flipFC()">
-            <div id="fc-card" style="position:relative;min-height:200px;transition:transform 0.5s;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;border-radius:16px;">
-              <div id="fc-front" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(135deg,#f0f4ff,#e8eeff);border:2px solid var(--border);border-radius:16px;padding:20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
-                <div id="fc-img" style="font-size:4rem;"></div>
-                <div id="fc-word" style="font-size:1.6rem;font-weight:900;color:var(--accent);"></div>
-                <div style="font-size:11px;color:var(--text3);">Tap to reveal</div>
+          <div id="fc-card-wrap" style="perspective:1000px;-webkit-perspective:1000px;cursor:pointer;margin-bottom:4px;" onclick="flipFC()">
+            <div id="fc-card" style="position:relative;min-height:200px;transition:transform 0.6s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;-webkit-transform-style:preserve-3d;border-radius:16px;">
+              <div id="fc-front" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(135deg,#f0f4ff,#e8eeff);border:2px solid var(--border);border-radius:16px;padding:20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 20px rgba(91,94,244,.12);">
+                <div id="fc-img" style="font-size:4rem;line-height:1;"></div>
+                <div id="fc-word" style="font-size:1.6rem;font-weight:900;color:var(--accent);word-break:break-word;"></div>
+                <div style="font-size:11px;color:var(--text3);margin-top:4px;">👆 Tap to reveal meaning</div>
               </div>
-              <div id="fc-back" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:linear-gradient(135deg,#e8fff3,#e8f4ff);border:2px solid var(--accent3);border-radius:16px;padding:20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:absolute;top:0;left:0;right:0;bottom:0;">
-                <div id="fc-meaning" style="font-size:1rem;font-weight:800;color:var(--text);"></div>
-                <div id="fc-sentence" style="font-size:12px;color:var(--text2);font-style:italic;line-height:1.5;"></div>
-                <div id="fc-pron" style="font-size:11px;color:var(--text3);"></div>
-                <button class="btn btn-secondary btn-sm" onclick="speakFC(event)" style="margin-top:4px;">🔊 Hear</button>
+              <div id="fc-back" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);-webkit-transform:rotateY(180deg);background:linear-gradient(135deg,#e8fff3,#e8f4ff);border:2px solid var(--accent3);border-radius:16px;padding:20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;position:absolute;top:0;left:0;right:0;bottom:0;box-shadow:0 4px 20px rgba(0,201,107,.15);">
+                <div id="fc-meaning" style="font-size:1rem;font-weight:800;color:var(--text);word-break:break-word;"></div>
+                <div id="fc-sentence" style="font-size:12px;color:var(--text2);font-style:italic;line-height:1.6;padding:0 4px;"></div>
+                <div id="fc-pron" style="font-size:11px;color:var(--text3);background:#e8f4ff;border-radius:50px;padding:2px 10px;"></div>
+                <button class="btn btn-secondary btn-sm" onclick="speakFC(event)" style="margin-top:4px;">🔊 Hear it</button>
               </div>
             </div>
           </div>
@@ -658,10 +718,11 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         </div>
       </div>
 
-      <!-- VOCAB MATCH (K1–P3) -->
+      <!-- VOCAB MATCH (All Levels) -->
       <div id="grammar-vocab" style="display:none;">
-        <div style="background:#fff3e0;border:1.5px solid #ffaa40;border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:11px;font-weight:700;color:#8a5c00;">🎯 Vocabulary Matching — designed for Kinder 1 to Primary 3 students</div>
+        <div style="background:#e8f4ff;border:1.5px solid #80c8ff;border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:11px;font-weight:700;color:#0055aa;">🎯 Vocabulary Matching Game — available for all levels</div>
         <div class="grid-2" style="margin-bottom:10px;">
+          <div><label>Level</label><select id="vm-level" style="margin-bottom:0;"></select></div>
           <div><label>Category</label>
             <select id="vm-category" style="margin-bottom:0;">
               <option value="Animals">🐾 Animals</option><option value="Fruits">🍎 Fruits</option>
@@ -670,6 +731,9 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <option value="Family">👨‍👩‍👧 Family</option><option value="Food">🍕 Food</option>
               <option value="Transport">🚗 Transport</option><option value="Body Parts">🖐 Body Parts</option>
               <option value="School Items">📏 School Items</option><option value="Weather">🌤 Weather</option>
+              <option value="Science">🔬 Science</option><option value="Geography">🌍 Geography</option>
+              <option value="Mathematics">📐 Mathematics</option><option value="Technology">💻 Technology</option>
+              <option value="Sports">⚽ Sports</option><option value="Arts">🎨 Arts</option>
             </select></div>
           <div><label>Difficulty</label>
             <select id="vm-diff" style="margin-bottom:0;">
@@ -678,11 +742,18 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <option value="hard">⭐⭐⭐ Hard (8 pairs)</option>
             </select></div>
         </div>
-        <button class="btn btn-primary" onclick="generateVocabMatch()" id="vm-gen-btn"><span id="vm-gen-icon">🖼️</span> Start Matching Game</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px;">
+          <button class="btn btn-primary" onclick="generateVocabMatch(false)" id="vm-gen-btn"><span id="vm-gen-icon">🖼️</span> Start Matching Game</button>
+          <button class="btn btn-secondary btn-sm" onclick="generateVocabMatch(true)" title="Refresh with new words from API">🔄 Refresh with API$</button>
+        </div>
+        <div id="vm-score-bar" style="display:none;background:linear-gradient(90deg,#eef0ff,#f5e8ff);border:1px solid var(--border);border-radius:50px;padding:6px 14px;font-size:11px;font-weight:700;margin-top:8px;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span id="vm-score-text">0/0 matched</span>
+          <span id="vm-attempts-text">0 attempts</span>
+          <div style="flex:1;background:#e0e8ff;border-radius:50px;height:6px;min-width:60px;"><div id="vm-score-prog" style="height:100%;border-radius:50px;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width .4s;width:0%;"></div></div>
+        </div>
         <div id="vm-area" style="margin-top:14px;display:none;"></div>
       </div>
     </div>
-  </div>
 
   </div><!-- /panel-grammar -->
 
@@ -773,7 +844,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           <div style="flex:1;min-width:0;"><label>Level</label><select id="fib-level" style="margin-bottom:0;"></select></div>
           <div style="flex:1;min-width:0;"><label>Subject / Topic</label><select id="fib-subject" style="margin-bottom:0;"></select></div>
           <button class="btn btn-primary btn-sm" onclick="generateFIB(false)" id="fib-gen-btn" style="align-self:flex-end;"><span id="fib-gen-icon">✨</span> Generate</button>
-          <button class="btn btn-secondary btn-sm" onclick="generateFIB(true)" title="New API call to refresh" style="align-self:flex-end;font-size:10px;padding:6px 10px;">🔄 Refresh API</button>
+          <button class="btn btn-secondary btn-sm" onclick="generateFIB(true)" title="New API call to refresh" style="align-self:flex-end;font-size:10px;padding:6px 10px;">🔄 Refresh with API$</button>
         </div>
         <div id="fib-area"></div>
         <div id="fib-history-wrap" style="margin-top:12px;">
@@ -824,7 +895,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <option value="extreme">Extreme (super hard!)</option>
             </select></div>
           <button class="btn btn-primary btn-sm" onclick="generateTongueTwisters(false)" id="tt-gen-btn" style="align-self:flex-end;"><span id="tt-gen-icon">👅</span> Get 10</button>
-          <button class="btn btn-secondary btn-sm" onclick="generateTongueTwisters(true)" title="New API call to refresh" style="align-self:flex-end;font-size:10px;padding:6px 10px;">🔄 Refresh API</button>
+          <button class="btn btn-secondary btn-sm" onclick="generateTongueTwisters(true)" title="New API call to refresh" style="align-self:flex-end;font-size:10px;padding:6px 10px;">🔄 Refresh with API$</button>
         </div>
         <div id="tt-list" style="margin-bottom:12px;"></div>
         <div id="tt-practice-area" style="display:none;">
@@ -878,6 +949,11 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <button class="btn btn-secondary" onclick="resetExplain()" style="font-size:12px;">🔄 Reset</button>
       </div>
       <div id="explain-rich" style="display:none;margin-top:14px;">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;">
+          <button class="speak-btn" id="explain-speak-btn" onclick="speakExplainContent()" title="Listen to explanation" style="width:36px;height:36px;font-size:16px;border-radius:50px;">🔊</button>
+          <span style="font-size:11px;color:var(--text3);font-weight:700;">Listen to explanation</span>
+          <button class="btn btn-secondary btn-sm" onclick="stopExplainSpeech()" style="font-size:11px;padding:5px 10px;">⏹ Stop</button>
+        </div>
         <div id="explain-svg-wrap" style="display:none;"></div>
         <div id="explain-image-row" style="display:flex;flex-wrap:wrap;gap:10px;margin:10px 0;"></div>
         <div id="explain-rendered" class="explain-rendered"></div>
@@ -914,8 +990,9 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <div><label>Topic</label><input type="text" id="plan-task-name" placeholder="e.g. Maths Chapter 3..." style="margin-bottom:0;" /></div>
         <div><label>Date</label><input type="date" id="plan-task-date" style="margin-bottom:0;" /></div>
         <div><label>Duration</label><select id="plan-task-duration" style="margin-bottom:0;">
+          <option value="15">15 min</option><option value="20">20 min</option>
           <option value="30">30 min</option><option value="45">45 min</option>
-          <option value="60" selected>1 hour</option><option value="90">1.5 hrs</option><option value="120">2 hrs</option>
+          <option value="60" selected>1 hour</option><option value="90">1.5 hrs (recommended daily)</option><option value="120">2 hrs</option>
         </select></div>
         <div><label>Priority</label><select id="plan-task-priority" style="margin-bottom:0;">
           <option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option>
@@ -1067,13 +1144,16 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           <div class="grid-2" style="gap:10px;">
             <div><label>Session Length</label>
               <select id="effort-session" style="margin-bottom:0;font-size:15px;">
-                <option value="30">30 min sessions</option>
-                <option value="45" selected>45 min sessions</option>
+                <option value="15">15 min sessions</option>
+                <option value="20">20 min sessions</option>
+                <option value="30" selected>30 min sessions</option>
+                <option value="45">45 min sessions</option>
                 <option value="60">1 hour sessions</option>
                 <option value="90">1.5 hour sessions</option>
               </select></div>
             <div><label>Break Between Sessions</label>
               <select id="effort-break" style="margin-bottom:0;font-size:15px;">
+                <option value="5">5 min break</option>
                 <option value="10">10 min break</option>
                 <option value="15" selected>15 min break</option>
                 <option value="20">20 min break</option>
@@ -1149,6 +1229,37 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 <div class="modal-overlay" id="profile-modal">
   <div class="modal">
     <h2>⚙️ Profile Settings</h2>
+    <!-- TOKEN USAGE CARD -->
+    <div class="token-profile-card" id="profile-token-card">
+      <h3>🪙 API Token Usage</h3>
+      <div class="token-row"><span class="lbl">This session used</span><span class="val" id="pt-session-used" style="color:#43e97b;">0</span></div>
+      <div class="token-row"><span class="lbl">Session limit</span><span class="val" id="pt-session-limit" style="color:#38b2f8;">–</span></div>
+      <div class="token-row"><span class="lbl">Remaining this session</span><span class="val" id="pt-session-rem" style="color:#ffd080;">–</span></div>
+      <div class="token-row"><span class="lbl">Daily total used</span><span class="val" id="pt-daily-used" style="color:#ff8c00;">0</span></div>
+      <div class="token-row"><span class="lbl">Daily limit</span><span class="val" id="pt-daily-limit" style="color:#ff4d8d;">–</span></div>
+      <div style="background:rgba(255,255,255,.1);border-radius:50px;height:7px;margin:8px 0;overflow:hidden;">
+        <div id="pt-daily-prog" style="height:100%;border-radius:50px;background:linear-gradient(90deg,#43e97b,#38b2f8);transition:width .5s;width:0%;"></div>
+      </div>
+      <div style="font-size:9px;opacity:.6;margin-top:4px;">Recommended: ~100K tokens/session · ~500K tokens/day for light use</div>
+    </div>
+    <!-- DAILY LIMIT SETTING -->
+    <label>Daily Token Limit (API calls)</label>
+    <div style="display:flex;gap:7px;margin-bottom:10px;align-items:center;">
+      <select id="prof-daily-limit" style="margin-bottom:0;flex:1;font-size:15px;">
+        <option value="100000" selected>🟢 100K — Light (recommended)</option>
+        <option value="250000">🟡 250K — Moderate</option>
+        <option value="500000">🟠 500K — Heavy use</option>
+      </select>
+    </div>
+    <label>Session Token Limit</label>
+    <div style="display:flex;gap:7px;margin-bottom:12px;align-items:center;">
+      <select id="prof-session-limit" style="margin-bottom:0;flex:1;font-size:15px;">
+        <option value="20000" selected>🟢 20K — Standard (recommended)</option>
+        <option value="50000">🟡 50K — Extended session</option>
+        <option value="100000">🟠 100K — Long session</option>
+      </select>
+    </div>
+
     <label>Student Name</label>
     <input type="text" id="prof-name" placeholder="Enter your name..." />
     <label>School Level</label>
@@ -1190,7 +1301,19 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   </div>
 </div>
 
+<!-- TOKEN USAGE BAR -->
+<div id="token-usage-bar" class="hidden">
+  <span style="font-size:12px;">🪙</span>
+  <span class="tok-pill" id="tok-this-req">This req: –</span>
+  <span class="tok-pill" id="tok-session">Session: –</span>
+  <div class="tok-prog-track"><div class="tok-prog-fill" id="tok-prog-fill" style="width:0%"></div></div>
+  <span class="tok-pill" id="tok-remaining">Remaining: –</span>
+  <span class="tok-pill" id="tok-daily-pct">Daily: –</span>
+  <button onclick="document.getElementById('token-usage-bar').classList.add('hidden')" style="background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:14px;padding:0 4px;touch-action:manipulation;">✕</button>
+</div>
+
 <div class="toast" id="toast"></div>
+
 <script>
 // ══════════════════════════════════════════════
 // CONSTANTS & STATE
@@ -1230,7 +1353,7 @@ let fibHistory=[],currentFIBSession=null;
 let ttList=[],ttHistory=[],selectedTT=null;
 let sudokuPuzzle=[],sudokuSolution=[],sudokuSelected=null,sudokuErrors=0,sudokuTimer=0,sudokuTimerInterval=null;
 // Language
-let currentLang='chinese',langSessions={chinese:{},japanese:{},french:{},german:{}},langHistory={chinese:[],japanese:[],french:[],german:[]},transHistory=[],readHistory=[];
+let currentLang='chinese',langSessions={chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},langHistory={chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},transHistory=[],readHistory=[];
 // Explain
 let explainHistory=[];
 // Plan
@@ -1323,15 +1446,21 @@ const DEFAULT_SUBJECTS={
 
 const LANG_CONFIG={
   chinese:{flag:'🇨🇳',name:'Mandarin Chinese',code:'zh',tts:'zh-CN'},
+  cantonese:{flag:'🇭🇰',name:'Cantonese',code:'yue',tts:'zh-HK'},
   japanese:{flag:'🇯🇵',name:'Japanese',code:'ja',tts:'ja-JP'},
   french:{flag:'🇫🇷',name:'French',code:'fr',tts:'fr-FR'},
-  german:{flag:'🇩🇪',name:'German',code:'de',tts:'de-DE'}
+  german:{flag:'🇩🇪',name:'German',code:'de',tts:'de-DE'},
+  filipino:{flag:'🇵🇭',name:'Filipino',code:'fil',tts:'fil-PH'},
+  malay:{flag:'🇲🇾',name:'Malay',code:'ms',tts:'ms-MY'}
 };
 const LANG_CATEGORIES={
   chinese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Time','Emotions','Sports','Hobbies','Body Parts'],
+  cantonese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Time','Emotions','Sports','Hobbies','Daily Life'],
   japanese:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Seasons','Time','Politeness','Daily Life','Nature'],
   french:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Café & Restaurant','Travel','Directions','Time','Fashion','Sports','Culture'],
-  german:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Directions','Time','Occupations','Transport','Culture']
+  german:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Directions','Time','Occupations','Transport','Culture'],
+  filipino:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Directions','Time','Emotions','Sports','Celebrations'],
+  malay:['Greetings','Family','Food','Numbers','Colors','Animals','School','Weather','Shopping','Travel','Directions','Time','Emotions','Sports','Culture']
 };
 
 // ── Utils ──
@@ -1363,16 +1492,169 @@ function loadApiKey(){const v=ls_get(KEYS.api);if(v){apiKey=v;document.getElemen
 function saveApiKey(){const v=document.getElementById('api-key-input').value.trim();if(!v){showToast('Please enter your API key');return;}apiKey=v;ls_set(KEYS.api,v);document.getElementById('api-saved').style.display='inline';document.getElementById('forget-btn').style.display='inline';updateApiIndicator();document.getElementById('api-panel').classList.remove('open');showToast('✅ API key saved!');}
 function forgetApiKey(){if(!confirm('Remove API key from this device?'))return;apiKey='';ls_del(KEYS.api);document.getElementById('api-key-input').value='';document.getElementById('api-saved').style.display='none';document.getElementById('forget-btn').style.display='none';updateApiIndicator();showToast('🗑 API key removed');}
 
-// ── Claude API ──
-async function callClaude(prompt,maxTokens=1200){
+// ── Token tracking ──
+let tokenStats={sessionUsed:0,dailyUsed:0,lastReqTokens:0,dailyDate:new Date().toDateString()};
+const TOKEN_STATS_KEY='sb_tok';
+function loadTokenStats(){
+  const r=ls_get(TOKEN_STATS_KEY);
+  if(r)try{
+    const saved=JSON.parse(r);
+    // Reset daily if different date
+    if(saved.dailyDate===new Date().toDateString()){
+      tokenStats.dailyUsed=saved.dailyUsed||0;
+    }
+    tokenStats.sessionUsed=saved.sessionUsed||0;
+  }catch(e){}
+}
+function saveTokenStats(){
+  tokenStats.dailyDate=new Date().toDateString();
+  ls_set(TOKEN_STATS_KEY,JSON.stringify(tokenStats));
+}
+function addTokenUsage(inputTokens,outputTokens){
+  const total=(inputTokens||0)+(outputTokens||0);
+  tokenStats.lastReqTokens=total;
+  tokenStats.sessionUsed+=total;
+  tokenStats.dailyUsed+=total;
+  saveTokenStats();
+  updateTokenBar();
+  updateProfileTokenCard();
+}
+function getTokenLimits(){
+  const dailyLimit=parseInt(ls_get('sb_daily_limit')||'100000');
+  const sessionLimit=parseInt(ls_get('sb_session_limit')||'20000');
+  return{dailyLimit,sessionLimit};
+}
+function saveTokenLimits(){
+  const dl=document.getElementById('prof-daily-limit')?.value;
+  const sl=document.getElementById('prof-session-limit')?.value;
+  if(dl)ls_set('sb_daily_limit',dl);
+  if(sl)ls_set('sb_session_limit',sl);
+}
+function updateTokenBar(){
+  const bar=document.getElementById('token-usage-bar');if(!bar)return;
+  const{dailyLimit,sessionLimit}=getTokenLimits();
+  bar.classList.remove('hidden');
+  const reqEl=document.getElementById('tok-this-req');
+  const sessEl=document.getElementById('tok-session');
+  const remEl=document.getElementById('tok-remaining');
+  const dailyEl=document.getElementById('tok-daily-pct');
+  const fill=document.getElementById('tok-prog-fill');
+  const fmt=n=>n>=1000000?(n/1000000).toFixed(1)+'M':n>=1000?Math.round(n/1000)+'K':n;
+  if(reqEl)reqEl.textContent='This req: '+fmt(tokenStats.lastReqTokens);
+  if(sessEl)sessEl.textContent='Session: '+fmt(tokenStats.sessionUsed);
+  const sessionRem=sessionLimit>0?Math.max(0,sessionLimit-tokenStats.sessionUsed):-1;
+  if(remEl){
+    remEl.textContent=sessionRem>=0?'Rem: '+fmt(sessionRem):'Unlimited';
+    remEl.className='tok-pill'+(sessionRem>=0&&sessionRem<10000?' danger':sessionRem>=0&&sessionRem<30000?' warn':'');
+  }
+  const dailyPct=dailyLimit>0?Math.round(tokenStats.dailyUsed/dailyLimit*100):0;
+  if(dailyEl){
+    dailyEl.textContent=dailyLimit>0?'Daily: '+dailyPct+'%':'Daily: unlimited';
+    dailyEl.className='tok-pill'+(dailyPct>80?' danger':dailyPct>50?' warn':'');
+  }
+  const progPct=sessionLimit>0?Math.min(100,Math.round(tokenStats.sessionUsed/sessionLimit*100)):dailyPct;
+  if(fill){
+    fill.style.width=progPct+'%';
+    fill.className='tok-prog-fill'+(progPct>80?' danger':progPct>50?' warn':'');
+  }
+}
+function updateProfileTokenCard(){
+  const{dailyLimit,sessionLimit}=getTokenLimits();
+  const fmt=n=>n>=1000000?(n/1000000).toFixed(2)+'M':n>=1000?Math.round(n/1000)+'K':n;
+  const el=id=>document.getElementById(id);
+  if(el('pt-session-used'))el('pt-session-used').textContent=fmt(tokenStats.sessionUsed);
+  if(el('pt-session-limit'))el('pt-session-limit').textContent=sessionLimit>0?fmt(sessionLimit):'Unlimited';
+  const sessRem=sessionLimit>0?Math.max(0,sessionLimit-tokenStats.sessionUsed):-1;
+  if(el('pt-session-rem'))el('pt-session-rem').textContent=sessRem>=0?fmt(sessRem):'Unlimited';
+  if(el('pt-daily-used'))el('pt-daily-used').textContent=fmt(tokenStats.dailyUsed);
+  if(el('pt-daily-limit'))el('pt-daily-limit').textContent=dailyLimit>0?fmt(dailyLimit):'Unlimited';
+  const dailyPct=dailyLimit>0?Math.min(100,Math.round(tokenStats.dailyUsed/dailyLimit*100)):0;
+  const prog=el('pt-daily-prog');if(prog)prog.style.width=dailyPct+'%';
+  // Set selects to saved values
+  const dlSel=el('prof-daily-limit');if(dlSel&&dailyLimit)dlSel.value=String(dailyLimit);
+  const slSel=el('prof-session-limit');if(slSel&&sessionLimit)slSel.value=String(sessionLimit);
+}
+
+// ── Claude API (with token tracking + cache_control + batch support) ──
+
+// Shared system prompt cached across calls (cache_control="ephemeral" reuses prefix)
+const CACHED_SYSTEM_PROMPT = `You are MyStudyBuddy AI — an expert educational assistant for students from Kinder 1 through Secondary 5. You produce clear, age-appropriate, encouraging responses. Always return valid JSON when asked. Never add markdown fences unless the format explicitly requires it.`;
+
+// Main API call — supports cache_control for expensive repeated context
+async function callClaude(prompt, maxTokens=1200, useCache=false){
   if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
+  
+  // Check session limit before calling
+  const {sessionLimit} = getTokenLimits();
+  if(sessionLimit > 0 && tokenStats.sessionUsed >= sessionLimit){
+    showToast('⚠️ Session token limit reached. Reset in Profile.');
+    throw new Error('Session token limit reached');
+  }
+  
+  // Build message content — add cache_control to large prompts when useCache=true
+  const msgContent = useCache
+    ? [
+        {type:'text', text: CACHED_SYSTEM_PROMPT, cache_control:{type:'ephemeral'}},
+        {type:'text', text: prompt}
+      ]
+    : prompt;
+
+  const headers = {
+    'Content-Type':'application/json',
+    'x-api-key':apiKey,
+    'anthropic-version':'2023-06-01',
+    'anthropic-dangerous-direct-browser-access':'true'
+  };
+  // Add beta header for cache_control support
+  if(useCache) headers['anthropic-beta'] = 'prompt-caching-2024-07-31';
+
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:maxTokens,messages:[{role:'user',content:prompt}]})
+    headers,
+    body: JSON.stringify({
+      model:'claude-haiku-4-5-20251001',
+      max_tokens: maxTokens,
+      system: useCache ? undefined : CACHED_SYSTEM_PROMPT,
+      messages:[{role:'user', content: msgContent}]
+    })
   });
   if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
-  const d=await res.json();return d.content.map(b=>b.text||'').join('');
+  const d=await res.json();
+  // Track usage (cache_read_input_tokens are cheaper — track total)
+  if(d.usage){
+    const inp = (d.usage.input_tokens||0) + (d.usage.cache_read_input_tokens||0);
+    const out = d.usage.output_tokens||0;
+    const cacheCreation = d.usage.cache_creation_input_tokens||0;
+    addTokenUsage(inp + cacheCreation, out);
+    if(d.usage.cache_read_input_tokens > 0){
+      console.log('💾 Cache hit! Saved ~'+d.usage.cache_read_input_tokens+' tokens');
+    }
+  }
+  return d.content.map(b=>b.text||'').join('');
+}
+
+// Batch API: send multiple prompts in one call, returns array of results
+// Used for: quiz generation (multiple questions), flashcard batches, FIB sentences
+async function callClaudeBatch(requests){
+  // requests = [{id:'r1', prompt:'...', maxTokens:500}, ...]
+  // Returns map of id -> response text
+  if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
+  if(!requests||!requests.length) return {};
+
+  // For browser usage, we simulate batch by sending a single merged prompt
+  // True batch API requires server-side polling — we use parallel requests instead
+  // which is semantically equivalent and works in browser context
+  const results = {};
+  const promises = requests.map(async req => {
+    try {
+      const text = await callClaude(req.prompt, req.maxTokens||800, req.useCache||false);
+      results[req.id] = {success:true, text};
+    } catch(e) {
+      results[req.id] = {success:false, error:e.message};
+    }
+  });
+  await Promise.all(promises);
+  return results;
 }
 
 // ── Tabs ──
@@ -1397,6 +1679,7 @@ function saveProfile(){
   profile.level=document.getElementById('prof-level').value;
   const sel=document.querySelector('.avatar-opt.selected');if(sel)profile.avatar=sel.dataset.av;
   ls_set(KEYS.profile,JSON.stringify(profile));
+  saveTokenLimits();
   updateHeaderProfile();populateSubjectDropdowns();closeProfile();
   showToast('✅ Profile saved!');
 }
@@ -1406,6 +1689,7 @@ function openProfile(){
   document.querySelectorAll('.avatar-opt').forEach(el=>el.classList.toggle('selected',el.dataset.av===profile.avatar));
   renderProfileSubjTags();
   populateProfileSubjDropdown();
+  updateProfileTokenCard();
   document.getElementById('profile-modal').classList.add('open');
 }
 function populateProfileSubjDropdown(){
@@ -1458,7 +1742,7 @@ function populateSubjectDropdowns(){
   ['quiz-subject','fib-subject'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
   // Level dropdowns — default to profile level, allow higher levels only
   const lvOpts=levelOptsFromProfile();
-  ['quiz-level','fib-level','explain-level','spell-level','scramble-level'].forEach(id=>{
+  ['quiz-level','fib-level','explain-level','spell-level','scramble-level','fc-level','vm-level'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.innerHTML=lvOpts;
   });
 }
@@ -1507,7 +1791,7 @@ async function generateQuiz(){
   setLoading('quiz-gen-btn','quiz-gen-icon',true,'⚡');
   const topicStr=topic?` specifically on "${topic}"`:' ';
   try{
-    const raw=await callClaude(`Generate ${count} multiple choice questions for ${level} students on ${subject}${topicStr}.\nReturn ONLY a JSON array:\n[{"q":"Question?","options":["A) ...","B) ...","C) ...","D) ..."],"answer":"A","explanation":"Why."}]`,3500);
+    const raw=await callClaude(`Generate ${count} multiple choice questions for ${level} students on ${subject}${topicStr}.\nReturn ONLY a JSON array:\n[{"q":"Question?","options":["A) ...","B) ...","C) ...","D) ..."],"answer":"A","explanation":"Why."}]`,3500,true);
     quizData=JSON.parse(raw.replace(/```json|```/g,'').trim());
     quizCurrent=0;quizScore=0;quizAnswered=0;
     renderQuiz(level,subject);
@@ -1582,7 +1866,10 @@ function switchGTab(tab){
   });
   const el=document.getElementById('grammar-'+tab),tb=document.getElementById('gtab-'+tab);
   if(el)el.style.display='block';if(tb)tb.classList.add('active');
-  if(tab==='flashcards'&&!document.getElementById('fc-level').options.length)populateSubjectDropdowns();
+  // Always refresh level dropdowns when switching to tabs that use them
+  if(tab==='flashcards'||tab==='vocab'){
+    populateSubjectDropdowns();
+  }
 }
 function addWord(){const inp=document.getElementById('word-input');const w=inp.value.trim().toLowerCase();if(!w)return;if(!words.includes(w)){words.push(w);renderWordTags();}inp.value='';inp.focus();}
 let words=[];
@@ -1591,22 +1878,64 @@ function renderWordTags(){document.getElementById('word-tags-container').innerHT
 async function generateSentences(){
   if(!words.length){showToast('Please add at least one word');return;}
   setLoading('sentence-gen-btn','sentence-gen-icon',true,'✨');
-  try{const result=await callClaude(`English teacher for 11-16yr students. For these words: ${words.join(', ')}. For EACH word: 1) Example sentence 2) Grammar role 3) Two synonyms with example sentences. Be educational.`,1500);const box=document.getElementById('sentences-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Sentence builder: '+words.join(', '));}catch(e){showToast('❌ '+e.message);}
+  try{const result=await callClaude(`English teacher for 11-16yr students. For these words: ${words.join(', ')}. For EACH word: 1) Example sentence 2) Grammar role 3) Two synonyms with example sentences. Be educational.`,1500,true);const box=document.getElementById('sentences-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Sentence builder: '+words.join(', '));}catch(e){showToast('❌ '+e.message);}
   setLoading('sentence-gen-btn','sentence-gen-icon',false,'✨');
 }
 async function checkGrammar(){
   if(!requireField('grammar-check-input','⚠️ Please enter a sentence'))return;
   const text=document.getElementById('grammar-check-input').value.trim();
   setLoading('grammar-check-btn','grammar-check-icon',true,'🔍');
-  try{const result=await callClaude(`Grammar teacher for 11-15yr students. Analyse: "${text}". Provide: 1) ✅ CORRECTED VERSION 2) 🔍 ERRORS FOUND 3) 📚 GRAMMAR TIP 4) ⭐ IMPROVED VERSION. Be encouraging.`,1000);const box=document.getElementById('grammar-check-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Grammar check');}catch(e){showToast('❌ '+e.message);}
+  try{const result=await callClaude(`Grammar teacher for 11-15yr students. Analyse: "${text}". Provide: 1) ✅ CORRECTED VERSION 2) 🔍 ERRORS FOUND 3) 📚 GRAMMAR TIP 4) ⭐ IMPROVED VERSION. Be encouraging.`,1000,true);const box=document.getElementById('grammar-check-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Grammar check');}catch(e){showToast('❌ '+e.message);}
   setLoading('grammar-check-btn','grammar-check-icon',false,'🔍');
 }
-async function getSynonyms(){
-  if(!requireField('synonym-input','⚠️ Please enter a word'))return;
-  const word=document.getElementById('synonym-input').value.trim();
+let synonymBatch=[];
+async function getSynonyms(forceRefresh=false){
+  const cat=document.getElementById('synonym-category')?.value||'Emotions';
+  const isCustom=cat==='Custom';
+  const customWord=document.getElementById('synonym-input')?.value.trim();
+  if(isCustom&&!customWord){showToast('⚠️ Please enter a word');return;}
+  const label=isCustom?customWord:cat;
+  if(!forceRefresh&&synonymBatch.length>0){renderSynonymGrid();return;}
   setLoading('synonym-btn','synonym-icon',true,'🔄');
-  try{const result=await callClaude(`Vocabulary teacher. For word: "${word}". Provide: 1) 📖 DEFINITION 2) 🔄 SYNONYMS (5-8) with meaning differences 3) ↔️ ANTONYMS (3) 4) 📝 EXAMPLE SENTENCES for 3 synonyms 5) 💡 USAGE TIP.`,1000);const box=document.getElementById('synonym-result');box.textContent=result;box.classList.add('show');addHistory('grammar','Word replacer: "'+word+'"');}catch(e){showToast('❌ '+e.message);}
+  const btn2=document.getElementById('synonym-refresh-btn');if(btn2)btn2.disabled=true;
+  try{
+    const prompt=isCustom
+      ?`For the word "${customWord}", generate 20 related vocabulary words (synonyms, antonyms, related terms). Return ONLY a JSON array: [{"word":"happy","type":"synonym","meaning":"Feeling pleasure","antonym":"sad","example":"She was happy to see him."}] 20 items, no markdown.`
+      :`Generate exactly 20 English words in the category "${cat}". Include synonyms, antonyms, and usage. Return ONLY a JSON array: [{"word":"happy","type":"adjective","meaning":"Feeling pleasure and contentment","synonym":"joyful","antonym":"sad","example":"She felt happy on her birthday."}] 20 items, no markdown.`;
+    const raw=await callClaude(prompt,1800);
+    synonymBatch=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    renderSynonymGrid();
+    addHistory('grammar','Word Replacer: '+label);
+  }catch(e){showToast('❌ '+e.message);}
   setLoading('synonym-btn','synonym-icon',false,'🔄');
+  if(btn2)btn2.disabled=false;
+}
+function renderSynonymGrid(){
+  const grid=document.getElementById('synonym-words-grid');if(!grid)return;
+  grid.style.display='block';
+  grid.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">'
+    +synonymBatch.map((item,i)=>`<button class="btn btn-secondary btn-sm" onclick="showSynonymDetail(${i})" style="border-radius:50px;font-size:11px;padding:5px 12px;border-color:var(--border);">${escHtml(item.word)}</button>`).join('')
+    +'</div>';
+}
+function showSynonymDetail(idx){
+  const item=synonymBatch[idx];if(!item)return;
+  const box=document.getElementById('synonym-result');
+  box.innerHTML=`<div style="font-size:15px;font-weight:900;color:var(--accent);margin-bottom:8px;">${escHtml(item.word)} <span style="font-size:10px;background:var(--surface2);border-radius:50px;padding:2px 8px;color:var(--text2);">${escHtml(item.type||'')}</span> <button class="speak-btn" onclick="speakText('${escHtml(item.word)}','en')" style="margin-left:4px;">🔊</button></div>
+<div style="margin-bottom:6px;"><strong>📖 Meaning:</strong> ${escHtml(item.meaning||'')}</div>
+<div style="margin-bottom:6px;"><strong>🔄 Synonym:</strong> <span style="color:var(--accent3);">${escHtml(item.synonym||'—')}</span></div>
+<div style="margin-bottom:6px;"><strong>↔️ Antonym:</strong> <span style="color:var(--accent2);">${escHtml(item.antonym||'—')}</span></div>
+<div><strong>📝 Example:</strong> <em style="color:var(--text2);">${escHtml(item.example||'')}</em> <button class="speak-btn" onclick="speakText('${escHtml(item.example||'')}','en')" style="margin-left:4px;">🔊</button></div>`;
+  box.classList.add('show');
+}
+function initSynonymCategoryListener(){
+  const catSel=document.getElementById('synonym-category');
+  if(catSel)catSel.addEventListener('change',function(){
+    const wrap=document.getElementById('synonym-custom-wrap');
+    if(wrap)wrap.style.display=this.value==='Custom'?'block':'none';
+    synonymBatch=[];
+    const grid=document.getElementById('synonym-words-grid');if(grid)grid.style.display='none';
+    const box=document.getElementById('synonym-result');if(box)box.classList.remove('show');
+  });
 }
 
 // ── Parts of Speech ──
@@ -1688,7 +2017,7 @@ async function generateSpellingWords(){
   const modeDesc=modeMap[spellingMode]||'common';
   setLoading('spell-auto-btn','spell-auto-icon',true,'🎲');
   try{
-    const raw=await callClaude(`Generate exactly 25 ${modeDesc} spelling words for ${level} students${theme?' on theme "'+theme+'"':''}. Return ONLY a JSON array with 25 items:\n[{"word":"EXAMPLE","hint":"short clue","meaning":"definition"}]\nNo markdown.`,1200);
+    const raw=await callClaude(`Generate exactly 25 ${modeDesc} spelling words for ${level} students${theme?' on theme "'+theme+'"':''}. Return ONLY a JSON array with 25 items:\n[{"word":"EXAMPLE","hint":"short clue","meaning":"definition"}]\nNo markdown.`,1200,true);
     spellWords=JSON.parse(raw.replace(/```json|```/g,'').trim());
     currentSpellSessionId=Date.now();spellResults={};
     const entry={id:currentSpellSessionId,level,theme,mode:spellingMode,words:spellWords,results:{},date:new Date().toLocaleDateString()};
@@ -1758,7 +2087,12 @@ async function startScramble(mode){
     const level=document.getElementById('scramble-level').value;
     const theme=(document.getElementById('scramble-theme').value||document.getElementById('scramble-theme-sel').value||'').trim();
     setLoading('scramble-load-btn','scramble-load-icon',true,'🎲');
-    try{const raw=await callClaude(`Generate exactly 20 vocabulary words for ${level} students${theme?' on theme "'+theme+'"':''}. Return ONLY JSON array with 20 items:\n[{"word":"EXAMPLE","hint":"short clue","meaning":"definition"}]\nNo markdown.`,1200);scrambleWords=JSON.parse(raw.replace(/```json|```/g,'').trim());initScrambleGame();saveScrToHistory(level,theme,scrambleWords);addHistory('brain','Scramble: '+level+(theme?' — '+theme:''));}catch(e){showToast('❌ '+e.message);}
+    try{
+      // Use cache for repeated level-based word generation
+      const raw=await callClaude(`Generate exactly 20 vocabulary words for ${level} students${theme?' on theme "'+theme+'"':''}. Return ONLY JSON array with 20 items:\n[{"word":"EXAMPLE","hint":"short clue","meaning":"definition"}]\nNo markdown.`,1200,true);
+      scrambleWords=JSON.parse(raw.replace(/```json|```/g,'').trim());
+      initScrambleGame();saveScrToHistory(level,theme,scrambleWords);addHistory('brain','Scramble: '+level+(theme?' — '+theme:''));
+    }catch(e){showToast('❌ '+e.message);}
     setLoading('scramble-load-btn','scramble-load-icon',false,'🎲');
   }
 }
@@ -1796,7 +2130,7 @@ async function generateFIB(forceRefresh=false){
   const subject=document.getElementById('fib-subject').value;
   setLoading('fib-gen-btn','fib-gen-icon',true,'✨');
   try{
-    const raw=await callClaude(`Generate 8 fill-in-the-blank sentences for ${level} ${subject} students. Return ONLY JSON:\n[{"sentence":"The ___ is the powerhouse of the cell.","answer":"mitochondria","hint":"organelle that produces energy","options":["nucleus","mitochondria","ribosome","vacuole"]}]\n8 items, no markdown.`,1200);
+    const raw=await callClaude(`Generate 8 fill-in-the-blank sentences for ${level} ${subject} students. Return ONLY JSON:\n[{"sentence":"The ___ is the powerhouse of the cell.","answer":"mitochondria","hint":"organelle that produces energy","options":["nucleus","mitochondria","ribosome","vacuole"]}]\n8 items, no markdown.`,1200,true);
     const sentences=JSON.parse(raw.replace(/```json|```/g,'').trim());
     renderFIBSentences(sentences);
     const entry={id:Date.now(),level,subject,count:sentences.length,sentences,date:new Date().toLocaleDateString()};
@@ -2001,7 +2335,7 @@ async function generateTongueTwisters(forceRefresh=false){
   const diff=document.getElementById('tt-diff').value;
   setLoading('tt-gen-btn','tt-gen-icon',true,'👅');
   try{
-    const raw=await callClaude(`Generate exactly 10 ${diff} tongue twisters in English. Return ONLY a JSON array:\n[{"text":"She sells seashells by the seashore.","tip":"Focus on the 'sh' and 's' sounds"}]\n10 items, no markdown.`,1000);
+    const raw=await callClaude(`Generate exactly 10 ${diff} tongue twisters in English. Return ONLY a JSON array:\n[{"text":"She sells seashells by the seashore.","tip":"Focus on the 'sh' and 's' sounds"}]\n10 items, no markdown.`,1000,true);
     ttList=JSON.parse(raw.replace(/```json|```/g,'').trim());
     renderTTList();
     const entry={id:Date.now(),difficulty:diff,twisters:ttList,date:new Date().toLocaleDateString()};
@@ -2072,8 +2406,8 @@ function renderLangPanel(){
     </div>
     <div id="lang-mode-translate" style="display:none;">
       <div class="grid-2" style="margin-bottom:8px;">
-        <div><label>From</label><select id="lang-trans-from" style="margin-bottom:0;font-size:15px;"><option value="English">🇬🇧 English</option><option value="Chinese">🇨🇳 Chinese</option><option value="Japanese">🇯🇵 Japanese</option><option value="French">🇫🇷 French</option><option value="German">🇩🇪 German</option></select></div>
-        <div><label>To</label><select id="lang-trans-to" style="margin-bottom:0;font-size:15px;"><option value="Chinese" ${currentLang==='chinese'?'selected':''}>🇨🇳 Chinese</option><option value="Japanese" ${currentLang==='japanese'?'selected':''}>🇯🇵 Japanese</option><option value="French" ${currentLang==='french'?'selected':''}>🇫🇷 French</option><option value="German" ${currentLang==='german'?'selected':''}>🇩🇪 German</option></select></div>
+        <div><label>From</label><select id="lang-trans-from" style="margin-bottom:0;font-size:15px;"><option value="English">🇬🇧 English</option><option value="Chinese">🇨🇳 Chinese</option><option value="Japanese">🇯🇵 Japanese</option><option value="French">🇫🇷 French</option><option value="German">🇩🇪 German</option><option value="Filipino">🇵🇭 Filipino</option><option value="Malay">🇲🇾 Malay</option><option value="Cantonese">🇭🇰 Cantonese</option></select></div>
+        <div><label>To</label><select id="lang-trans-to" style="margin-bottom:0;font-size:15px;"><option value="Chinese" ${currentLang==='chinese'?'selected':''}>🇨🇳 Chinese</option><option value="Japanese" ${currentLang==='japanese'?'selected':''}>🇯🇵 Japanese</option><option value="French" ${currentLang==='french'?'selected':''}>🇫🇷 French</option><option value="German" ${currentLang==='german'?'selected':''}>🇩🇪 German</option><option value='Filipino' ${currentLang==='filipino'?'selected':''}>🇵🇭 Filipino</option><option value='Malay' ${currentLang==='malay'?'selected':''}>🇲🇾 Malay</option><option value='Cantonese' ${currentLang==='cantonese'?'selected':''}>🇭🇰 Cantonese</option></select></div>
       </div>
       <textarea id="lang-trans-input" placeholder="Enter text (up to 15 lines, 50 words per line)..." rows="5" style="${sess.translateInput?'':''}"></textarea>
       <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
@@ -2213,7 +2547,7 @@ function renderLangPanel(){
           </select></div>
         <div style="display:flex;align-items:flex-end;gap:6px;">
           <button class="btn btn-primary btn-sm" onclick="generatePodcast(false)" id="podcast-gen-btn" style="flex:1;"><span id="podcast-gen-icon">🎧</span> Generate 10 (1 API)</button>
-          <button class="btn btn-secondary btn-sm" onclick="generatePodcast(true)" title="Refresh">🔄</button>
+          <button class="btn btn-secondary btn-sm" onclick="generatePodcast(true)" title="Refresh with API$">🔄 API$</button>
         </div>
       </div>
       <div id="podcast-list" style="margin-bottom:12px;"></div>
@@ -2249,7 +2583,7 @@ function renderLangPanel(){
         </select></div>
         <div style="display:flex;align-items:flex-end;">
           <button class="btn btn-primary" onclick="generateReadAloud(false)" id="ra-gen-btn" style="width:100%;justify-content:center;"><span id="ra-gen-icon">📖</span> Generate 20 <span style="font-size:9px;opacity:.8;">(1 API call)</span></button>
-          <button class="btn btn-secondary btn-sm" onclick="generateReadAloud(true)" title="New API call to refresh" style="width:100%;justify-content:center;font-size:11px;margin-top:5px;">🔄 Refresh with new API call</button>
+          <button class="btn btn-secondary btn-sm" onclick="generateReadAloud(true)" title="New API call to refresh" style="width:100%;justify-content:center;font-size:11px;margin-top:5px;">🔄 Refresh with API$</button>
         </div>
       </div>
       <div id="ra-stories-list" style="margin-bottom:12px;"></div>
@@ -2304,7 +2638,7 @@ async function generateFlashcards(forceRefresh=false){
   setLoading('fc-gen-btn','fc-gen-icon',true,'🃏');
   try{
         const fcPrompt='Create '+count+' vocabulary flashcards for '+level+' students on topic "'+topic+'". Return ONLY JSON array: [{"word":"Apple","meaning":"A round fruit","example":"I eat an apple.","pronunciation":"AP-ul","emoji":"🍎"}] '+count+' items, simple language, no markdown.';
-    const raw=await callClaude(fcPrompt,Math.max(800,count*60));
+    const raw=await callClaude(fcPrompt,Math.max(800,count*60),true);
     fcCards=JSON.parse(raw.replace(/```json|```/g,'').trim());
     fcIdx=0;fcFlipped=false;fcResults={};
     document.getElementById('fc-area').style.display='block';renderFCCard();
@@ -2316,7 +2650,15 @@ async function generateFlashcards(forceRefresh=false){
 function renderFCCard(){
   if(!fcCards.length)return;
   const card=fcCards[fcIdx];fcFlipped=false;
-  const cardEl=document.getElementById('fc-card');if(cardEl)cardEl.style.transform='rotateY(0deg)';
+  const cardEl=document.getElementById('fc-card');
+  if(cardEl){
+    cardEl.style.transition='none';
+    cardEl.style.transform='rotateY(0deg)';
+    cardEl.style.webkitTransform='rotateY(0deg)';
+    cardEl.style.msTransform='rotateY(0deg)';
+    // Re-enable transition after reset
+    setTimeout(()=>{if(cardEl)cardEl.style.transition='transform 0.6s cubic-bezier(.4,0,.2,1)';},50);
+  }
   document.getElementById('fc-idx').textContent=fcIdx+1;
   document.getElementById('fc-total').textContent=fcCards.length;
   document.getElementById('fc-img').textContent=card.emoji||'📖';
@@ -2329,7 +2671,12 @@ function renderFCCard(){
 function flipFC(){
   fcFlipped=!fcFlipped;
   const card=document.getElementById('fc-card');
-  if(card){card.style.transform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';card.style.webkitTransform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';}
+  if(card){
+    const rot=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';
+    card.style.transform=rot;
+    card.style.webkitTransform=rot;
+    card.style.msTransform=rot;
+  }
 }
 function navFC(dir){const next=fcIdx+dir;if(next<0||next>=fcCards.length)return;fcIdx=next;renderFCCard();}
 function speakFC(e){if(e)e.stopPropagation();const card=fcCards[fcIdx];if(!card)return;if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(card.word+'. '+card.example);u.lang='en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
@@ -2353,69 +2700,176 @@ const VOCAB_EMOJI_SETS={
   Weather:{sunny:'☀️',rainy:'🌧️',cloudy:'☁️',windy:'💨',snowy:'❄️',thunderstorm:'⛈️'},
 };
 let vmPairs=[],vmMatched=[],vmSelected=null,vmScore=0,vmAttempts=0;
-async function generateVocabMatch(){
+async function generateVocabMatch(forceRefresh=false){
   const cat=document.getElementById('vm-category').value;
+  const level=document.getElementById('vm-level')?.value||profile.level;
   const diff=document.getElementById('vm-diff').value;
   const count={easy:4,medium:6,hard:8}[diff]||6;
-  // Use local emoji sets — no API needed!
+  // Reset state
+  vmMatched=[];vmSelected=null;window._vmEmojiSel=null;vmScore=0;vmAttempts=0;_vmWordIdx=null;_vmEmojiIdx=null;
+  // Hide old game area
+  const area=document.getElementById('vm-area');if(area)area.style.display='none';
+  const scoreBar=document.getElementById('vm-score-bar');if(scoreBar)scoreBar.style.display='none';
+  // Use local emoji sets for basic categories (no API needed!)
   const emojiSet=VOCAB_EMOJI_SETS[cat];
-  if(emojiSet){
-    const entries=Object.entries(emojiSet).slice(0,count);
-    vmPairs=entries.map(([word,emoji])=>({word,emoji}));
+  if(emojiSet&&!forceRefresh){
+    const entries=Object.entries(emojiSet);
+    // Shuffle and take count
+    const shuffled=[...entries].sort(()=>Math.random()-0.5).slice(0,count);
+    vmPairs=shuffled.map(([word,emoji])=>({word,emoji}));
   } else {
     setLoading('vm-gen-btn','vm-gen-icon',true,'🖼️');
-    try{const vmP='Generate '+count+' '+cat+' vocabulary words for young children (K1-P3). Return ONLY JSON: [{"word":"Apple","emoji":"🍎"}] '+count+' items.';const raw=await callClaude(vmP,400);vmPairs=JSON.parse(raw.replace(/```json|```/g,'').trim());}
+    try{
+      const vmP='Generate exactly '+count+' '+cat+' vocabulary words for '+level+' students. Return ONLY a JSON array (no markdown, no extra text): [{"word":"Apple","emoji":"🍎"}]. Use '+count+' items with appropriate complexity for '+level+'.';
+      const raw=await callClaude(vmP,600);
+      const parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
+      vmPairs=parsed.slice(0,count);
+    }
     catch(e){showToast('❌ '+e.message);setLoading('vm-gen-btn','vm-gen-icon',false,'🖼️');return;}
     setLoading('vm-gen-btn','vm-gen-icon',false,'🖼️');
   }
-  vmMatched=[];vmSelected=null;vmScore=0;vmAttempts=0;
   renderVocabMatch();
 }
 function renderVocabMatch(){
-  const area=document.getElementById('vm-area');area.style.display='block';
-  const words=vmPairs.map(p=>p.word);const emojis=vmPairs.map(p=>p.emoji);
-  const shuffleArr=arr=>{const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-  const sw=shuffleArr(words),se=shuffleArr(emojis);
-  area.innerHTML='<div style="font-weight:800;font-size:13px;margin-bottom:10px;text-align:center;">Match the word to the picture! 🎯</div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
-    +'<div><div style="font-weight:800;font-size:11px;color:var(--text2);margin-bottom:6px;text-align:center;">WORDS</div>'
-    +sw.map(w=>'<div class="vm-item vm-word" id="vmw-'+w+'" data-val="'+w+'" onclick="vmSelectWord(this)" style="background:#f0f4ff;border:2px solid var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;font-weight:800;font-size:14px;margin-bottom:6px;transition:all .2s;">'+escHtml(w)+'</div>').join('')
-    +'</div><div><div style="font-weight:800;font-size:11px;color:var(--text2);margin-bottom:6px;text-align:center;">PICTURES</div>'
-    +se.map(em=>'<div class="vm-item vm-emoji" id="vme-'+encodeURIComponent(em)+'" data-val="'+escHtml(em)+'" onclick="vmSelectEmoji(this)" style="background:#fff8e0;border:2px solid #ffd080;border-radius:10px;padding:12px;text-align:center;cursor:pointer;font-size:2rem;margin-bottom:6px;transition:all .2s;">'+em+'</div>').join('')
-    +'</div></div>'
-    +'<div style="margin-top:10px;text-align:center;" id="vm-status"></div>'
-    +'<div style="background:#e0e8ff;border-radius:50px;height:8px;margin-top:8px;"><div id="vm-prog" style="height:100%;border-radius:50px;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width .4s;width:0%;"></div></div>';
+  const area=document.getElementById('vm-area');
+  area.style.display='block';
+  // Create shuffled index arrays so we match by vmPairs index (no encoding issues)
+  const wordOrder=[...Array(vmPairs.length).keys()].sort(()=>Math.random()-0.5);
+  const emojiOrder=[...Array(vmPairs.length).keys()].sort(()=>Math.random()-0.5);
+  
+  let wordsHtml='';
+  wordOrder.forEach(pairIdx=>{
+    const w=vmPairs[pairIdx].word;
+    wordsHtml+=`<div class="vm-item vm-word" data-idx="${pairIdx}" onclick="vmSelectWord(this)" style="background:#f0f4ff;border:2.5px solid var(--border);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;font-weight:800;font-size:13px;margin-bottom:6px;transition:all .2s;user-select:none;-webkit-tap-highlight-color:transparent;">${escHtml(w)}</div>`;
+  });
+  
+  let emojisHtml='';
+  emojiOrder.forEach(pairIdx=>{
+    const em=vmPairs[pairIdx].emoji;
+    emojisHtml+=`<div class="vm-item vm-emoji" data-idx="${pairIdx}" onclick="vmSelectEmoji(this)" style="background:#fff8e0;border:2.5px solid #ffd080;border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;font-size:2.4rem;line-height:1.2;margin-bottom:6px;transition:all .2s;user-select:none;-webkit-tap-highlight-color:transparent;">${em}</div>`;
+  });
+  
+  area.innerHTML=`
+    <div style="text-align:center;margin-bottom:10px;">
+      <span style="font-weight:900;font-size:14px;">🎯 Match the word to the picture!</span>
+      <div style="font-size:11px;color:var(--text3);margin-top:3px;">Tap a word, then tap its picture</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div>
+        <div style="font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:8px;padding:4px 8px;background:var(--accent);color:#fff;border-radius:50px;">Words</div>
+        ${wordsHtml}
+      </div>
+      <div>
+        <div style="font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:8px;padding:4px 8px;background:var(--accent4);color:#fff;border-radius:50px;">Pictures</div>
+        ${emojisHtml}
+      </div>
+    </div>
+    <div style="margin-top:12px;min-height:36px;text-align:center;font-weight:800;font-size:13px;" id="vm-status"></div>
+  `;
+  
+  // Show score bar
+  const scoreBar=document.getElementById('vm-score-bar');
+  if(scoreBar)scoreBar.style.display='flex';
+  vmUpdateScoreBar();
 }
+
+function vmUpdateScoreBar(){
+  const total=vmPairs.length;
+  const matched=vmMatched.length;
+  const pct=total>0?Math.round(matched/total*100):0;
+  const st=document.getElementById('vm-score-text');if(st)st.textContent=matched+'/'+total+' matched';
+  const at=document.getElementById('vm-attempts-text');if(at)at.textContent=vmAttempts+' attempt'+(vmAttempts!==1?'s':'');
+  const sp=document.getElementById('vm-score-prog');if(sp)sp.style.width=pct+'%';
+}
+
+// Index-based selection — no encoding issues
+let _vmWordIdx=null, _vmEmojiIdx=null;
+
 function vmSelectWord(el){
-  if(el.style.opacity==='0.3')return;
-  document.querySelectorAll('.vm-word').forEach(e=>e.style.borderColor='var(--border)');
-  el.style.borderColor='var(--accent)';vmSelected={type:'word',val:el.dataset.val,el};
-  if(vmSelected&&vmSelected.type==='emoji'||window._vmEmojiSel)vmCheckMatch();
+  if(el.dataset.matched==='1')return;
+  // Deselect all words
+  document.querySelectorAll('.vm-word').forEach(e=>{
+    if(e.dataset.matched!=='1') e.style.borderColor='var(--border)';
+  });
+  el.style.borderColor='var(--accent)';
+  el.style.boxShadow='0 0 0 3px rgba(91,94,244,.25)';
+  _vmWordIdx=parseInt(el.dataset.idx);
+  vmSelected={idx:_vmWordIdx, el};
+  if(_vmEmojiIdx!==null) vmCheckMatch();
 }
+
 function vmSelectEmoji(el){
-  if(el.style.opacity==='0.3')return;
-  document.querySelectorAll('.vm-emoji').forEach(e=>e.style.borderColor='#ffd080');
-  el.style.borderColor='var(--accent)';window._vmEmojiSel={val:el.dataset.val,el};
-  if(vmSelected&&vmSelected.type==='word')vmCheckMatch();
+  if(el.dataset.matched==='1')return;
+  // Deselect all emojis
+  document.querySelectorAll('.vm-emoji').forEach(e=>{
+    if(e.dataset.matched!=='1') e.style.borderColor='#ffd080';
+  });
+  el.style.borderColor='var(--accent)';
+  el.style.boxShadow='0 0 0 3px rgba(91,94,244,.25)';
+  _vmEmojiIdx=parseInt(el.dataset.idx);
+  window._vmEmojiSel={idx:_vmEmojiIdx, el};
+  if(_vmWordIdx!==null) vmCheckMatch();
 }
+
 function vmCheckMatch(){
-  const wordSel=vmSelected;const emojiSel=window._vmEmojiSel;
+  const wordSel=vmSelected;
+  const emojiSel=window._vmEmojiSel;
   if(!wordSel||!emojiSel)return;
-  const pair=vmPairs.find(p=>p.word===wordSel.val&&p.emoji===emojiSel.val);
+  
+  const wordIdx=wordSel.idx;
+  const emojiIdx=emojiSel.idx;
+  
+  // Reset selection state
+  vmSelected=null; window._vmEmojiSel=null;
+  _vmWordIdx=null; _vmEmojiIdx=null;
   vmAttempts++;
-  if(pair){
-    vmMatched.push(wordSel.val);vmScore++;
-    [wordSel.el,emojiSel.el].forEach(el=>{el.style.opacity='0.3';el.style.background='#e6fff3';el.style.borderColor='var(--accent3)';});
-    showToast('✅ Correct! '+wordSel.val+' = '+emojiSel.val,1500);
-    if(window.speechSynthesis){const u=new SpeechSynthesisUtterance(wordSel.val);u.lang='en-GB';u.rate=0.9;window.speechSynthesis.speak(u);}
-    const pct=Math.round(vmMatched.length/vmPairs.length*100);
-    const prog=document.getElementById('vm-prog');if(prog)prog.style.width=pct+'%';
-    if(vmMatched.length===vmPairs.length){document.getElementById('vm-status').innerHTML='🎉 <strong>All matched!</strong> Score: '+vmScore+'/'+vmAttempts+' attempts!';}
+  
+  if(wordIdx===emojiIdx){
+    // CORRECT MATCH — same pair index
+    vmMatched.push(wordIdx);
+    vmScore++;
+    
+    [wordSel.el, emojiSel.el].forEach(el=>{
+      el.style.opacity='0.45';
+      el.style.background='#e6fff3';
+      el.style.borderColor='var(--accent3)';
+      el.style.boxShadow='none';
+      el.style.transform='scale(0.96)';
+      el.dataset.matched='1';
+      el.style.pointerEvents='none';
+    });
+    
+    const word=vmPairs[wordIdx].word;
+    if(window.speechSynthesis){
+      const u=new SpeechSynthesisUtterance(word);
+      u.lang='en-GB';u.rate=0.9;
+      window.speechSynthesis.speak(u);
+    }
+    
+    vmUpdateScoreBar();
+    const status=document.getElementById('vm-status');
+    if(vmMatched.length===vmPairs.length){
+      if(status)status.innerHTML='🎉 <strong>All matched! Well done!</strong><br><button class="btn btn-primary btn-sm" onclick="generateVocabMatch(false)" style="margin-top:8px;">🔄 Play Again</button> <button class="btn btn-secondary btn-sm" onclick="generateVocabMatch(true)" style="margin-top:8px;">🔄 New Words (API$)</button>';
+      showToast('🎉 All matched! Score: '+vmScore+'/'+vmAttempts,3500);
+    } else {
+      if(status)status.innerHTML=`<span style="color:var(--accent3);">✅ ${escHtml(word)} matched!</span> <span style="color:var(--text3);font-size:11px;">${vmMatched.length}/${vmPairs.length} done</span>`;
+    }
   } else {
-    [wordSel.el,emojiSel.el].forEach(el=>{el.style.borderColor='#ff4477';setTimeout(()=>{el.style.borderColor=el.classList.contains('vm-word')?'var(--border)':'#ffd080';},700);});
-    showToast('❌ Try again!',1200);
+    // WRONG MATCH
+    [wordSel.el, emojiSel.el].forEach(el=>{
+      el.style.borderColor='#ff4477';
+      el.style.boxShadow='0 0 0 3px rgba(255,68,119,.2)';
+      el.style.background=el.classList.contains('vm-word')?'#fff0f4':'#fff0e0';
+      setTimeout(()=>{
+        if(el.dataset.matched!=='1'){
+          el.style.borderColor=el.classList.contains('vm-word')?'var(--border)':'#ffd080';
+          el.style.boxShadow='none';
+          el.style.background=el.classList.contains('vm-word')?'#f0f4ff':'#fff8e0';
+        }
+      },700);
+    });
+    showToast('❌ Not quite — try again!',1500);
   }
-  vmSelected=null;window._vmEmojiSel=null;
 }
 
 // ══════════════════════════════════════════════════════════
@@ -2661,16 +3115,32 @@ async function generatePodcast(forceRefresh=false){
 function renderPodcastList(eps){
   podcastEpisodes=eps;
   const list=document.getElementById('podcast-list');if(!list)return;
-  list.innerHTML=eps.map((ep,i)=>'<div class="story-card" id="podcard-'+i+'" onclick="selectPodcast('+i+')">'
-    +'<div class="story-title">🎧 Ep '+(i+1)+': '+escHtml(ep.title||ep.t||'')+'</div>'
-    +'<div class="story-preview">'+escHtml(ep.summary||ep.s||'')+'</div></div>').join('');
+  // Estimate duration: ~130 words per minute speech for intermediate
+  list.innerHTML=eps.map((ep,i)=>{
+    const wordCount=(ep.content||ep.c||'').split(/\s+/).filter(Boolean).length;
+    const durationSec=Math.round(wordCount/2.1); // ~2.1 words/sec at 0.9x speed
+    const durationStr=durationSec>60?Math.floor(durationSec/60)+'m '+(durationSec%60)+'s':durationSec+'s';
+    return '<div class="story-card" id="podcard-'+i+'" onclick="selectPodcast('+i+')">'
+      +'<div class="story-title">🎧 Ep '+(i+1)+': '+escHtml(ep.title||ep.t||'')
+      +'<span style="background:#e8f4ff;color:var(--accent5);border-radius:50px;padding:2px 8px;font-size:10px;font-weight:800;margin-left:8px;">⏱ '+durationStr+'</span>'
+      +'<button class="speak-btn" onclick="event.stopPropagation();playPodcastEp('+i+')" style="margin-left:6px;" title="Play this episode">▶</button></div>'
+      +'<div class="story-preview">'+escHtml(ep.summary||ep.s||'')+'</div></div>';
+  }).join('');
 }
+function playPodcastEp(idx){selectPodcast(idx);setTimeout(()=>playPodcast(),200);}
 function selectPodcast(idx){
   document.querySelectorAll('.story-card').forEach((c,i)=>c.classList.toggle('selected',i===idx));
   const ep=podcastEpisodes[idx];if(!ep)return;currentPodcast=ep;
   const player=document.getElementById('podcast-player');player.style.display='block';
   document.getElementById('podcast-player-title').textContent='🎧 '+escHtml(ep.title||ep.t||'Episode '+(idx+1));
-  const tw=document.getElementById('podcast-transcript-wrap');if(tw){const rawContent=ep.content||ep.c||'';tw.innerHTML=escHtml(rawContent).split('\\n').join('<br>');}  const sp=document.getElementById('podcast-speed');if(sp)sp.addEventListener('input',function(){document.getElementById('podcast-speed-val').textContent=this.value+'x';});
+  const tw=document.getElementById('podcast-transcript-wrap');
+  if(tw){
+    const rawContent=ep.content||ep.c||'';
+    let html=escHtml(rawContent).split('\\n').join('<br>');
+    if(currentLang!=='english'&&ep.translation){html+='<hr style="margin:10px 0;"><div style="font-size:11px;font-weight:800;color:var(--accent5);margin-bottom:5px;">🇬🇧 English:</div>'+escHtml(ep.translation);}
+    tw.innerHTML=html;
+  }
+  const sp=document.getElementById('podcast-speed');if(sp)sp.addEventListener('input',function(){document.getElementById('podcast-speed-val').textContent=this.value+'x';});
   player.scrollIntoView({behavior:'smooth'});
 }
 function playPodcast(){
@@ -2717,7 +3187,7 @@ async function learnLanguage(){
   setLoading('lang-learn-btn','lang-learn-icon',true,cfg.flag);
   const prompt=`You are a ${cfg.name} language teacher for English-speaking students aged 11-16.\nTeach: ${type} about the topic: "${topic}" in ${cfg.name}.\nFormatting: Use # for title, ## for sections. For vocabulary: markdown table with columns: Native|Pronunciation|English.\n${cfg.code==='zh'?'Include Pinyin.':cfg.code==='ja'?'Include Hiragana and Romaji.':'Include pronunciation guides.'}\nInclude 8-10 vocabulary items or 6+ conversation exchanges. Add cultural note at end.`;
   try{
-    const result=await callClaude(prompt,1800);const html=mdToLangHtml(result,cfg.code);
+    const result=await callClaude(prompt,1800,true);const html=mdToLangHtml(result,cfg.code);
     const richEl=document.getElementById('lang-rich-'+currentLang);const rendEl=document.getElementById('lang-rendered-'+currentLang);
     if(richEl)richEl.style.display='block';if(rendEl){rendEl.innerHTML=html;const btn=document.createElement('div');btn.style.cssText='margin-bottom:10px;display:flex;align-items:center;gap:8px;';btn.innerHTML=`<button class="btn btn-secondary btn-sm" onclick="speakText('${topic.replace(/'/g,"\\'")}','${cfg.code}')">🔊 Hear topic</button><span style="font-size:10px;color:var(--text3);">Tap 🔊 on any row</span>`;rendEl.insertBefore(btn,rendEl.firstChild);}
     const sess=langSessions[currentLang]||{};sess.rawResult=result;sess.topic=topic;sess.type=type;langSessions[currentLang]=sess;ls_set(KEYS.langSess,JSON.stringify(langSessions));
@@ -2740,15 +3210,15 @@ function mdToLangHtml(md,langCode){
   return '<div class="lang-rich-rendered">'+h+'</div>';
 }
 // TTS
-function speakText(text,lang){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE'};u.lang=map[lang]||'en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
-function speakBtn(btn,text,langCode){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}if(btn.classList.contains('speaking')){window.speechSynthesis.cancel();btn.classList.remove('speaking');btn.textContent='🔊';return;}document.querySelectorAll('.speak-btn.speaking').forEach(b=>{b.classList.remove('speaking');b.textContent='🔊';});btn.classList.add('speaking');btn.textContent='⏹';const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE'};u.lang=map[langCode]||'en-GB';u.rate=0.8;u.onend=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};u.onerror=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};window.speechSynthesis.speak(u);}
+function speakText(text,lang){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[lang]||'en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
+function speakBtn(btn,text,langCode){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}if(btn.classList.contains('speaking')){window.speechSynthesis.cancel();btn.classList.remove('speaking');btn.textContent='🔊';return;}document.querySelectorAll('.speak-btn.speaking').forEach(b=>{b.classList.remove('speaking');b.textContent='🔊';});btn.classList.add('speaking');btn.textContent='⏹';const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[langCode]||'en-GB';u.rate=0.8;u.onend=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};u.onerror=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};window.speechSynthesis.speak(u);}
 // Lang History
-function loadLangHistory(){const r=ls_get(KEYS.langHist);if(r)try{langHistory=Object.assign({chinese:[],japanese:[],french:[],german:[]},JSON.parse(r));}catch(e){}}
+function loadLangHistory(){const r=ls_get(KEYS.langHist);if(r)try{langHistory=Object.assign({chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},JSON.parse(r));}catch(e){}}
 function saveLangHistEntry(lang,topic,type,rawResult){if(!langHistory[lang])langHistory[lang]=[];const entry={id:Date.now(),topic,type,rawResult:rawResult.slice(0,2000),date:new Date().toLocaleDateString()};langHistory[lang].unshift(entry);if(langHistory[lang].length>5)langHistory[lang]=langHistory[lang].slice(0,5);ls_set(KEYS.langHist,JSON.stringify(langHistory));}
 function deleteLangHistItem(lang,id){if(!langHistory[lang])return;langHistory[lang]=langHistory[lang].filter(e=>e.id!==id);ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Removed');}
 function clearAllLangHistory(lang){if(!confirm('Clear all sessions for this language?'))return;langHistory[lang]=[];ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Cleared');}
 function recallLangHistory(lang,id){const e=(langHistory[lang]||[]).find(x=>x.id===id);if(!e)return;const cfg=LANG_CONFIG[lang];const rich=document.getElementById('lang-rich-'+lang);const rend=document.getElementById('lang-rendered-'+lang);if(rich)rich.style.display='block';if(rend)rend.innerHTML=mdToLangHtml(e.rawResult,cfg.code);showToast('📖 Loaded: '+e.topic);}
-function loadLangSessions(){const r=ls_get(KEYS.langSess);if(r)try{langSessions=Object.assign({chinese:{},japanese:{},french:{},german:{}},JSON.parse(r));}catch(e){}}
+function loadLangSessions(){const r=ls_get(KEYS.langSess);if(r)try{langSessions=Object.assign({chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},JSON.parse(r));}catch(e){}}
 // Translate
 function loadTransHistory(){const r=ls_get(KEYS.transHist);if(r)try{transHistory=JSON.parse(r);}catch(e){}renderTransHistoryList();}
 function saveTransHistory(from,to,input,result){
@@ -2899,6 +3369,48 @@ function stopNarration(){if(window.speechSynthesis)window.speechSynthesis.cancel
 // ══════════════════════════════════════════════
 // EXPLAIN IT
 // ══════════════════════════════════════════════
+function speakExplainContent(){
+  const renderedEl=document.getElementById('explain-rendered');
+  if(!renderedEl){showToast('⚠️ Explain a topic first');return;}
+  const text=renderedEl.textContent||renderedEl.innerText||'';
+  if(!text.trim()){showToast('⚠️ No content to speak');return;}
+  if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}
+  window.speechSynthesis.cancel();
+  const btn=document.getElementById('explain-speak-btn');
+  const u=new SpeechSynthesisUtterance(text.slice(0,3000));
+  u.lang='en-GB';u.rate=0.9;
+  if(btn){btn.textContent='⏹';btn.style.background='linear-gradient(135deg,#00c96b,#43e97b)';}
+  u.onend=()=>{if(btn){btn.textContent='🔊';btn.style.background='';}};
+  u.onerror=()=>{if(btn){btn.textContent='🔊';btn.style.background='';}};
+  window.speechSynthesis.speak(u);
+}
+function stopExplainSpeech(){
+  window.speechSynthesis.cancel();
+  const btn=document.getElementById('explain-speak-btn');
+  if(btn){btn.textContent='🔊';btn.style.background='';}
+}
+function reviewQuizAnswers(){
+  const area=document.getElementById('quiz-review-area');
+  if(!area)return;
+  const isOpen=area.style.display==='block';
+  area.style.display=isOpen?'none':'block';
+  const btn=document.getElementById('quiz-review-btn');
+  if(btn)btn.textContent=isOpen?'📋 Review Answers':'📋 Hide Review';
+  if(!isOpen&&quizData.length){
+    area.innerHTML='<div style="font-weight:800;font-size:13px;margin-bottom:10px;color:var(--text2);">📋 Question Review</div>'
+      +quizData.map((q,i)=>{
+        const wasAnswered=document.getElementById('qfeed-'+i);
+        const feedText=wasAnswered?wasAnswered.textContent:'Not answered';
+        const correct=feedText.startsWith('✅');
+        const bg=correct?'#e6fff3':'#fff0f4';const border=correct?'#80e0b0':'#ffaacc';
+        return '<div style="background:'+bg+';border:1.5px solid '+border+';border-radius:10px;padding:12px;margin-bottom:8px;">'
+          +'<div style="font-weight:800;font-size:13px;margin-bottom:5px;">Q'+(i+1)+'. '+escHtml(q.q)+'</div>'
+          +'<div style="font-size:12px;font-weight:700;color:var(--accent3);">✅ Answer: '+escHtml(q.answer)+'</div>'
+          +'<div style="font-size:12px;color:var(--text2);margin-top:4px;">'+escHtml(q.explanation)+'</div>'
+          +'</div>';
+      }).join('');
+  }
+}
 function resetExplain(){document.getElementById('explain-topic').value='';document.getElementById('explain-rich').style.display='none';document.getElementById('explain-rendered').innerHTML='';document.getElementById('explain-image-row').innerHTML='';document.getElementById('explain-image-row').style.display='none';document.getElementById('explain-youtube').style.display='none';document.getElementById('explain-svg-wrap').style.display='none';document.getElementById('explain-svg-wrap').innerHTML='';showToast('🔄 Ready for new topic!');}
 function buildYTLinks(topic,level){return[topic+' explained for students',topic+' '+level+' lesson',topic+' easy explanation animation'].map(q=>({label:q,url:'https://www.youtube.com/results?search_query='+encodeURIComponent(q)}));}
 async function fetchExplainImages(topic){return['education','learning','school'].map((kw,i)=>({url:`https://source.unsplash.com/440x260/?${encodeURIComponent(topic)},${kw}&sig=${i}`}));}
@@ -2913,7 +3425,7 @@ async function explainTopic(){
   setLoading('explain-btn','explain-icon',true,'💡');
   const prompt=`You are an enthusiastic teacher explaining "${topic}" to a ${level} student.\nExplain in a ${style} way using rich Markdown.\nStructure: # [Title with emoji]\n## What is it?\n## Why does it matter?\n## Key Terms\n## Examples\n## Quick Summary\nUse **bold** for key terms, bullet lists, tables where helpful. End with a fun fact.`;
   try{
-    const [result, svgResult]=await Promise.all([callClaude(prompt,1800),generateSvgDiagram(topic,level)]);
+    const [result, svgResult]=await Promise.all([callClaude(prompt,1800,true),generateSvgDiagram(topic,level)]);
     const renderedHtml=mdToHtml(result);
     document.getElementById('explain-rendered').innerHTML=renderedHtml;
     const svgWrap=document.getElementById('explain-svg-wrap');
@@ -3594,6 +4106,7 @@ async function generateEffortPlan(){
   // Time breakdown pie-like bar
   html+='<div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:14px;">';
   html+='<div style="font-weight:800;font-size:12px;margin-bottom:8px;color:var(--text2);">⏱ Your 24-Hour Day Breakdown</div>';
+  const busyHrs=sleepHrs+mealHrs+schoolHrs+ccaHrs+leisureHrs;
   const timeItems=[
     {label:'Sleep',hrs:sleepHrs,color:'#6644cc'},
     {label:'School',hrs:schoolHrs,color:'#0066cc'},
@@ -3719,7 +4232,7 @@ function addEffortPlanToCalendar(){
 // ══════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded',function(){
   initGate();
-  loadApiKey();loadProfile();
+  loadApiKey();loadProfile();loadTokenStats();
   loadExplainHistory();loadQuizHistory();loadPlanTasks();
   loadSpellWords();loadSpellHistory();
   loadScrWords();loadScrHistory();
@@ -3730,6 +4243,7 @@ window.addEventListener('DOMContentLoaded',function(){
   renderLangPanel();renderExplainHistoryList();
   document.getElementById('profile-modal').addEventListener('click',function(e){if(e.target===this)closeProfile();});
   document.addEventListener('click',function(e){const p=document.getElementById('api-panel');const b=document.getElementById('api-toggle-btn');if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');});
+  initSynonymCategoryListener();
 });
 </script>
 </body>

@@ -64,10 +64,10 @@ Languages: 🇨🇳 Mandarin · 🇯🇵 Japanese · 🇫🇷 French · 🇩🇪
 ## 🚀 Getting Started
 
 ### 1. Open the App
-Visit **https://mcylle.github.io/mystudybuddy** in **Safari** (iPhone/iPad) or **Chrome** (Android/Desktop).
+Visit **https://cylcm.github.io/mystudybuddy** in **Safari** (iPhone/iPad) or **Chrome** (Android/Desktop).
 
 ### 2. Enter Access Code
-On first visit, enter the access code to unlock the app. Contact **mcylle@gmail.com** for the code.
+On first visit, enter the access code to unlock the app. Contact **me** for the code.
 
 ### 3. Set Up Profile
 Tap ⚙️ (top-right) to set:
@@ -116,7 +116,7 @@ Safari → Share → **Add to Home Screen** → works like a native app!
 - API key never leaves your device
 - No accounts, no tracking, no ads
 - Access code is XOR-encrypted in the source code
-- Contact **mcylle@gmail.com** for access code or support
+- Contact **me** for access code or support
 
 ---
 
@@ -124,11 +124,11 @@ Safari → Share → **Add to Home Screen** → works like a native app!
 
 When a new version of `index.html` is available:
 1. Download the new `index.html`
-2. Go to **github.com/mcylle/mystudybuddy**
+2. Go to **github.com/cylcm/mystudybuddy**
 3. Click `index.html` → click ✏️ edit icon → **Upload new file**
 4. Or drag-and-drop the new file → **Commit changes**
-5. Wait 2–3 minutes → live at **mcylle.github.io/mystudybuddy**
+5. Wait 2–3 minutes → live at **cylcm.github.io/mystudybuddy**
 
 ---
 
-*Built with ❤️ for Singapore students · Powered by Claude AI*
+*Built with ❤️ for students · Powered by Claude AI*

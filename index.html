@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
-<title>MyStudyBuddy</title>
+<title>MyStudyBuddy v5.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:600px;hei
 #profile-icon-btn{position:fixed;top:10px;right:86px;z-index:1100;background:#fff;border:2px solid var(--border);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;box-shadow:0 3px 10px rgba(91,94,244,.2);touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 
 /* ─── ACTIVATION GATE ─── */
-#activation-gate{position:fixed;inset:0;background:linear-gradient(135deg,#5b5ef4,#ff4d8d);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+#activation-gate{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#5b5ef4,#ff4d8d);z-index:9999;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;padding:20px;}
 .gate-card{background:#fff;border-radius:24px;padding:32px 28px;width:100%;max-width:380px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);}
 .gate-card h1{font-size:1.8rem;font-weight:900;margin-bottom:6px;background:linear-gradient(135deg,#5b5ef4,#ff4d8d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .gate-card p{color:#666;font-size:14px;margin-bottom:20px;}
@@ -171,7 +171,8 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
 /* ─── BRAIN TEASER ─── */
 .sudoku-grid{display:grid;grid-template-columns:repeat(9,1fr);gap:1px;background:#333;border:3px solid #333;border-radius:6px;overflow:hidden;max-width:340px;margin:0 auto;}
-.sudoku-cell{background:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,3vw,16px);font-weight:700;cursor:pointer;border:none;font-family:'Space Mono',monospace;transition:background .15s;-webkit-tap-highlight-color:transparent;min-width:0;}
+.sudoku-cell{min-height:30px;}
+.sudoku-cell{background:#fff;width:100%;padding-bottom:0;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,3vw,16px);font-weight:700;cursor:pointer;border:none;font-family:'Space Mono',monospace;transition:background .15s;-webkit-tap-highlight-color:transparent;min-width:0;}
 .sudoku-cell:nth-child(3n){border-right:2px solid #555;}
 .sudoku-cell:nth-child(9n){border-right:none;}
 .sudoku-row-break{border-bottom:2px solid #555;}
@@ -397,7 +398,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 <div class="wrapper">
   <div class="header">
     <h1>📚 MyStudyBuddy</h1>
-    <p>Smart study companion on the GO 🚀</p>
+    <p>Smart study companion on the GO 🚀 <span style="font-size:10px;background:rgba(91,94,244,.15);color:var(--accent);padding:2px 8px;border-radius:50px;font-weight:800;">v5.0 · 2026-05-24 07:01</span></p>
     <div class="header-profile">
       <span id="header-avatar" style="font-size:1.3rem;"></span>
       <span id="header-name" style="font-weight:800;font-size:13px;color:var(--text2);"></span>
@@ -621,8 +622,8 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <button class="btn btn-secondary btn-sm" onclick="navFC(1)">▶</button>
             </div>
           </div>
-          <div id="fc-card-wrap" style="perspective:800px;cursor:pointer;" onclick="flipFC()">
-            <div id="fc-card" style="position:relative;min-height:200px;transition:transform 0.5s;transform-style:preserve-3d;border-radius:16px;">
+          <div id="fc-card-wrap" style="-webkit-perspective:800px;perspective:800px;cursor:pointer;" onclick="flipFC()">
+            <div id="fc-card" style="position:relative;min-height:200px;transition:transform 0.5s;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;border-radius:16px;">
               <div id="fc-front" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(135deg,#f0f4ff,#e8eeff);border:2px solid var(--border);border-radius:16px;padding:20px;text-align:center;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;">
                 <div id="fc-img" style="font-size:4rem;"></div>
                 <div id="fc-word" style="font-size:1.6rem;font-weight:900;color:var(--accent);"></div>
@@ -682,6 +683,8 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       </div>
     </div>
   </div>
+
+  </div><!-- /panel-grammar -->
 
   <!-- ═══════════ BRAIN TEASER HUB ═══════════ -->
   <div id="panel-brain" class="panel">
@@ -1209,6 +1212,13 @@ let profile={name:'',level:'Secondary 1',avatar:'🧑',subjects:[]};
 let globalStats={quizTotal:0,quizCorrect:0,scrambleTotal:0,scrambleCorrect:0};
 let activityHistory=[];
 
+// ── New feature state (hoisted so renderLangPanel can access them) ──
+let fcCards=[],fcIdx=0,fcFlipped=false,fcResults={},fcHistory=[];
+let convoHistory=[],convoRecordings=[],convoMediaRec=null;
+let cultureNotes={};
+let pronHistory=[],pronSR=null;
+let podcastEpisodes=[],podcastHistory=[],currentPodcast=null;
+
 // Quiz
 let quizData=[],quizCurrent=0,quizScore=0,quizAnswered=0,quizHistoryStore=[];
 // Scramble
@@ -1340,8 +1350,10 @@ function checkGate(){
   else{document.getElementById('gate-error').style.display='block';document.getElementById('gate-input').value='';}
 }
 function initGate(){
-  if(ls_get(KEYS.activated)==='1'){document.getElementById('activation-gate').style.display='none';}
-  else{document.getElementById('activation-gate').style.display='flex';}
+  let activated=false;
+  try{activated=localStorage.getItem(KEYS.activated)==='1';}catch(e){}
+  const gate=document.getElementById('activation-gate');
+  if(gate){gate.style.display=activated?'none':'flex';}
 }
 
 // ── API Key ──
@@ -2261,7 +2273,6 @@ function renderLangPanel(){
 // ══════════════════════════════════════════════════════════
 // FLASHCARDS (Item 1) — K1–Secondary, with images+pronunciation
 // ══════════════════════════════════════════════════════════
-let fcCards=[],fcIdx=0,fcFlipped=false,fcResults={},fcHistory=[];
 const FC_HIST_KEY='sb_fc';
 
 function loadFCHistory(){const r=ls_get(FC_HIST_KEY);if(r)try{fcHistory=JSON.parse(r);}catch(e){}renderFCHistoryList();}
@@ -2318,7 +2329,7 @@ function renderFCCard(){
 function flipFC(){
   fcFlipped=!fcFlipped;
   const card=document.getElementById('fc-card');
-  if(card)card.style.transform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';
+  if(card){card.style.transform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';card.style.webkitTransform=fcFlipped?'rotateY(180deg)':'rotateY(0deg)';}
 }
 function navFC(dir){const next=fcIdx+dir;if(next<0||next>=fcCards.length)return;fcIdx=next;renderFCCard();}
 function speakFC(e){if(e)e.stopPropagation();const card=fcCards[fcIdx];if(!card)return;if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(card.word+'. '+card.example);u.lang='en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
@@ -2412,7 +2423,6 @@ function vmCheckMatch(){
 // ══════════════════════════════════════════════════════════
 
 // ── CONVERSATION PRACTICE (Item 3) ──
-let convoHistory=[],convoRecordings=[],convoMediaRec=null;
 const CONVO_HIST_KEY='sb_cvh';
 function loadConvoHistory(){const r=ls_get(CONVO_HIST_KEY);if(r)try{convoHistory=JSON.parse(r);}catch(e){}renderConvoHistoryList();}
 function saveConvoEntry(entry){
@@ -2490,7 +2500,6 @@ function renderConvoRecordings(){
 function deleteConvoRec(idx){URL.revokeObjectURL(convoRecordings[idx].url);convoRecordings.splice(idx,1);renderConvoRecordings();}
 
 // ── CULTURAL NOTES (Item 4) ──
-let cultureNotes={};
 const CULTURE_KEY='sb_cult';
 function loadCultureNotes(){const r=ls_get(CULTURE_KEY);if(r)try{cultureNotes=JSON.parse(r);}catch(e){}renderCultureNotesList();}
 function saveCultureNote(){
@@ -2542,7 +2551,6 @@ async function generateCultureNote(forceRefresh=false){
 }
 
 // ── PRONUNCIATION PRACTICE (Item 5) ──
-let pronHistory=[],pronSR=null;
 const PRON_KEY='sb_pron';
 const PRON_PHRASES={zh:['你好','谢谢你','再见','我爱你'],ja:['こんにちは','ありがとう','さようなら','おはよう'],fr:['Bonjour','Merci beaucoup','Au revoir','Comment allez-vous?'],de:['Guten Morgen','Danke schön','Auf Wiedersehen','Wie geht es Ihnen?']};
 function loadPronHistory(){const r=ls_get(PRON_KEY);if(r)try{pronHistory=JSON.parse(r);}catch(e){}renderPronHistoryList();}
@@ -2615,7 +2623,6 @@ async function getPronFeedback(){
 }
 
 // ── MINI PODCAST (Item 6) ──
-let podcastEpisodes=[],podcastHistory=[],currentPodcast=null;
 const PODCAST_KEY='sb_pod';
 function loadPodcastHistory(){const r=ls_get(PODCAST_KEY);if(r)try{podcastHistory=JSON.parse(r);}catch(e){}renderPodcastHistoryList();}
 function savePodcastEntry(entry){

@@ -3,7 +3,7 @@
 **Smart Study Companion on the GO 🚀**  
 An AI-powered, single-file study app for Singapore students from Kinder 1 to Secondary 5.
 
-🌐 **Live App:** https://mcylle.github.io/mystudybuddy
+🌐 **Live App:** https://cylcm.github.io/mystudybuddy
 
 ---
 

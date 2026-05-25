@@ -554,20 +554,20 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
   <!-- TABS ROW 1 -->
   <div class="tabs-row1">
-    <button class="tab-btn active" onclick="switchTab('quiz',this)">🧠 Smart Quiz</button>
-    <button class="tab-btn" onclick="switchTab('grammar',this)">🪄 Word Wizards</button>
-    <button class="tab-btn" onclick="switchTab('brain',this)">🧩 Brain Teaser Hub</button>
-    <button class="tab-btn" onclick="switchTab('language',this)">🈳 Language Corner</button>
-    <button class="tab-btn" onclick="switchTab('explain',this)">💡 Explain It</button>
+    <button class="tab-btn active" data-tab="quiz" onclick="switchTab('quiz',this)">🧠 Smart Quiz</button>
+    <button class="tab-btn" data-tab="grammar" onclick="switchTab('grammar',this)">🪄 Word Wizards</button>
+    <button class="tab-btn" data-tab="brain" onclick="switchTab('brain',this)">🧩 Brain Teaser Hub</button>
+    <button class="tab-btn" data-tab="language" onclick="switchTab('language',this)">🈳 Language Corner</button>
+    <button class="tab-btn" data-tab="explain" onclick="switchTab('explain',this)">💡 Explain It</button>
   </div>
   <!-- TABS ROW 2 -->
   <div class="tabs-row2">
-    <button class="tab-btn" onclick="switchTab('plan',this)">📅 Study Plan</button>
-    <button class="tab-btn" onclick="switchTab('scores',this)">📊 My Scores</button>
+    <button class="tab-btn" data-tab="plan" onclick="switchTab('plan',this)">📅 Study Plan</button>
+    <button class="tab-btn" data-tab="scores" onclick="switchTab('scores',this)">📊 My Scores</button>
   </div>
 
   <!-- ═══════════ SMART QUIZ ═══════════ -->
-  <div id="panel-quiz" class="panel active">
+  <div id="panel-quiz" class="panel">
     <div class="card">
       <h2>🧠 Smart Quiz Generator</h2>
       <!-- Syllabus indicator -->
@@ -6007,7 +6007,7 @@ const DataLoader = (() => {
       if (!isPreview && !is404) {
         logError('DataLoader:' + pack, fetchErr);
       } else {
-        console.info('[DataLoader] ' + pack + ' pack not found — using built-in defaults.');
+        console.log('[DataLoader] ' + pack + ' pack not found — using built-in defaults.');
       }
       return null;  // callers use inline DEFAULT_* constants
     }
@@ -6024,7 +6024,7 @@ const DataLoader = (() => {
       || location.origin.startsWith('blob:')
       || location.origin === 'null';
     if (isPreview) {
-      console.info('[DataLoader] Preview origin — skipping pack prewarm, using built-in defaults.');
+      console.log('[DataLoader] Preview origin — skipping pack prewarm, using built-in defaults.');
       return;
     }
     setTimeout(() => {
@@ -6313,6 +6313,9 @@ window.addEventListener('DOMContentLoaded',function(){
   });
   // OPT: Invalidate lang panel cache when data packs load (cats may change)
   AppEvents.on('pack:loaded',()=>{ _langPanelBuilt=false; });
+  // Activate default tab — seeds _currentTabName so first switch-away works correctly
+  const _defaultTabBtn = document.querySelector('.tab-btn[data-tab="quiz"]');
+  switchTab('quiz', _defaultTabBtn);
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
   // Award daily bonus XP on first activity of the day
   rewardDailyBonus();
@@ -6360,7 +6363,7 @@ window.addEventListener('DOMContentLoaded',function(){
         .catch(err => console.warn('[SW] Registration failed:', err));
     });
   } else {
-    console.info('[SW] Skipped — preview/local environment detected.');
+    console.log('[SW] Skipped — preview/local environment detected.');
   }
 
   // ── Offline / Online detection ──

@@ -13,7 +13,10 @@ const CACHE_NAME = 'studybuddy-v5.2';
 const PRECACHE_URLS = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './data/quiz-pack.json',
+  './data/vocab-pack.json',
+  './data/language-pack.json'
 ];
 
 // External origins that should always go network-only.

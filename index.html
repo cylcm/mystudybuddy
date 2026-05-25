@@ -1629,7 +1629,20 @@ const LANG_CATEGORIES={
 // SECTION: Utilities
 // Shared helpers used across all modules.
 // escHtml, showToast, ls_get/set/del, setLoading.
+// getSubjectMap() — sync accessor for subject data.
 // ══════════════════════════════════════════════
+
+// Synchronous subject map accessor.
+// Uses localStorage-cached pack if available, otherwise inline DEFAULT_SUBJECTS.
+// DataLoader.prewarm() runs 1.5s after startup so the cache is usually warm.
+function getSubjectMap() {
+  try {
+    const stored = ls_get('sb_pack_quiz');
+    if (stored) { const p = JSON.parse(stored); if (p && p.subjects) return p.subjects; }
+  } catch(e) {}
+  return DEFAULT_SUBJECTS;
+}
+
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showToast(msg,dur=CONFIG.TOAST_MS){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
 function ls_get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
@@ -1761,6 +1774,30 @@ function updateProfileTokenCard(){
 // ══════════════════════════════════════════════
 
 // Shared system prompt cached across calls (cache_control="ephemeral" reuses prefix)
+// getLangConfig() — returns LANG_CONFIG enhanced with pack data if available
+function getLangConfig() {
+  try {
+    const stored = ls_get('sb_pack_lang');
+    if (stored) {
+      const p = JSON.parse(stored);
+      if (p && p.languages) return p.languages;
+    }
+  } catch(e) {}
+  return LANG_CONFIG;
+}
+
+// getLangCategories() — returns LANG_CATEGORIES enhanced with pack data if available
+function getLangCategories() {
+  try {
+    const stored = ls_get('sb_pack_lang');
+    if (stored) {
+      const p = JSON.parse(stored);
+      if (p && p.categories) return p.categories;
+    }
+  } catch(e) {}
+  return LANG_CATEGORIES;
+}
+
 const CACHED_SYSTEM_PROMPT = `You are MyStudyBuddy AI — an expert educational assistant for students from Kinder 1 through Secondary 5. You produce clear, age-appropriate, encouraging responses. Always return valid JSON when asked. Never add markdown fences unless the format explicitly requires it.`;
 
 // Main API call — supports cache_control for expensive repeated context
@@ -1934,8 +1971,10 @@ function levelOptsFromProfile(selectedOverride){
   return ALL_LEVELS.slice(startIdx).map(l=>`<option value="${l}"${l===selected?' selected':''}>${l}</option>`).join('');
 }
 
-function populateSubjectDropdowns(){
-  const subjects=profile.subjects.length>0?profile.subjects:(DEFAULT_SUBJECTS[profile.level]||DEFAULT_SUBJECTS['Primary 1']);
+async function populateSubjectDropdowns(){
+  const pack = await DataLoader.quiz();
+  const subjectMap = (pack && pack.subjects) ? pack.subjects : DEFAULT_SUBJECTS;
+  const subjects=profile.subjects.length>0?profile.subjects:(subjectMap[profile.level]||subjectMap['Primary 1']);
   const opts=subjects.map(s=>`<option value="${escHtml(s)}">${escHtml(s)}</option>`).join('');
   ['quiz-subject','fib-subject'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
   // Level dropdowns — default to profile level, allow higher levels only
@@ -2088,7 +2127,7 @@ function renderSyllabusList(){
   `).join('');
 }
 function populateSyllabusSubjectSels(){
-  const subjects=Object.keys(DEFAULT_SUBJECTS||{}).reduce((a,lv)=>a.concat(DEFAULT_SUBJECTS[lv]),[]);
+  const subjects=Object.keys(getSubjectMap()||{}).reduce((a,lv)=>a.concat(getSubjectMap()[lv]),[]);
   const uniqueSubjs=[...new Set(subjects)].sort();
   ['syllabus-subject-sel','syllabus-paste-subject'].forEach(id=>{
     const sel=document.getElementById(id);if(!sel)return;
@@ -2857,6 +2896,14 @@ function checkSudoku(){
 
 // ── Tongue Twisters ──
 function loadTTHistory(){const r=ls_get(KEYS.ttHist);if(r)try{ttHistory=JSON.parse(r);}catch(e){}renderTTHistoryList();}
+// enrichTTFromPack — upgrades ttList with the extended pack after it loads
+async function enrichTTFromPack(){
+  const pack = await DataLoader.vocab();
+  if(pack && pack.tongueTwisters && pack.tongueTwisters.length > DEFAULT_TT_DATA.length){
+    ttList = pack.tongueTwisters;
+    if(document.getElementById('tt-list')) renderTTList();
+  }
+}
 function saveTTHistory(entry){
   // Optimize: trim twister text to save space
   const slim={id:entry.id,difficulty:entry.difficulty,date:entry.date,
@@ -2916,12 +2963,12 @@ function speakTT(rate){
 // ══════════════════════════════════════════════
 function buildLangTabs(){
   const container=document.getElementById('lang-tabs-container');if(!container)return;
-  container.innerHTML=Object.entries(LANG_CONFIG).map(([key,cfg])=>`<button class="lang-tab${key===currentLang?' active':''}" id="ltab-${key}" onclick="switchLang('${key}')">${cfg.flag} ${cfg.name.split(' ')[0]}</button>`).join('');
+  container.innerHTML=Object.entries(getLangConfig()).map(([key,cfg])=>`<button class="lang-tab${key===currentLang?' active':''}" id="ltab-${key}" onclick="switchLang('${key}')">${cfg.flag} ${cfg.name.split(' ')[0]}</button>`).join('');
 }
 function switchLang(lang){currentLang=lang;buildLangTabs();renderLangPanel();}
 function renderLangPanel(){
   buildLangTabs();
-  const cfg=LANG_CONFIG[currentLang];const cats=LANG_CATEGORIES[currentLang]||[];
+  const cfg=getLangConfig()[currentLang]||LANG_CONFIG[currentLang];const cats=getLangCategories()[currentLang]||LANG_CATEGORIES[currentLang]||[];
   const sess=langSessions[currentLang]||{};const area=document.getElementById('lang-panel-area');if(!area)return;
   const langHistHtml=buildLangHistHtml(currentLang);
   area.innerHTML=`
@@ -3269,7 +3316,10 @@ async function generateVocabMatch(forceRefresh=false){
   const area=document.getElementById('vm-area');if(area)area.style.display='none';
   const scoreBar=document.getElementById('vm-score-bar');if(scoreBar)scoreBar.style.display='none';
   // Use local emoji sets for basic categories (no API needed!)
-  const emojiSet=VOCAB_EMOJI_SETS[cat];
+  // Load vocab-pack lazily; fall back to inline VOCAB_EMOJI_SETS
+  const vocabPack = await DataLoader.vocab('vm-area');
+  const emojiSets = (vocabPack && vocabPack.emojiSets) ? vocabPack.emojiSets : VOCAB_EMOJI_SETS;
+  const emojiSet=emojiSets[cat];
   if(emojiSet&&!forceRefresh){
     const entries=Object.entries(emojiSet);
     // Shuffle and take count
@@ -5019,6 +5069,121 @@ function addEffortPlanToCalendar(){
 //   EMIT  events via AppEvents.emit('event', data)
 //   TRACK rewards via App.rewards.addTokenUsage()
 // ══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: DataLoader — Lazy content pack loader  (→ App.data)
+//
+// Loads quiz-pack.json / vocab-pack.json / language-pack.json
+// on first use, caches in memory + localStorage for offline.
+//
+// Strategy:
+//   1. Return in-memory cache immediately if available.
+//   2. Try fetch from ./data/<pack>.json → store in memory + ls.
+//   3. If fetch fails → restore from localStorage.
+//   4. If localStorage also empty → callers use inline defaults.
+//
+// Usage:
+//   const pack = await DataLoader.quiz();
+//   const pack = await DataLoader.vocab();
+//   const pack = await DataLoader.language();
+// ═══════════════════════════════════════════════════════════════
+const DataLoader = (() => {
+
+  const _mem = {};
+
+  const LS_KEYS = {
+    quiz:     'sb_pack_quiz',
+    vocab:    'sb_pack_vocab',
+    language: 'sb_pack_lang',
+  };
+
+  const PACK_URLS = {
+    quiz:     './data/quiz-pack.json',
+    vocab:    './data/vocab-pack.json',
+    language: './data/language-pack.json',
+  };
+
+  const PACK_VERSION = '1.0';
+  const LS_VERSION_KEY = 'sb_pack_ver';
+
+  // Show shimmer skeleton over a container while loading
+  function _showSkeleton(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const sk = document.createElement('div');
+    sk.className = '_data-skeleton';
+    sk.setAttribute('aria-hidden','true');
+    sk.style.cssText = 'position:absolute;inset:0;z-index:10;border-radius:inherit;background:linear-gradient(90deg,#e8eeff 25%,#f0f4ff 50%,#e8eeff 75%);background-size:200% 100%;animation:_sk-shimmer 1.2s ease infinite;pointer-events:none;';
+    el.style.position = 'relative';
+    el.appendChild(sk);
+    return sk;
+  }
+
+  function _hideSkeleton(sk) {
+    if (sk && sk.parentNode) sk.parentNode.removeChild(sk);
+  }
+
+  async function _load(pack) {
+    if (_mem[pack]) return _mem[pack];
+
+    // Invalidate localStorage cache on version bump
+    if (ls_get(LS_VERSION_KEY) !== PACK_VERSION) {
+      Object.values(LS_KEYS).forEach(k => ls_del(k));
+      ls_set(LS_VERSION_KEY, PACK_VERSION);
+    }
+
+    // Try network
+    try {
+      const res = await fetch(PACK_URLS[pack], { cache: 'no-cache' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      _mem[pack] = data;
+      ls_set(LS_KEYS[pack], JSON.stringify(data));
+      return data;
+    } catch(fetchErr) {
+      // Fallback: localStorage
+      const stored = ls_get(LS_KEYS[pack]);
+      if (stored) {
+        try {
+          const data = JSON.parse(stored);
+          _mem[pack] = data;
+          return data;
+        } catch(e) { /* fall through */ }
+      }
+      logError('DataLoader:' + pack, fetchErr);
+      return null;  // callers use inline defaults
+    }
+  }
+
+  async function quiz(skeletonId)    { const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('quiz');}    finally{_hideSkeleton(sk);} }
+  async function vocab(skeletonId)   { const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('vocab');}   finally{_hideSkeleton(sk);} }
+  async function language(skeletonId){ const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('language');}finally{_hideSkeleton(sk);} }
+
+  // Background pre-warm — called after app:ready, never blocks startup
+  function prewarm() {
+    setTimeout(() => {
+      _load('quiz').catch(()=>{});
+      _load('vocab').catch(()=>{});
+      _load('language').catch(()=>{});
+    }, 1500);
+  }
+
+  function status() {
+    return { loaded: Object.keys(_mem), cached: Object.keys(LS_KEYS).filter(k=>!!ls_get(LS_KEYS[k])), version: PACK_VERSION };
+  }
+
+  return Object.freeze({ quiz, vocab, language, prewarm, status });
+})();
+
+// Inject shimmer keyframe once
+(function(){
+  if(document.getElementById('_sk-style'))return;
+  const s=document.createElement('style');
+  s.id='_sk-style';
+  s.textContent='@keyframes _sk-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}';
+  document.head.appendChild(s);
+})();
+
 const App = (() => {
 
   // ── App.storage ── localStorage + all load/save functions
@@ -5108,7 +5273,7 @@ const App = (() => {
     clear:  clearErrLog,
   };
 
-  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, version: CONFIG.APP_VERSION });
+  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, data: DataLoader, version: CONFIG.APP_VERSION });
 })();
 
 // ══════════════════════════════════════════════
@@ -5259,6 +5424,10 @@ window.addEventListener('DOMContentLoaded',function(){
   updateQuizTopicsFromSyllabus();
   // Emit app:ready so AppEvents subscribers can hook into startup
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
+  // Pre-warm data packs in background (1.5s delay, non-blocking)
+  DataLoader.prewarm();
+  // Enrich tongue twisters once pack is warm
+  setTimeout(() => enrichTTFromPack(), 2000);
 });
 </script>
 

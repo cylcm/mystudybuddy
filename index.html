@@ -428,6 +428,16 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .err-entry .err-fn{font-weight:800;color:#ff8cb3;font-size:10px;text-transform:uppercase;margin-bottom:3px;}
 .err-entry .err-msg{color:#ffd0e0;word-break:break-all;}
 .err-entry .err-time{color:rgba(255,255,255,.4);font-size:9px;margin-top:3px;}
+/* ─── PERFORMANCE: GPU hints & layout containment ─── */
+.panel{contain:layout style;}
+.card{contain:layout style;}
+.tab-btn,.mod-tab,.btn{will-change:transform;}
+.lang-tabs-wrap{contain:layout;}
+/* Passive scroll for all scrollable containers */
+.wrapper,.modal,.result-box,.explain-rendered{
+  -webkit-overflow-scrolling:touch;
+  overflow-y:auto;
+}
 /* ─── ANIMATIONS ─── */
 @keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -1776,7 +1786,7 @@ function getSubjectMap() {
 }
 
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function showToast(msg,dur=CONFIG.TOAST_MS){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+function showToast(msg,dur=CONFIG.TOAST_MS){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;requestAnimationFrame(()=>t.classList.add('show'));setTimeout(()=>t.classList.remove('show'),dur);}
 function ls_get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 function ls_set(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 function ls_del(k){try{localStorage.removeItem(k);}catch(e){}}
@@ -1853,6 +1863,10 @@ function saveTokenLimits(){
   if(sl)ls_set(CONFIG.STORAGE_SESSION_LIMIT,sl);
 }
 function updateTokenBar(){
+  // OPT: Defer non-critical token bar DOM update to next animation frame
+  requestAnimationFrame(_doUpdateTokenBar);
+}
+function _doUpdateTokenBar(){
   const bar=document.getElementById('token-usage-bar');if(!bar)return;
   const{dailyLimit,sessionLimit}=getTokenLimits();
   bar.classList.remove('hidden');
@@ -1899,6 +1913,19 @@ function updateProfileTokenCard(){
 
 // ══════════════════════════════════════════════
 // SECTION: AI / Claude API  (→ App.ai)
+
+// ── Session result cache ──
+// OPT: Avoids redundant API calls for identical inputs within a session.
+// In-memory only — cleared on page reload (intentional: keeps content fresh).
+const _resultCache = new Map();
+const RESULT_CACHE_MAX = 30;
+function _cacheKey(...args){ return args.map(String).join(' '); }
+function _cacheGet(key){ return _resultCache.has(key)?_resultCache.get(key):null; }
+function _cacheSet(key,val){
+  if(_resultCache.size>=RESULT_CACHE_MAX) _resultCache.delete(_resultCache.keys().next().value);
+  _resultCache.set(key,val);
+}
+
 // callClaude  — single request with optional
 //              cache_control for prompt caching.
 // callClaudeBatch — parallel multi-request.
@@ -2016,14 +2043,46 @@ function showPanel(name){
   if(btn)switchTab(name,btn);
   else{const p=document.getElementById('panel-'+name);if(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));p.classList.add('active');}}
 }
+// OPT: Panel and tab button registries built once at startup.
+// Avoids querySelectorAll('.panel') walk on every tab click.
+let _panelRegistry = null;
+let _tabBtnRegistry = null;
+let _currentTabName = null;
+
+function _buildRegistries(){
+  if(_panelRegistry) return;
+  _panelRegistry  = {};
+  _tabBtnRegistry = {};
+  document.querySelectorAll('.panel').forEach(p=>{
+    const id = p.id; // e.g. "panel-quiz"
+    if(id) _panelRegistry[id.replace('panel-','')] = p;
+  });
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    const tab = b.dataset.tab;
+    if(tab) _tabBtnRegistry[tab] = b;
+  });
+}
+
 function switchTab(name,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+name).classList.add('active');
-  if(btn)btn.classList.add('active');
-  if(name==='scores')updateScoresPanel();
-  if(name==='plan')renderCurrentPlanView();
-  if(name==='language')renderLangPanel();
+  _buildRegistries();
+  // Hide previous panel and deactivate its button
+  if(_currentTabName && _currentTabName !== name){
+    const prev = _panelRegistry[_currentTabName];
+    if(prev) prev.classList.remove('active');
+    const prevBtn = _tabBtnRegistry[_currentTabName];
+    if(prevBtn) prevBtn.classList.remove('active');
+  }
+  // Show new panel
+  const panel = _panelRegistry[name] || document.getElementById('panel-'+name);
+  if(panel) panel.classList.add('active');
+  // Activate button
+  const activeBtn = btn || _tabBtnRegistry[name];
+  if(activeBtn) activeBtn.classList.add('active');
+  _currentTabName = name;
+  // On-demand panel updates (only when switching TO that panel)
+  if(name==='scores')   updateScoresPanel();
+  if(name==='plan')     renderCurrentPlanView();
+  if(name==='language') _langPanelOnce();
 }
 
 // ── Profile ──
@@ -2103,9 +2162,14 @@ function levelOptsFromProfile(selectedOverride){
   return ALL_LEVELS.slice(startIdx).map(l=>`<option value="${l}"${l===selected?' selected':''}>${l}</option>`).join('');
 }
 
+// OPT: Cache resolved subject map — avoids async overhead on repeated calls
+let _subjectMapCache = null;
 async function populateSubjectDropdowns(){
-  const pack = await DataLoader.quiz();
-  const subjectMap = (pack && pack.subjects) ? pack.subjects : DEFAULT_SUBJECTS;
+  if(!_subjectMapCache){
+    const pack = await DataLoader.quiz();
+    _subjectMapCache = (pack && pack.subjects) ? pack.subjects : DEFAULT_SUBJECTS;
+  }
+  const subjectMap = _subjectMapCache;
   const subjects=profile.subjects.length>0?profile.subjects:(subjectMap[profile.level]||subjectMap['Primary 1']);
   const opts=subjects.map(s=>`<option value="${escHtml(s)}">${escHtml(s)}</option>`).join('');
   ['quiz-subject','fib-subject'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
@@ -2119,8 +2183,32 @@ function updateSubjectDropdowns(){populateSubjectDropdowns();}
 
 // ── Activity History ──
 function addHistory(type,label){
-  activityHistory.push({type,label,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),date:new Date().toISOString().split('T')[0]});
-  if(activityHistory.length>80)activityHistory.shift();
+  // OPT: unshift+slice instead of push+shift avoids O(n) shift on every add
+  activityHistory.unshift({type,label,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),date:new Date().toISOString().split('T')[0]});
+  if(activityHistory.length>80)activityHistory.length=80;
+}
+
+// ── Lazy render utility ──
+// OPT: Defers expensive list renders until the container is actually visible.
+// Usage: lazyRender('container-id', renderFn)
+const _lazyRenderMap = new WeakMap();
+const _lazyObserver = typeof IntersectionObserver !== 'undefined'
+  ? new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const fn=_lazyRenderMap.get(e.target);
+          if(fn){ fn(); _lazyObserver.unobserve(e.target); }
+        }
+      });
+    },{rootMargin:'100px'})
+  : null;
+
+function lazyRender(elId, renderFn){
+  const el=document.getElementById(elId);
+  if(!el){ renderFn(); return; }  // fallback: render immediately
+  if(!_lazyObserver){ renderFn(); return; }  // no IO support
+  _lazyRenderMap.set(el, renderFn);
+  _lazyObserver.observe(el);
 }
 
 // ── Markdown renderer ──
@@ -2700,7 +2788,11 @@ function saveQuizToHistory(level,subject,count,topic,data,score){
   ls_set(KEYS.quiz,JSON.stringify(quizHistoryStore));
 }
 function toggleQuizHistory(){const p=document.getElementById('quiz-history-panel');const v=p.style.display!=='none';p.style.display=v?'none':'block';if(!v)renderQuizHistoryPanel();}
+// OPT: Track render count — skip re-render if history hasn't changed
+let _quizHistRenderCount = -1;
 function renderQuizHistoryPanel(){
+  if(_quizHistRenderCount === quizHistoryStore.length) return;  // nothing new
+  _quizHistRenderCount = quizHistoryStore.length;
   const list=document.getElementById('quiz-history-list');
   if(!quizHistoryStore.length){list.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px;">No past quizzes yet.</div>';return;}
   list.innerHTML=quizHistoryStore.map((e,i)=>{
@@ -2740,6 +2832,14 @@ function renderWordTags(){document.getElementById('word-tags-container').innerHT
 async function generateSentences(){
   if(!words.length){showToast('Please add at least one word');return;}
   setLoading('sentence-gen-btn','sentence-gen-icon',true,'✨');
+  const _sentCacheKey=_cacheKey('sentences',...words);
+  const _sentCached=_cacheGet(_sentCacheKey);
+  if(_sentCached){
+    const box=document.getElementById('sentences-result');
+    box.classList.add('show'); box.innerHTML=_sentCached;
+    setLoading('sentence-btn','sentence-icon',false,'📝');
+    return;
+  }
   try{
     const raw=await callClaude(`You are an English teacher for students aged 11-16. For each of these words: ${words.join(', ')} — provide structured info.
 Return ONLY a JSON array (no markdown, no extra text):
@@ -2781,6 +2881,9 @@ One object per word. Keep language simple and age-appropriate.`,Math.max(1000,wo
         ${item.tip?`<div class="res-section"><div class="res-label">💡 Usage Tip</div><div class="res-card tip">${escHtml(item.tip)}</div></div>`:''}
       </div>
     `).join('');
+    // Cache rendered HTML so repeated requests return instantly
+    const _sentBox=document.getElementById('sentences-result');
+    if(_sentBox)_cacheSet(_sentCacheKey,_sentBox.innerHTML);
     addHistory('grammar','Sentence builder: '+words.join(', '));
   }catch(e){logError(arguments.callee&&arguments.callee.name||'unknown',e);showToast('❌ '+e.message);}
   setLoading('sentence-gen-btn','sentence-gen-icon',false,'✨');
@@ -2840,6 +2943,12 @@ async function getSynonyms(forceRefresh=false){
   if(isCustom&&!customWord){showToast('⚠️ Please enter a word');return;}
   const label=isCustom?customWord:cat;
   if(!forceRefresh&&synonymBatch.length>0){renderSynonymGrid();return;}
+  // OPT: Cache synonym batches by category/word so switching back is instant
+  const _synKey=_cacheKey('syn',cat,isCustom?customWord:'');
+  if(!forceRefresh){
+    const _synCached=_cacheGet(_synKey);
+    if(_synCached){synonymBatch=_synCached;renderSynonymGrid();return;}
+  }
   setLoading('synonym-btn','synonym-icon',true,'🔄');
   const btn2=document.getElementById('synonym-refresh-btn');if(btn2)btn2.disabled=true;
   try{
@@ -2851,6 +2960,7 @@ async function getSynonyms(forceRefresh=false){
     const synFB=synRaw.indexOf('['),synLB=synRaw.lastIndexOf(']');
     if(synFB===-1)throw new Error('Invalid synonym response format');
     synonymBatch=JSON.parse(synRaw.slice(synFB,synLB+1));
+    _cacheSet(_synKey,synonymBatch);  // OPT: cache for instant re-access
     if(!synonymBatch.length)throw new Error('No synonyms returned');
     renderSynonymGrid();
     addHistory('grammar','Word Replacer: '+label);
@@ -3338,7 +3448,10 @@ async function generateTongueTwisters(forceRefresh=false){
   }catch(e){logError(arguments.callee&&arguments.callee.name||'unknown',e);showToast('❌ '+e.message);}
   setLoading('tt-gen-btn','tt-gen-icon',false,'👅');
 }
+let _ttListRenderLen = -1;
 function renderTTList(){
+  if(_ttListRenderLen === ttList.length) return;  // OPT: skip if unchanged
+  _ttListRenderLen = ttList.length;
   const list=document.getElementById('tt-list');
   list.innerHTML=ttList.map((tt,i)=>`<div class="tt-card" id="ttcard-${i}" onclick="selectTT(${i})"><div class="tt-text">🗣️ ${escHtml(tt.text)}</div><div style="font-size:11px;color:var(--text3);">💡 Tip: ${escHtml(tt.tip||'')}</div></div>`).join('');
 }
@@ -3366,11 +3479,92 @@ function speakTT(rate){
 // ══════════════════════════════════════════════
 // LANGUAGE CORNER
 // ══════════════════════════════════════════════
+let _langTabsCurrent=null;
 function buildLangTabs(){
   const container=document.getElementById('lang-tabs-container');if(!container)return;
+  // OPT: Only update active state if same language, skip full rebuild
+  if(_langTabsCurrent===currentLang){
+    container.querySelectorAll('.lang-tab').forEach(b=>b.classList.toggle('active',b.id==='ltab-'+currentLang));
+    return;
+  }
+  _langTabsCurrent=currentLang;
   container.innerHTML=Object.entries(getLangConfig()).map(([key,cfg])=>`<button class="lang-tab${key===currentLang?' active':''}" id="ltab-${key}" onclick="switchLang('${key}')">${cfg.flag} ${cfg.name.split(' ')[0]}</button>`).join('');
 }
-function switchLang(lang){currentLang=lang;buildLangTabs();renderLangPanel();}
+function switchLang(lang){
+  currentLang=lang;
+  buildLangTabs();         // update tab highlight (fast — no innerHTML rebuild)
+  _langPanelOnce();        // build full panel first time, patch on subsequent calls
+  AppEvents.emit('lang:switched',{lang});
+}
+// OPT: _langPanelOnce — build full panel on first visit,
+// then only patch the language-specific parts on subsequent switches.
+// This avoids rebuilding 18KB of innerHTML on every tab/language click.
+let _langPanelBuilt = false;
+
+function _langPanelOnce(){
+  if(!_langPanelBuilt){
+    renderLangPanel();          // full build on first call
+    _langPanelBuilt = true;
+  } else {
+    _patchLangPanel();          // fast patch: only update what changes
+  }
+}
+
+// Patch only the language-specific dynamic parts:
+//   1. Category dropdown options
+//   2. Type dropdown options
+//   3. History accordion HTML
+//   4. Previously-generated result visibility
+//   5. Button icon/label (flag)
+function _patchLangPanel(){
+  const cfg  = getLangConfig()[currentLang]||LANG_CONFIG[currentLang];
+  const cats = getLangCategories()[currentLang]||LANG_CATEGORIES[currentLang]||[];
+  const sess = langSessions[currentLang]||{};
+
+  // 1. Category dropdown
+  const catSel = document.getElementById('lang-cat-'+currentLang);
+  if(!catSel){
+    // Dropdown has the old lang id — rebuild the input IDs by re-rendering
+    renderLangPanel(); return;
+  }
+
+  // The select id encodes the language — on lang change the ids change,
+  // so we must re-render the inputs. But we can skip rebuilding the mode tabs
+  // and the static chrome. Use a targeted innerHTML on only lang-mode-learn:
+  const learnDiv = document.getElementById('lang-mode-learn');
+  if(!learnDiv){ renderLangPanel(); return; }
+
+  const typeOptions = currentLang==='english'
+    ? `<option value="vocabulary building with definitions and examples">Vocabulary Building</option>
+       <option value="grammar rules with examples">Grammar &amp; Usage</option>
+       <option value="idioms and common phrases">Idioms &amp; Phrases</option>
+       <option value="reading comprehension passage">Reading Comprehension</option>
+       <option value="creative writing prompts and examples">Creative Writing</option>`
+    : `<option value="vocabulary with pronunciation">Vocabulary + Pronunciation</option>
+       <option value="basic sentences and phrases">Sentences &amp; Phrases</option>
+       <option value="a short story with translation">Mini Story</option>
+       <option value="common questions and answers">Q&amp;A Conversation</option>`;
+
+  learnDiv.innerHTML=`
+    <div class="grid-2" style="margin-bottom:10px;">
+      <div><label>Category</label><select id="lang-cat-${currentLang}" style="margin-bottom:0;font-size:15px;" onchange="syncLangTopic()"><option value="">— Select —</option>${cats.map(ct=>`<option value="${escHtml(ct)}">${escHtml(ct)}</option>`).join('')}</select></div>
+      <div><label>Custom Topic</label><input type="text" id="lang-topic-${currentLang}" placeholder="or type here..." style="margin-bottom:0;" /></div>
+      <div><label>Type</label><select id="lang-type-${currentLang}" style="margin-bottom:0;font-size:15px;">${typeOptions}</select></div>
+      <div style="display:flex;gap:6px;align-items:flex-end;">
+        <button class="btn btn-primary" onclick="learnLanguage()" id="lang-learn-btn" style="flex:1;justify-content:center;"><span id="lang-learn-icon">${cfg.flag}</span> Learn</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetLangPanel()" title="Reset" style="padding:10px 12px;">🔄</button>
+      </div>
+    </div>
+    ${buildLangHistHtml(currentLang)}
+    <div id="lang-rich-${currentLang}" style="display:${sess.rawResult?'block':'none'};">
+      <div id="lang-rendered-${currentLang}">${sess.rawResult?mdToLangHtml(sess.rawResult,cfg.code):''}</div>
+    </div>`;
+
+  // Reset to learn mode
+  switchLangMode('learn');
+}
+
+
 function renderLangPanel(){
   buildLangTabs();
   const cfg=getLangConfig()[currentLang]||LANG_CONFIG[currentLang];const cats=getLangCategories()[currentLang]||LANG_CATEGORIES[currentLang]||[];
@@ -4911,7 +5105,14 @@ function showXPToast(msg){
 }
 
 // ── Update HUD + scores panel ─────────────────────────────────
+// OPT: Debounced rewards UI refresh — coalesces rapid successive calls
+// (e.g. correct answer → session complete fires within 100ms of each other)
+let _rewardsRefreshTimer = null;
 function refreshRewardsUI(){
+  if(_rewardsRefreshTimer) clearTimeout(_rewardsRefreshTimer);
+  _rewardsRefreshTimer = setTimeout(_doRefreshRewardsUI, 150);
+}
+function _doRefreshRewardsUI(){
   const rd=loadRewards();
   const {lvl,next,progressXP,rangeXP,pct}=getLevelInfo(rd.xp);
 
@@ -5010,7 +5211,7 @@ function rewardCorrectAnswer(){
   rd.correctCount=(rd.correctCount||0)+1;
   checkBadges(rd);
   saveRewards(rd);
-  refreshRewardsUI();
+  // OPT: refreshRewardsUI already scheduled by addXP
 }
 
 // Called on session complete (+50 XP)
@@ -5018,11 +5219,11 @@ function rewardSessionComplete(moduleLabel){
   const rd=loadRewards();
   rd.sessionsCount=(rd.sessionsCount||0)+1;
   saveRewards(rd);
-  const rd2=addXP(50,'Session done');
+  const rd2=addXP(50,'Session done');  // addXP already calls refreshRewardsUI (debounced)
   rd2.sessionsCount=rd.sessionsCount;
   checkBadges(rd2);
   saveRewards(rd2);
-  refreshRewardsUI();
+  // OPT: refreshRewardsUI already scheduled by addXP — skip duplicate call
 }
 
 // Called once per day on first activity (+20 XP daily bonus)
@@ -5070,6 +5271,9 @@ function calcStudyStreak(){
   return streak;
 }
 function updateScoresPanel(){
+  // OPT: Skip if scores panel is not visible — avoids invisible DOM work
+  const scorePanel = document.getElementById('panel-scores');
+  if(scorePanel && !scorePanel.classList.contains('active')) return;
   updateScoreDisplay();
   refreshRewardsUI();
   const el=id=>document.getElementById(id);
@@ -5783,7 +5987,7 @@ const DataLoader = (() => {
       ls_set(LS_KEYS[pack], JSON.stringify(data));
       return data;
     } catch(fetchErr) {
-      // Fallback: localStorage
+      // Fallback 1: localStorage (works offline after first real load)
       const stored = ls_get(LS_KEYS[pack]);
       if (stored) {
         try {
@@ -5792,8 +5996,20 @@ const DataLoader = (() => {
           return data;
         } catch(e) { /* fall through */ }
       }
-      logError('DataLoader:' + pack, fetchErr);
-      return null;  // callers use inline defaults
+      // Fallback 2: silently use inline defaults.
+      // Only log if NOT a 404 on a preview/local origin — those are expected.
+      const isPreview = location.origin.includes('claudeusercontent.com')
+        || location.origin.startsWith('blob:')
+        || location.origin === 'null'
+        || location.hostname === 'localhost'
+        || location.hostname === '127.0.0.1';
+      const is404 = fetchErr && fetchErr.message && fetchErr.message.includes('404');
+      if (!isPreview && !is404) {
+        logError('DataLoader:' + pack, fetchErr);
+      } else {
+        console.info('[DataLoader] ' + pack + ' pack not found — using built-in defaults.');
+      }
+      return null;  // callers use inline DEFAULT_* constants
     }
   }
 
@@ -5801,8 +6017,16 @@ const DataLoader = (() => {
   async function vocab(skeletonId)   { const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('vocab');}   finally{_hideSkeleton(sk);} }
   async function language(skeletonId){ const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('language');}finally{_hideSkeleton(sk);} }
 
-  // Background pre-warm — called after app:ready, never blocks startup
+  // Background pre-warm — called after app:ready, never blocks startup.
+  // Skipped on preview origins where JSON files don't exist.
   function prewarm() {
+    const isPreview = location.origin.includes('claudeusercontent.com')
+      || location.origin.startsWith('blob:')
+      || location.origin === 'null';
+    if (isPreview) {
+      console.info('[DataLoader] Preview origin — skipping pack prewarm, using built-in defaults.');
+      return;
+    }
     setTimeout(() => {
       _load('quiz').catch(()=>{});
       _load('vocab').catch(()=>{});
@@ -5925,7 +6149,13 @@ const App = (() => {
     clear:  clearErrLog,
   };
 
-  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, data: DataLoader, version: CONFIG.APP_VERSION });
+  const perf={
+    cacheGet:_cacheGet, cacheSet:_cacheSet, lazyRender,
+    clearSubjectCache:()=>{_subjectMapCache=null;},
+    invalidateLangPanel:()=>{_langPanelBuilt=false;_langTabsCurrent=null;},
+    status:()=>({resultCacheSize:_resultCache.size,langPanelBuilt:_langPanelBuilt,registryBuilt:!!_panelRegistry}),
+  };
+  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, data: DataLoader, perf, version: CONFIG.APP_VERSION });
 })();
 
 // ══════════════════════════════════════════════
@@ -6075,6 +6305,14 @@ window.addEventListener('DOMContentLoaded',function(){
   initSynonymCategoryListener();
   updateQuizTopicsFromSyllabus();
   // Emit app:ready so AppEvents subscribers can hook into startup
+  // OPT: Add passive touch scroll listeners on high-scroll elements
+  // Prevents scroll janking on mobile by telling browser touch won't preventDefault
+  ['wrapper','lang-panel-area','quiz-q-container','explain-rendered'].forEach(id=>{
+    const el=document.getElementById(id)||document.querySelector('.'+id);
+    if(el) el.addEventListener('touchstart',()=>{},{passive:true});
+  });
+  // OPT: Invalidate lang panel cache when data packs load (cats may change)
+  AppEvents.on('pack:loaded',()=>{ _langPanelBuilt=false; });
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
   // Award daily bonus XP on first activity of the day
   rewardDailyBonus();
@@ -6094,18 +6332,24 @@ window.addEventListener('DOMContentLoaded',function(){
 (function initPWA() {
 
   // ── Register service worker ──
-  if ('serviceWorker' in navigator) {
+  // Only register SW when running from a real file server (GitHub Pages, localhost).
+  // Skip on preview iframes (claudeusercontent.com, blob:, data:) where sw.js won't exist.
+  const _swOrigin = location.origin;
+  const _swOk = 'serviceWorker' in navigator
+    && !_swOrigin.includes('claudeusercontent.com')
+    && !_swOrigin.startsWith('blob:')
+    && !_swOrigin.startsWith('data:')
+    && _swOrigin !== 'null';
+
+  if (_swOk) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' })
         .then(reg => {
           console.log('[SW] Registered, scope:', reg.scope);
-
-          // Check for SW updates and notify user
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
             newWorker.addEventListener('statechange', () => {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New version available — show toast
                 if (typeof showToast === 'function') {
                   showToast('🔄 App updated! Refresh to get the latest version.', 6000);
                 }
@@ -6115,6 +6359,8 @@ window.addEventListener('DOMContentLoaded',function(){
         })
         .catch(err => console.warn('[SW] Registration failed:', err));
     });
+  } else {
+    console.info('[SW] Skipped — preview/local environment detected.');
   }
 
   // ── Offline / Online detection ──

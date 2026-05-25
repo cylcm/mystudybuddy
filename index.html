@@ -359,6 +359,66 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .token-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px;}
 .token-row .lbl{opacity:.75;}
 .token-row .val{font-weight:900;font-size:13px;}
+/* ─── GAMIFICATION: XP / LEVEL / BADGES ─── */
+#xp-hud{position:fixed;top:10px;left:10px;z-index:1090;background:linear-gradient(135deg,#1a1a2e,#2d2d5e);color:#fff;border-radius:50px;padding:5px 12px 5px 8px;display:flex;align-items:center;gap:7px;font-size:11px;font-weight:800;box-shadow:0 3px 14px rgba(91,94,244,.4);cursor:pointer;touch-action:manipulation;}
+#xp-hud .xp-avatar{font-size:1.1rem;line-height:1;}
+#xp-hud .xp-level{color:#ffd080;font-size:10px;display:block;line-height:1.1;}
+#xp-hud .xp-pts{color:rgba(255,255,255,.8);font-size:9px;}
+#xp-hud .xp-bar-track{width:40px;height:4px;background:rgba(255,255,255,.2);border-radius:50px;overflow:hidden;}
+#xp-hud .xp-bar-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#43e97b,#38b2f8);transition:width .5s;}
+/* XP toast */
+.xp-toast{position:fixed;top:60px;left:50%;transform:translateX(-50%) scale(0);background:linear-gradient(135deg,#5b5ef4,#43e97b);color:#fff;padding:8px 18px;border-radius:50px;font-size:12px;font-weight:900;z-index:9998;pointer-events:none;transition:transform .3s,opacity .3s;opacity:0;white-space:nowrap;}
+.xp-toast.show{transform:translateX(-50%) scale(1);opacity:1;}
+/* Badge grid */
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:10px;margin-top:8px;}
+.badge-item{background:#f8f9ff;border:2px solid var(--border);border-radius:14px;padding:12px 8px;text-align:center;transition:all .2s;}
+.badge-item.earned{background:linear-gradient(135deg,#f0f0ff,#fff8e0);border-color:#ffd080;box-shadow:0 3px 12px rgba(255,208,0,.3);}
+.badge-item.locked{opacity:.45;filter:grayscale(.7);}
+.badge-icon{font-size:1.8rem;display:block;margin-bottom:4px;}
+.badge-name{font-size:10px;font-weight:800;color:var(--text2);line-height:1.3;}
+.badge-desc{font-size:9px;color:var(--text3);margin-top:2px;}
+.badge-earned-date{font-size:8px;color:var(--accent3);margin-top:3px;font-weight:700;}
+/* Level progress bar */
+.level-progress-wrap{margin:12px 0;}
+.level-progress-label{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--text2);margin-bottom:5px;}
+.level-progress-track{background:#e0e8ff;border-radius:50px;height:10px;overflow:hidden;}
+.level-progress-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--accent),var(--accent3));transition:width .6s;}
+/* Streak card */
+.streak-ring{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff8c00,#ffcc00);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px;box-shadow:0 4px 16px rgba(255,140,0,.4);}
+.streak-ring .sr-num{font-size:1.4rem;font-weight:900;color:#fff;line-height:1;}
+.streak-ring .sr-label{font-size:8px;font-weight:800;color:rgba(255,255,255,.85);}
+/* ─── AI INSIGHT PANEL ─── */
+#ai-insight-panel{margin-top:14px;border-radius:14px;overflow:hidden;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#5b5ef4,#ff4d8d,#43e97b) border-box;}
+#ai-insight-panel.hidden{display:none;}
+.insight-header{display:flex;align-items:center;gap:10px;padding:13px 15px;cursor:pointer;background:linear-gradient(135deg,#f0f0ff,#fff0f8);border-bottom:1px solid #ebe8ff;user-select:none;-webkit-tap-highlight-color:transparent;}
+.insight-header h3{flex:1;font-size:13px;font-weight:900;margin:0;background:linear-gradient(135deg,#5b5ef4,#ff4d8d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.insight-chevron{font-size:12px;color:var(--text3);transition:transform .25s;}
+.insight-chevron.open{transform:rotate(180deg);}
+.insight-body{padding:14px 15px;display:none;}
+.insight-body.open{display:block;animation:fadeUp .3s ease;}
+.insight-loading{display:flex;align-items:center;gap:10px;padding:10px 0;font-size:13px;color:var(--text2);}
+.insight-loading .spinner{border-top-color:var(--accent);}
+.insight-section{margin-bottom:12px;}
+.insight-section:last-child{margin-bottom:0;}
+.insight-section-label{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:5px;}
+.insight-card{border-radius:10px;padding:10px 13px;font-size:13px;line-height:1.6;}
+.insight-card.strengths{background:#e6fff3;border:1.5px solid #80e0b0;color:#006b38;}
+.insight-card.weaknesses{background:#fff0f4;border:1.5px solid #ffaacc;color:#cc1144;}
+.insight-card.next-activity{background:#e8f4ff;border:1.5px solid #90caf9;color:#1565c0;}
+.insight-card.difficulty{display:flex;align-items:center;gap:10px;background:#fff8e0;border:1.5px solid #ffd080;color:#8a5c00;}
+.insight-diff-badge{font-size:1.4rem;flex-shrink:0;}
+.insight-diff-text{font-weight:700;}
+.insight-diff-reason{font-size:11px;opacity:.75;margin-top:2px;}
+.insight-trend{display:flex;gap:5px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+.insight-trend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.insight-meta{font-size:10px;color:var(--text3);margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);display:flex;gap:12px;flex-wrap:wrap;}
+.insight-history-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--text2);cursor:pointer;margin-top:10px;width:100%;touch-action:manipulation;}
+.insight-history-btn:hover{border-color:var(--accent);color:var(--accent);}
+.insight-history-panel{display:none;margin-top:8px;}
+.insight-history-panel.open{display:block;animation:fadeUp .25s ease;}
+.insight-hist-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.insight-hist-row:last-child{border:none;}
+.insight-hist-score{font-weight:900;font-size:13px;min-width:36px;}
 /* ─── ERROR LOG ─── */
 #err-log-icon{position:fixed;bottom:48px;right:12px;z-index:1060;background:#ff4d8d;color:#fff;border:none;border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(255,77,141,.5);animation:pulse-err 1.5s ease infinite;}
 @keyframes pulse-err{0%,100%{box-shadow:0 3px 12px rgba(255,77,141,.4);}50%{box-shadow:0 3px 20px rgba(255,77,141,.8);}}
@@ -556,6 +616,18 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <button class="btn btn-primary" onclick="resetQuiz()">🔄 New Quiz</button>
         <button class="btn btn-secondary" id="quiz-review-btn" onclick="reviewQuizAnswers()" style="margin-top:8px;">📋 Review Answers</button>
         <div id="quiz-review-area" style="display:none;margin-top:12px;"></div>
+
+        <!-- ── AI INSIGHT PANEL ── -->
+        <div id="ai-insight-panel" class="hidden">
+          <div class="insight-header" onclick="toggleInsightPanel()">
+            <span style="font-size:1.3rem;">🧠</span>
+            <h3>AI Insight Review</h3>
+            <span class="insight-chevron" id="insight-chevron">▼</span>
+          </div>
+          <div class="insight-body" id="insight-body">
+            <!-- populated by generateInsight() -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1248,6 +1320,53 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
   <!-- ═══════════ MY SCORES ═══════════ -->
   <div id="panel-scores" class="panel">
+    <!-- GAMIFICATION CARD -->
+    <div class="card" id="gamification-card">
+      <h2>⚡ XP &amp; Level Progress</h2>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap;">
+        <div style="text-align:center;min-width:64px;">
+          <div class="streak-ring" id="gam-streak-ring">
+            <span class="sr-num" id="gam-streak-num">0</span>
+            <span class="sr-label">DAY STREAK</span>
+          </div>
+          <div style="font-size:10px;color:var(--text3);font-weight:700;">🔥 Keep it up!</div>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:1.5rem;font-weight:900;color:var(--accent);" id="gam-level-display">🌱 Seedling</div>
+          <div style="font-size:11px;color:var(--text2);margin:2px 0 8px;" id="gam-xp-display">0 XP total</div>
+          <div class="level-progress-wrap" style="margin:0;">
+            <div class="level-progress-label">
+              <span id="gam-lvl-from"></span>
+              <span id="gam-xp-progress"></span>
+              <span id="gam-lvl-to"></span>
+            </div>
+            <div class="level-progress-track"><div class="level-progress-fill" id="gam-level-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="gam-total-xp" style="color:var(--accent);">0</div>
+          <div class="stat-label">Total XP</div>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="gam-sessions" style="color:var(--accent3);">0</div>
+          <div class="stat-label">Sessions</div>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="gam-correct-total" style="color:var(--accent4);">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="gam-badges-count" style="color:var(--accent2);">0</div>
+          <div class="stat-label">Badges</div>
+        </div>
+      </div>
+    <!-- BADGES CARD -->
+    <div class="card">
+      <h2>🏅 Achievements</h2>
+      <div class="badge-grid" id="badge-grid"></div>
+    </div>
     <!-- Overall Performance -->
     <div class="card">
       <h2>🏆 Overall Performance</h2>
@@ -1289,6 +1408,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <h2>📋 Recent Activity</h2>
       <ul id="history-list" style="list-style:none;"><li class="hist-item"><span style="color:var(--text3);">No activity yet.</span></li></ul>
     </div>
+  </div>
   </div>
 </div><!-- /wrapper -->
 
@@ -1367,6 +1487,17 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
     </div>
   </div>
 </div>
+
+<!-- GAMIFICATION XP HUD -->
+<div id="xp-hud" onclick="switchTab('scores',document.querySelector('.tab-btn[data-tab=scores]'))" title="View your XP & badges">
+  <span class="xp-avatar" id="xp-avatar">🌱</span>
+  <div>
+    <span class="xp-level" id="xp-level-label">Seedling</span>
+    <span class="xp-pts" id="xp-pts-label">0 XP</span>
+  </div>
+  <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-bar-fill" style="width:0%"></div></div>
+</div>
+<div class="xp-toast" id="xp-toast"></div>
 
 <!-- PWA INSTALL PROMPT -->
 <div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:2100;background:linear-gradient(90deg,#5b5ef4,#ff4d8d);color:#fff;padding:10px 14px;font-size:12px;font-weight:800;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 3px 14px rgba(91,94,244,.4);">
@@ -1495,6 +1626,7 @@ let podcastEpisodes=[],podcastHistory=[],currentPodcast=null;
 
 // Quiz
 let quizData=[],quizCurrent=0,quizScore=0,quizAnswered=0,quizHistoryStore=[];
+let quizStartTime=0; // timestamp when current quiz began (for duration tracking)
 // Scramble
 let scrManualWords=[],scrambleWords=[],scrambleIdx=0,scrambleScore=0,scrambleAnswered=0,scrambleRevealed=false,scrHistory=[];
 // Spelling
@@ -2245,6 +2377,7 @@ async function generateQuiz(){
     if(fb===-1)throw new Error('Invalid format returned. Try again.');
     quizData=JSON.parse(jsonStr.slice(fb,lb+1));
     quizCurrent=0;quizScore=0;quizAnswered=0;
+    quizStartTime=Date.now(); // track duration for AI Insight
     renderQuiz(level,subject+(topic?' — '+topic:'')+' ['+difficulty+']');
     saveQuizToHistory(level,subject,count,topic,quizData,0);
     addHistory('quiz',level+' '+subject+' Quiz ('+count+'Q '+difficulty+')');
@@ -2274,14 +2407,15 @@ function answerQuiz(qIdx,chosen,btnEl){
   });
   const feed=document.getElementById('qfeed-'+qIdx);feed.className='quiz-fb show '+(correct?'correct':'wrong');
   feed.textContent=correct?'✅ '+q.explanation:'❌ Correct: '+q.answer+'. '+q.explanation;
-  quizAnswered++;if(correct){quizScore++;globalStats.quizCorrect++;}globalStats.quizTotal++;
+  quizAnswered++;if(correct){quizScore++;globalStats.quizCorrect++;rewardCorrectAnswer();}globalStats.quizTotal++;rewardDailyBonus();
   document.getElementById('quiz-score-pill').textContent='Score: '+quizScore;
   document.getElementById('quiz-progress').textContent=quizAnswered+'/'+quizData.length;
   setTimeout(()=>{const next=qIdx+1;if(next<quizData.length){document.getElementById('qcard-'+next).classList.add('show');document.getElementById('qcard-'+next).scrollIntoView({behavior:'smooth',block:'center'});}else showQuizSummary();},1500);
 }
 function showQuizSummary(){
-  AppEvents.emit('quiz:complete',{score:quizScore,total:quizData.length,pct:quizData.length?Math.round(quizScore/quizData.length*100):0});
-  const pct=Math.round((quizScore/quizData.length)*100);
+  const pct=quizData.length?Math.round((quizScore/quizData.length)*100):0;
+  const durationSec=quizStartTime?Math.round((Date.now()-quizStartTime)/1000):0;
+  AppEvents.emit('quiz:complete',{score:quizScore,total:quizData.length,pct});
   document.getElementById('sum-correct').textContent=quizScore;
   document.getElementById('sum-wrong').textContent=quizData.length-quizScore;
   document.getElementById('sum-pct').textContent=pct+'%';
@@ -2289,8 +2423,276 @@ function showQuizSummary(){
   document.getElementById('quiz-summary').scrollIntoView({behavior:'smooth'});
   if(quizHistoryStore.length>0){quizHistoryStore[0].score=quizScore;ls_set(KEYS.quiz,JSON.stringify(quizHistoryStore));}
   updateScoreDisplay();
+  rewardSessionComplete('Smart Quiz');
+  refreshRewardsUI();
+  // Trigger AI Insight (non-blocking)
+  const lastEntry=quizHistoryStore[0]||{};
+  generateInsight({
+    score:quizScore,
+    total:quizData.length,
+    pct,
+    durationSec,
+    attempts:quizAnswered,
+    subject:lastEntry.subject||'',
+    level:lastEntry.level||profile.level,
+    topic:lastEntry.topic||'',
+    difficulty:document.getElementById('quiz-difficulty')?.value||'intermediate',
+    wrongQuestions:quizData.filter((_,i)=>!document.getElementById('qfeed-'+i)?.classList.contains('correct')).map(q=>q.q||'')
+  });
 }
-function resetQuiz(){document.getElementById('quiz-area').style.display='none';document.getElementById('quiz-q-container').innerHTML='';document.getElementById('quiz-summary').style.display='none';quizData=[];}
+// ═══════════════════════════════════════════════════════════════
+// SECTION: AI Insight Review  (→ App.ai + App.storage)
+//
+// Generates a 🧠 AI-powered post-quiz analysis covering:
+//   strengths, weaknesses, next activity, recommended difficulty.
+//
+// Data model — each session stored in localStorage (last 20):
+// {
+//   id:         number,     // Date.now()
+//   date:       string,     // toLocaleDateString
+//   subject:    string,
+//   topic:      string,
+//   level:      string,
+//   difficulty: string,     // beginner | intermediate | advanced
+//   score:      number,
+//   total:      number,
+//   pct:        number,     // 0-100
+//   durationSec:number,
+//   attempts:   number,
+//   insight: {
+//     strengths:        string,
+//     weaknesses:       string,
+//     nextActivity:     string,
+//     recDifficulty:    string,   // beginner | intermediate | advanced
+//     recDifficultyReason: string
+//   }
+// }
+// ═══════════════════════════════════════════════════════════════
+
+const INSIGHT_KEY = 'sb_ai_insights';
+const INSIGHT_MAX  = 20;
+
+// ── Session history ──────────────────────────────────────────
+function loadInsightHistory(){
+  try{ const r=ls_get(INSIGHT_KEY); return r?JSON.parse(r):[]; }catch(e){ return []; }
+}
+function saveInsightHistory(sessions){
+  try{ ls_set(INSIGHT_KEY,JSON.stringify(sessions.slice(0,INSIGHT_MAX))); }catch(e){}
+}
+
+// ── Difficulty recommendation (pure logic, no API) ───────────
+function recommendDifficulty(pct){
+  if(pct>85) return {diff:'advanced',   emoji:'🔴', label:'Harder Challenge',  reason:'Score above 85% — time for a tougher level!'};
+  if(pct>=50) return {diff:'intermediate',emoji:'🟡', label:'Maintain Level',   reason:'Solid performance — keep practising at this level.'};
+  return         {diff:'beginner',    emoji:'🟢', label:'Easier Start',      reason:'Score below 50% — build confidence with simpler questions.'};
+}
+
+// ── Format duration ──────────────────────────────────────────
+function fmtDuration(sec){
+  if(!sec||sec<2)return'—';
+  if(sec<60)return sec+'s';
+  return Math.floor(sec/60)+'m '+(sec%60)+'s';
+}
+
+// ── Panel toggle ─────────────────────────────────────────────
+function toggleInsightPanel(){
+  const body=document.getElementById('insight-body');
+  const chev=document.getElementById('insight-chevron');
+  if(!body)return;
+  const open=body.classList.toggle('open');
+  if(chev)chev.classList.toggle('open',open);
+}
+
+// ── Toggle insight session history list ─────────────────────
+function toggleInsightHistory(){
+  const panel=document.getElementById('insight-hist-panel');
+  if(!panel)return;
+  const open=panel.classList.toggle('open');
+  const btn=document.getElementById('insight-hist-btn');
+  if(btn)btn.textContent=open?'▲ Hide history':'📊 View session history (last '+INSIGHT_MAX+')';
+}
+
+// ── Render trend dots (last 10 scores) ──────────────────────
+function renderTrendDots(sessions){
+  const recent=sessions.slice(0,10).reverse();
+  if(!recent.length)return'';
+  return '<div class="insight-trend">'
+    +recent.map(s=>{
+      const col=s.pct>85?'#43e97b':s.pct>=50?'#ff8c00':'#ff4d8d';
+      return `<div class="insight-trend-dot" style="background:${col}" title="${s.pct}% — ${s.subject}"></div>`;
+    }).join('')
+    +'<span style="font-size:10px;color:var(--text3);margin-left:4px;">last 10 sessions</span></div>';
+}
+
+// ── Render full insight history list ────────────────────────
+function renderInsightHistoryList(sessions){
+  if(!sessions.length)return'<div style="font-size:12px;color:var(--text3);padding:8px;">No past sessions yet.</div>';
+  return sessions.slice(0,20).map(s=>{
+    const rec=recommendDifficulty(s.pct);
+    const col=s.pct>85?'#43e97b':s.pct>=50?'#ff8c00':'#ff4d8d';
+    return `<div class="insight-hist-row">
+      <div class="insight-hist-score" style="color:${col}">${s.pct}%</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:800;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(s.subject)}${s.topic?' — '+escHtml(s.topic):''}</div>
+        <div style="font-size:10px;color:var(--text3);">${escHtml(s.level)} · ${s.date} · ${fmtDuration(s.durationSec)}</div>
+      </div>
+      <div style="font-size:11px;">${rec.emoji}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Main insight generator ────────────────────────────────────
+async function generateInsight(ctx){
+  // ctx: { score, total, pct, durationSec, attempts, subject, level, topic, difficulty, wrongQuestions[] }
+  const panel  = document.getElementById('ai-insight-panel');
+  const body   = document.getElementById('insight-body');
+  if(!panel||!body)return;
+
+  // Show and expand the panel immediately
+  panel.classList.remove('hidden');
+  body.classList.add('open');
+  const chev=document.getElementById('insight-chevron');
+  if(chev)chev.classList.add('open');
+
+  // Show loading skeleton
+  body.innerHTML = `<div class="insight-loading"><div class="spinner"></div><span>Generating your personalised insight…</span></div>`;
+
+  // Compute recommendation without API
+  const rec = recommendDifficulty(ctx.pct);
+
+  // Load session history
+  const sessions = loadInsightHistory();
+  const avgPct = sessions.length ? Math.round(sessions.reduce((a,s)=>a+s.pct,0)/sessions.length) : ctx.pct;
+
+  let insight = { strengths:'—', weaknesses:'—', nextActivity:'—', recDifficulty:rec.diff, recDifficultyReason:rec.reason };
+
+  // Call AI if API key is available
+  if(apiKey){
+    try{
+      const wrongSample=(ctx.wrongQuestions||[]).slice(0,3).join('; ')||'none';
+      const prompt=`You are an educational AI coach. A student just completed a quiz.
+Context:
+- Subject: ${ctx.subject}${ctx.topic?' — Topic: '+ctx.topic:''}
+- Level: ${ctx.level}
+- Difficulty: ${ctx.difficulty}
+- Score: ${ctx.score}/${ctx.total} (${ctx.pct}%)
+- Duration: ${fmtDuration(ctx.durationSec)}
+- Questions attempted: ${ctx.attempts}
+- Questions answered incorrectly (sample): ${wrongSample}
+- Their recent average score: ${avgPct}%
+
+Return ONLY a JSON object (no markdown):
+{"strengths":"1-2 sentences on what they did well","weaknesses":"1-2 sentences on specific gaps to address","nextActivity":"One concrete study activity recommendation (e.g. flashcards on X, read chapter Y, practise Z)","encouragement":"One short motivating sentence"}`;
+
+      const raw=await callClaude(prompt,400,true);
+      const jsonFB=raw.indexOf('{'),jsonLB=raw.lastIndexOf('}');
+      if(jsonFB>=0){
+        const parsed=JSON.parse(raw.slice(jsonFB,jsonLB+1));
+        insight.strengths    = parsed.strengths    ||insight.strengths;
+        insight.weaknesses   = parsed.weaknesses   ||insight.weaknesses;
+        insight.nextActivity = parsed.nextActivity  ||insight.nextActivity;
+        insight.encouragement= parsed.encouragement||'';
+      }
+    }catch(e){
+      logError('generateInsight',e);
+      // Fill sensible defaults without API
+      insight.strengths   = ctx.pct>85?'Excellent accuracy across the quiz.':ctx.pct>=50?'You answered the majority of questions.':'You completed the quiz — that takes courage!';
+      insight.weaknesses  = ctx.pct<85?`Review the topics you found tricky in ${ctx.subject}.`:'Push yourself with harder questions to find new gaps.';
+      insight.nextActivity= rec.diff==='advanced'?`Try an advanced ${ctx.subject} quiz`:rec.diff==='beginner'?`Start with flashcards for ${ctx.subject} basics`:`Continue practising ${ctx.subject} at intermediate level`;
+    }
+  } else {
+    // No API key — generate helpful defaults from score alone
+    insight.strengths   = ctx.pct>85?'Great accuracy — you clearly know this material well.':ctx.pct>=50?'You have a solid foundation to build on.':'You took the quiz — every attempt builds your knowledge.';
+    insight.weaknesses  = ctx.pct<50?`Focus on the core concepts of ${ctx.subject||'this topic'} before the next quiz.`:ctx.pct<85?`A few topics in ${ctx.subject||'this area'} need more practice.`:'Challenge yourself further to uncover any remaining gaps.';
+    insight.nextActivity= rec.diff==='advanced'?`Try an advanced ${ctx.subject||'subject'} quiz or explain a concept to someone`:rec.diff==='beginner'?`Review ${ctx.subject||'this subject'} notes and use flashcards`:` Take another ${ctx.subject||'subject'} quiz or study the wrong answers`;
+    insight.encouragement= ctx.pct>85?'🌟 Outstanding work!':ctx.pct>=50?'💪 Keep going — you\'re making great progress!':'🎯 Every quiz makes you smarter. Don\'t give up!';
+  }
+
+  // Save session
+  const session={
+    id:Date.now(), date:new Date().toLocaleDateString(),
+    subject:ctx.subject, topic:ctx.topic, level:ctx.level, difficulty:ctx.difficulty,
+    score:ctx.score, total:ctx.total, pct:ctx.pct,
+    durationSec:ctx.durationSec, attempts:ctx.attempts,
+    insight
+  };
+  sessions.unshift(session);
+  saveInsightHistory(sessions);
+  AppEvents.emit('insight:generated',{pct:ctx.pct,recDifficulty:rec.diff,subject:ctx.subject});
+
+  // Render
+  body.innerHTML=`
+    ${insight.encouragement?`<div style="text-align:center;font-size:13px;font-weight:800;padding:8px 0 12px;color:var(--accent);">${escHtml(insight.encouragement)}</div>`:''}
+
+    <div class="insight-section">
+      <div class="insight-section-label">💪 Strengths</div>
+      <div class="insight-card strengths">${escHtml(insight.strengths)}</div>
+    </div>
+
+    <div class="insight-section">
+      <div class="insight-section-label">📌 Areas to Improve</div>
+      <div class="insight-card weaknesses">${escHtml(insight.weaknesses)}</div>
+    </div>
+
+    <div class="insight-section">
+      <div class="insight-section-label">🎯 Suggested Next Activity</div>
+      <div class="insight-card next-activity">${escHtml(insight.nextActivity)}</div>
+    </div>
+
+    <div class="insight-section">
+      <div class="insight-section-label">📈 Recommended Difficulty</div>
+      <div class="insight-card difficulty">
+        <div class="insight-diff-badge">${rec.emoji}</div>
+        <div>
+          <div class="insight-diff-text">${escHtml(rec.label)}</div>
+          <div class="insight-diff-reason">${escHtml(rec.reason)}</div>
+        </div>
+        <button class="btn btn-sm btn-secondary" onclick="applyRecommendedDifficulty('${rec.diff}')" style="margin-left:auto;flex-shrink:0;">Apply ↗</button>
+      </div>
+    </div>
+
+    ${renderTrendDots(sessions)}
+
+    <div class="insight-meta">
+      <span>📝 ${ctx.score}/${ctx.total} correct</span>
+      <span>⏱ ${fmtDuration(ctx.durationSec)}</span>
+      <span>🔢 ${ctx.attempts} answered</span>
+      ${ctx.subject?`<span>📚 ${escHtml(ctx.subject)}</span>`:''}
+    </div>
+
+    <button class="insight-history-btn" id="insight-hist-btn" onclick="toggleInsightHistory()">📊 View session history (last ${INSIGHT_MAX})</button>
+    <div class="insight-history-panel" id="insight-hist-panel">
+      ${renderInsightHistoryList(sessions)}
+    </div>
+  `;
+}
+
+// ── Apply recommended difficulty to the quiz difficulty selector ─
+function applyRecommendedDifficulty(diff){
+  const sel=document.getElementById('quiz-difficulty');
+  if(sel){
+    sel.value=diff;
+    showToast('✅ Difficulty set to '+diff+' — ready for your next quiz!',3000);
+    // Scroll back up to quiz setup
+    document.getElementById('quiz-area')?.scrollIntoView({behavior:'smooth'});
+    document.getElementById('quiz-summary')?.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('quiz-q-container').innerHTML='';
+  document.getElementById('quiz-summary').style.display='none';
+  quizData=[];
+  quizStartTime=0;
+  // Reset insight panel
+  const insightPanel=document.getElementById('ai-insight-panel');
+  const insightBody=document.getElementById('insight-body');
+  if(insightPanel)insightPanel.classList.add('hidden');
+  if(insightBody){insightBody.classList.remove('open');insightBody.innerHTML='';}
+  const chev=document.getElementById('insight-chevron');
+  if(chev)chev.classList.remove('open');
+}
 function loadQuizHistory(){const r=ls_get(KEYS.quiz);if(r)try{quizHistoryStore=JSON.parse(r);}catch(e){}}
 function saveQuizToHistory(level,subject,count,topic,data,score){
   const entry={id:Date.now(),level,subject,count,topic,data,score,total:data.length,date:new Date().toLocaleDateString(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})};
@@ -2615,6 +3017,7 @@ function renderSpellCard(){
 function navSpell(dir){const next=spellIdx+dir;if(next<0||next>=spellWords.length)return;spellIdx=next;renderSpellCard();}
 function speakSpellWord(){if(!spellWords.length)return;const w=spellWords[spellIdx].word;if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=0.7;window.speechSynthesis.speak(u);}
 function markSpell(correct){
+  if(correct)rewardCorrectAnswer();
   spellResults[spellIdx]=correct;renderSpellBadges();updateSpellScore();
   autoCompletePlanTask('Word Wizards','Spelling');
   if(currentSpellSessionId){const idx=spellHistory.findIndex(e=>e.id===currentSpellSessionId);if(idx>=0){spellHistory[idx].results=Object.assign({},spellResults);saveSpellHistoryEntry(spellHistory[idx]);}}
@@ -2626,7 +3029,9 @@ function renderSpellBadges(){
   c.innerHTML=spellWords.map((_,i)=>{const r=spellResults[i];const cls=r===true?'correct':r===false?'wrong':(i===spellIdx?'current':'');return `<div class="spell-badge ${cls}" data-idx="${i}" onclick="jumpSpell(parseInt(this.dataset.idx))">${i+1}</div>`;}).join('');
 }
 function updateSpellScore(){const correct=Object.values(spellResults).filter(v=>v===true).length;const total=Object.keys(spellResults).length;const el=document.getElementById('spell-score-summary');if(el)el.textContent=total>0?`✅ ${correct} correct / ❌ ${total-correct} wrong of ${total} answered`:'Mark words using ✅ / ❌ buttons';}
-function endSpellingPractice(){document.getElementById('spell-practice-area').style.display='none';spellWords=[];spellResults={};}
+function endSpellingPractice(){document.getElementById('spell-practice-area').style.display='none';spellWords=[];spellResults={};
+  rewardSessionComplete('Spelling Practice');
+}
 // ══════════════════════════════════════════════
 // SECTION: Brain Teasers  (→ App.ai + App.cache)
 // Tabs: FIB | scramble | tongue twisters | sudoku
@@ -2681,10 +3086,10 @@ async function startScramble(mode){
 function initScrambleGame(){scrambleIdx=0;scrambleScore=0;scrambleAnswered=0;document.getElementById('scramble-game').style.display='block';document.getElementById('scramble-summary').style.display='none';renderScrambleCard();document.getElementById('scramble-game').scrollIntoView({behavior:'smooth'});}
 function scrambleStr(s){const a=s.toUpperCase().split('');for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}if(a.join('')===s.toUpperCase()&&s.length>1)return scrambleStr(s);return a.join('');}
 function renderScrambleCard(){const w=scrambleWords[scrambleIdx];document.getElementById('scramble-idx').textContent=scrambleIdx+1;document.getElementById('scramble-total').textContent=scrambleWords.length;document.getElementById('scramble-score').textContent=scrambleScore;document.getElementById('scramble-display').textContent=scrambleStr(w.word);document.getElementById('scramble-hint').textContent='💡 '+w.hint;document.getElementById('scramble-answer').value='';document.getElementById('scramble-result').className='scr-result';document.getElementById('scramble-next-btn').style.display='none';scrambleRevealed=false;}
-function checkScramble(){if(scrambleRevealed)return;const ans=document.getElementById('scramble-answer').value.trim().toUpperCase();const correct=scrambleWords[scrambleIdx].word.toUpperCase();const el=document.getElementById('scramble-result');if(ans===correct){el.textContent='✅ Correct! "'+correct+'"'+(scrambleWords[scrambleIdx].meaning?' — '+scrambleWords[scrambleIdx].meaning:'');el.className='scr-result show correct';scrambleScore++;globalStats.scrambleCorrect++;autoCompletePlanTask('Brain Teaser Hub','Scramble');}else{el.textContent='❌ Not quite! Try again or tap 👁';el.className='scr-result show wrong';return;}globalStats.scrambleTotal++;scrambleAnswered++;document.getElementById('scramble-score').textContent=scrambleScore;document.getElementById('scramble-next-btn').style.display='inline-flex';updateScoreDisplay();}
+function checkScramble(){if(scrambleRevealed)return;const ans=document.getElementById('scramble-answer').value.trim().toUpperCase();const correct=scrambleWords[scrambleIdx].word.toUpperCase();const el=document.getElementById('scramble-result');if(ans===correct){el.textContent='✅ Correct! "'+correct+'"'+(scrambleWords[scrambleIdx].meaning?' — '+scrambleWords[scrambleIdx].meaning:'');el.className='scr-result show correct';scrambleScore++;globalStats.scrambleCorrect++;rewardCorrectAnswer();autoCompletePlanTask('Brain Teaser Hub','Scramble');}else{el.textContent='❌ Not quite! Try again or tap 👁';el.className='scr-result show wrong';return;}globalStats.scrambleTotal++;scrambleAnswered++;document.getElementById('scramble-score').textContent=scrambleScore;document.getElementById('scramble-next-btn').style.display='inline-flex';updateScoreDisplay();}
 function revealScramble(){const correct=scrambleWords[scrambleIdx].word.toUpperCase();document.getElementById('scramble-result').textContent='👁 Answer: "'+correct+'"';document.getElementById('scramble-result').className='scr-result show wrong';scrambleRevealed=true;globalStats.scrambleTotal++;scrambleAnswered++;document.getElementById('scramble-next-btn').style.display='inline-flex';updateScoreDisplay();}
 function nextScramble(){scrambleIdx++;if(scrambleIdx>=scrambleWords.length)showScrambleSummary();else renderScrambleCard();}
-function showScrambleSummary(){const pct=Math.round((scrambleScore/scrambleWords.length)*100);document.getElementById('scr-correct').textContent=scrambleScore;document.getElementById('scr-wrong').textContent=scrambleWords.length-scrambleScore;document.getElementById('scr-pct').textContent=pct+'%';document.getElementById('scramble-summary').style.display='block';}
+function showScrambleSummary(){const pct=Math.round((scrambleScore/scrambleWords.length)*100);document.getElementById('scr-correct').textContent=scrambleScore;document.getElementById('scr-wrong').textContent=scrambleWords.length-scrambleScore;document.getElementById('scr-pct').textContent=pct+'%';document.getElementById('scramble-summary').style.display='block';rewardSessionComplete('Word Scramble');}
 function resetScramble(){document.getElementById('scramble-game').style.display='none';document.getElementById('scramble-summary').style.display='none';scrambleWords=[];}
 function resetScrambleAuto(){const s=document.getElementById('scramble-theme-sel'),i=document.getElementById('scramble-theme');if(s)s.value='';if(i)i.value='';document.getElementById('scramble-game').style.display='none';document.getElementById('scramble-summary').style.display='none';scrambleWords=[];showToast('🔄 Reset');}
 
@@ -3287,7 +3692,9 @@ function navFC(dir){const next=fcIdx+dir;if(next<0||next>=fcCards.length)return;
 function speakFC(e){if(e)e.stopPropagation();const card=fcCards[fcIdx];if(!card)return;if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(card.word+'. '+card.example);u.lang='en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
 function markFC(correct){fcResults[fcIdx]=correct;updateFCProgress();if(fcIdx<fcCards.length-1)setTimeout(()=>navFC(1),300);}
 function updateFCProgress(){const done=Object.keys(fcResults).length;const got=Object.values(fcResults).filter(v=>v).length;document.getElementById('fc-score-label').textContent=got+'/'+done;const pct=fcCards.length>0?Math.round(done/fcCards.length*100):0;const bar=document.getElementById('fc-prog-bar');if(bar)bar.style.width=pct+'%';}
-function endFlashcards(){document.getElementById('fc-area').style.display='none';fcCards=[];fcResults={};}
+function endFlashcards(){document.getElementById('fc-area').style.display='none';fcCards=[];fcResults={};
+  rewardSessionComplete('Flashcards');
+}
 
 // ══════════════════════════════════════════════════════════
 // VOCAB MATCH (Item 2) — K1–P3 picture matching game
@@ -3924,7 +4331,7 @@ Add a short cultural note at the end. Do NOT output JSON format under any circum
     langSessions[currentLang]=sess;
     ls_set(KEYS.langSess,JSON.stringify(langSessions));
     saveLangHistEntry(currentLang,topic,type,result);
-    addHistory('lang',cfg.name+': '+topic);
+    addHistory('lang',cfg.name+': '+topic);rewardSessionComplete('Language Corner');rewardLangPractised(cfg.code);rewardDailyBonus();
     autoCompletePlanTask('Language Corner',cfg.name);
   }catch(e){logError(arguments.callee&&arguments.callee.name||'unknown',e);showToast('❌ '+e.message);}
   setLoading('lang-learn-btn','lang-learn-icon',false,cfg.flag);
@@ -4408,6 +4815,240 @@ function renderPlanStats(){const total=planTasks.length;const done=planTasks.fil
 // ══════════════════════════════════════════════
 // MY SCORES
 // ══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: Gamification — XP, Levels, Streak, Badges (→ App.rewards)
+//
+// XP rules:
+//   +10  per correct answer (quiz, scramble, spelling)
+//   +50  per session completed (any module)
+//   +20  daily login bonus (once per calendar day)
+//
+// Levels:
+//   0–99    🌱 Seedling
+//   100–299 🧭 Explorer
+//   300–799 📘 Scholar
+//   800+    🎓 Master
+//
+// Achievements (badges):
+//   first_quiz      First Quiz Completed
+//   five_sessions   5 Sessions Completed
+//   hundred_correct 100 Correct Answers
+//   polyglot        Practised 3 Languages
+//   streak_3        3-Day Streak
+//   streak_7        7-Day Streak
+//   scholar         Reached Scholar level
+//   master          Reached Master level
+//
+// Data stored in localStorage (key: sb_rewards):
+// {
+//   xp:            number,
+//   dailyDate:     string,   // last bonus date
+//   sessionsCount: number,
+//   correctCount:  number,
+//   langPractised: string[], // distinct language codes used
+//   badges: { [id]: { earned:bool, date:string } }
+// }
+// ═══════════════════════════════════════════════════════════════
+
+const REWARDS_KEY = 'sb_rewards';
+
+// ── Level config ─────────────────────────────────────────────
+const LEVELS = [
+  { min:   0, max:  99,  name:'Seedling', emoji:'🌱', color:'#43e97b' },
+  { min: 100, max: 299,  name:'Explorer', emoji:'🧭', color:'#38b2f8' },
+  { min: 300, max: 799,  name:'Scholar',  emoji:'📘', color:'#5b5ef4' },
+  { min: 800, max: Infinity, name:'Master', emoji:'🎓', color:'#ff8c00' },
+];
+
+// ── Badge definitions ─────────────────────────────────────────
+const BADGE_DEFS = [
+  { id:'first_quiz',      emoji:'🧠', name:'First Quiz',          desc:'Complete your first quiz',             secret:false },
+  { id:'five_sessions',   emoji:'🔁', name:'5 Sessions',          desc:'Complete 5 study sessions',            secret:false },
+  { id:'hundred_correct', emoji:'💯', name:'100 Correct',         desc:'Get 100 correct answers total',        secret:false },
+  { id:'polyglot',        emoji:'🌍', name:'Polyglot',            desc:'Practise 3 different languages',       secret:false },
+  { id:'streak_3',        emoji:'🔥', name:'On Fire',             desc:'Maintain a 3-day study streak',        secret:false },
+  { id:'streak_7',        emoji:'⚡', name:'Lightning Streak',    desc:'Maintain a 7-day study streak',        secret:false },
+  { id:'scholar',         emoji:'📘', name:'Scholar',             desc:'Reach Scholar level (300 XP)',         secret:false },
+  { id:'master',          emoji:'🎓', name:'Master',              desc:'Reach Master level (800 XP)',          secret:false },
+];
+
+// ── Load / save ───────────────────────────────────────────────
+function loadRewards(){
+  try{
+    const r=ls_get(REWARDS_KEY);
+    if(r){
+      const d=JSON.parse(r);
+      // Merge with defaults so new keys auto-appear
+      return Object.assign({
+        xp:0, dailyDate:'', sessionsCount:0, correctCount:0,
+        langPractised:[], badges:{}
+      }, d);
+    }
+  }catch(e){}
+  return { xp:0, dailyDate:'', sessionsCount:0, correctCount:0, langPractised:[], badges:{} };
+}
+
+function saveRewards(rd){
+  try{ ls_set(REWARDS_KEY,JSON.stringify(rd)); }catch(e){}
+}
+
+// ── Level helpers ─────────────────────────────────────────────
+function getLevelInfo(xp){
+  const lvl = LEVELS.find(l=>xp>=l.min&&xp<=l.max) || LEVELS[LEVELS.length-1];
+  const next = LEVELS[LEVELS.indexOf(lvl)+1];
+  const progressXP = xp - lvl.min;
+  const rangeXP    = next ? (next.min - lvl.min) : 1;
+  const pct        = next ? Math.min(100,Math.round(progressXP/rangeXP*100)) : 100;
+  return { lvl, next, progressXP, rangeXP, pct };
+}
+
+// ── XP toast ──────────────────────────────────────────────────
+function showXPToast(msg){
+  const t=document.getElementById('xp-toast'); if(!t)return;
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ── Update HUD + scores panel ─────────────────────────────────
+function refreshRewardsUI(){
+  const rd=loadRewards();
+  const {lvl,next,progressXP,rangeXP,pct}=getLevelInfo(rd.xp);
+
+  // HUD (top-left fixed)
+  const el=id=>document.getElementById(id);
+  if(el('xp-avatar'))    el('xp-avatar').textContent   = lvl.emoji;
+  if(el('xp-level-label'))el('xp-level-label').textContent = lvl.name;
+  if(el('xp-pts-label')) el('xp-pts-label').textContent = rd.xp+' XP';
+  if(el('xp-bar-fill'))  el('xp-bar-fill').style.width = pct+'%';
+
+  // Scores panel — gamification card
+  if(el('gam-level-display')) el('gam-level-display').textContent = lvl.emoji+' '+lvl.name;
+  if(el('gam-xp-display'))    el('gam-xp-display').textContent    = rd.xp+' XP total';
+  if(el('gam-level-fill'))    el('gam-level-fill').style.width    = pct+'%';
+  if(el('gam-lvl-from'))      el('gam-lvl-from').textContent      = lvl.name;
+  if(el('gam-lvl-to'))        el('gam-lvl-to').textContent        = next?next.name:'MAX';
+  if(el('gam-xp-progress'))   el('gam-xp-progress').textContent   = next?(progressXP+'/'+rangeXP+' XP'):'MAX';
+  if(el('gam-total-xp'))      el('gam-total-xp').textContent      = rd.xp;
+  if(el('gam-sessions'))      el('gam-sessions').textContent      = rd.sessionsCount;
+  if(el('gam-correct-total')) el('gam-correct-total').textContent = rd.correctCount;
+
+  // Streak ring
+  const streak=calcStudyStreak();
+  if(el('gam-streak-num'))el('gam-streak-num').textContent=streak;
+  if(el('gam-streak-ring')){
+    el('gam-streak-ring').style.background=streak>=7?'linear-gradient(135deg,#5b5ef4,#ff4d8d)':
+      streak>=3?'linear-gradient(135deg,#ff8c00,#ffcc00)':'linear-gradient(135deg,#aaa,#ccc)';
+  }
+
+  // Badge grid
+  const earned=Object.values(rd.badges).filter(b=>b.earned).length;
+  if(el('gam-badges-count'))el('gam-badges-count').textContent=earned;
+  renderBadgeGrid(rd);
+}
+
+// ── Render badge grid ─────────────────────────────────────────
+function renderBadgeGrid(rd){
+  const grid=document.getElementById('badge-grid'); if(!grid)return;
+  grid.innerHTML=BADGE_DEFS.map(def=>{
+    const state=rd.badges[def.id]||{earned:false};
+    return `<div class="badge-item ${state.earned?'earned':'locked'}">
+      <span class="badge-icon">${def.emoji}</span>
+      <div class="badge-name">${escHtml(def.name)}</div>
+      <div class="badge-desc">${escHtml(def.desc)}</div>
+      ${state.earned&&state.date?`<div class="badge-earned-date">✅ ${escHtml(state.date)}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+// ── Award badge (once only) ───────────────────────────────────
+function awardBadge(rd, badgeId){
+  if(rd.badges[badgeId]&&rd.badges[badgeId].earned) return false;
+  rd.badges[badgeId]={ earned:true, date:new Date().toLocaleDateString() };
+  const def=BADGE_DEFS.find(b=>b.id===badgeId);
+  if(def){
+    showToast('🏅 Badge unlocked: '+def.name+'!', 4000);
+    AppEvents.emit('badge:earned',{id:badgeId,name:def.name,emoji:def.emoji});
+  }
+  return true;
+}
+
+// ── Check all badge conditions ────────────────────────────────
+function checkBadges(rd){
+  const streak=calcStudyStreak();
+  if(rd.sessionsCount>=1)       awardBadge(rd,'first_quiz');
+  if(rd.sessionsCount>=5)       awardBadge(rd,'five_sessions');
+  if(rd.correctCount>=100)      awardBadge(rd,'hundred_correct');
+  if((rd.langPractised||[]).length>=3) awardBadge(rd,'polyglot');
+  if(streak>=3)                 awardBadge(rd,'streak_3');
+  if(streak>=7)                 awardBadge(rd,'streak_7');
+  if(rd.xp>=300)                awardBadge(rd,'scholar');
+  if(rd.xp>=800)                awardBadge(rd,'master');
+}
+
+// ── Core XP adder ────────────────────────────────────────────
+function addXP(amount, reason){
+  const rd=loadRewards();
+  const oldLvl=getLevelInfo(rd.xp).lvl.name;
+  rd.xp+=amount;
+  const newLvl=getLevelInfo(rd.xp).lvl;
+  saveRewards(rd);
+  showXPToast('+'+amount+' XP'+(reason?' · '+reason:''));
+  // Level-up notification
+  if(newLvl.name!==oldLvl){
+    setTimeout(()=>showToast('🎉 Level up! You are now a '+newLvl.emoji+' '+newLvl.name+'!',5000),400);
+    AppEvents.emit('level:up',{level:newLvl.name,xp:rd.xp});
+  }
+  refreshRewardsUI();
+  return rd;
+}
+
+// ── Public award functions ────────────────────────────────────
+// Called on correct answer (+10 XP)
+function rewardCorrectAnswer(){
+  const rd=addXP(10,'Correct!');
+  rd.correctCount=(rd.correctCount||0)+1;
+  checkBadges(rd);
+  saveRewards(rd);
+  refreshRewardsUI();
+}
+
+// Called on session complete (+50 XP)
+function rewardSessionComplete(moduleLabel){
+  const rd=loadRewards();
+  rd.sessionsCount=(rd.sessionsCount||0)+1;
+  saveRewards(rd);
+  const rd2=addXP(50,'Session done');
+  rd2.sessionsCount=rd.sessionsCount;
+  checkBadges(rd2);
+  saveRewards(rd2);
+  refreshRewardsUI();
+}
+
+// Called once per day on first activity (+20 XP daily bonus)
+function rewardDailyBonus(){
+  const rd=loadRewards();
+  const today=new Date().toDateString();
+  if(rd.dailyDate===today) return; // already given today
+  rd.dailyDate=today;
+  saveRewards(rd);
+  const rd2=addXP(20,'Daily bonus!');
+  Object.assign(rd2,{dailyDate:today});
+  saveRewards(rd2);
+}
+
+// Called when a language is practised
+function rewardLangPractised(langCode){
+  const rd=loadRewards();
+  if(!rd.langPractised) rd.langPractised=[];
+  if(!rd.langPractised.includes(langCode)){
+    rd.langPractised.push(langCode);
+    checkBadges(rd);
+    saveRewards(rd);
+    refreshRewardsUI();
+  }
+}
+
 function updateScoreDisplay(){
   const total=globalStats.quizTotal+globalStats.scrambleTotal;
   const correct=globalStats.quizCorrect+globalStats.scrambleCorrect;
@@ -4430,6 +5071,7 @@ function calcStudyStreak(){
 }
 function updateScoresPanel(){
   updateScoreDisplay();
+  refreshRewardsUI();
   const el=id=>document.getElementById(id);
   // Streak
   const streak=calcStudyStreak();
@@ -5239,18 +5881,25 @@ const App = (() => {
     updateTokenBar,     updateProfileTokenCard,
   };
 
-  // ── App.rewards ── Token budget + future XP/streaks/badges
+  // ── App.rewards ── Token budget + XP/streaks/badges
   const rewards = {
     addTokenUsage,
     getTokenLimits,   saveTokenLimits,
     loadTokenStats,   saveTokenStats,
     updateBar:  updateTokenBar,
     updateCard: updateProfileTokenCard,
-    // Future hooks (implement to add gamification):
-    // addXP(amount, reason)
-    // checkStreak()
-    // awardBadge(id)
-    // getLeaderboard()
+    // XP & gamification
+    addXP,
+    rewardCorrectAnswer,
+    rewardSessionComplete,
+    rewardDailyBonus,
+    rewardLangPractised,
+    awardBadge,
+    checkBadges,
+    refreshUI:  refreshRewardsUI,
+    load:       loadRewards,
+    save:       saveRewards,
+    getLevelInfo,
   };
 
   // ── App.cache ── History, session caching, context reuse
@@ -5263,6 +5912,9 @@ const App = (() => {
     loadSudokuPool,     saveSudokuPoolCache,
     expandSudokuPool,
     logError,           renderErrLog,
+    // AI Insight session history
+    loadInsightHistory, saveInsightHistory,
+    generateInsight,
   };
 
   // ── App.log ── Structured error logging
@@ -5424,6 +6076,10 @@ window.addEventListener('DOMContentLoaded',function(){
   updateQuizTopicsFromSyllabus();
   // Emit app:ready so AppEvents subscribers can hook into startup
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
+  // Award daily bonus XP on first activity of the day
+  rewardDailyBonus();
+  // Initialise rewards UI
+  refreshRewardsUI();
   // Pre-warm data packs in background (1.5s delay, non-blocking)
   DataLoader.prewarm();
   // Enrich tongue twisters once pack is warm

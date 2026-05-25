@@ -6,7 +6,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
-<title>MyStudyBuddy v5.0</title>
+<meta name="theme-color" content="#5b5ef4">
+<meta name="apple-mobile-web-app-title" content="StudyBuddy">
+<link rel="manifest" href="manifest.json">
+<title>MyStudyBuddy v5.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -1363,6 +1366,17 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <button class="btn btn-secondary" onclick="closeProfile()">Cancel</button>
     </div>
   </div>
+</div>
+
+<!-- PWA INSTALL PROMPT -->
+<div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:2100;background:linear-gradient(90deg,#5b5ef4,#ff4d8d);color:#fff;padding:10px 14px;font-size:12px;font-weight:800;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 3px 14px rgba(91,94,244,.4);">
+  <span style="flex:1;">📚 Install MyStudyBuddy for offline use!</span>
+  <button id="pwa-install-btn" onclick="pwaInstall()" style="background:#fff;color:#5b5ef4;border:none;border-radius:8px;padding:6px 14px;font-weight:800;font-size:12px;cursor:pointer;touch-action:manipulation;">Install ↓</button>
+  <button onclick="document.getElementById('pwa-install-bar').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;line-height:1;padding:0 2px;">✕</button>
+</div>
+<!-- PWA OFFLINE INDICATOR -->
+<div id="pwa-offline-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:2099;background:#ff8c00;color:#fff;padding:7px 14px;font-size:11px;font-weight:800;text-align:center;">
+  ✈️ Offline mode — AI features unavailable. Sudoku, Tongue Twisters &amp; local tools still work.
 </div>
 
 <!-- ERROR LOG ICON + PANEL -->
@@ -5246,6 +5260,114 @@ window.addEventListener('DOMContentLoaded',function(){
   // Emit app:ready so AppEvents subscribers can hook into startup
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
 });
+</script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// PWA: Service Worker registration + Install prompt
+// ═══════════════════════════════════════════════════════
+(function initPWA() {
+
+  // ── Register service worker ──
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js', { scope: './' })
+        .then(reg => {
+          console.log('[SW] Registered, scope:', reg.scope);
+
+          // Check for SW updates and notify user
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New version available — show toast
+                if (typeof showToast === 'function') {
+                  showToast('🔄 App updated! Refresh to get the latest version.', 6000);
+                }
+              }
+            });
+          });
+        })
+        .catch(err => console.warn('[SW] Registration failed:', err));
+    });
+  }
+
+  // ── Offline / Online detection ──
+  function updateOnlineStatus() {
+    const bar = document.getElementById('pwa-offline-bar');
+    if (!bar) return;
+    if (!navigator.onLine) {
+      bar.style.display = 'block';
+      // Push content down so bar doesn't overlap header
+      const wrapper = document.querySelector('.wrapper');
+      if (wrapper) wrapper.style.paddingTop = '46px';
+    } else {
+      bar.style.display = 'none';
+      const wrapper = document.querySelector('.wrapper');
+      if (wrapper) wrapper.style.paddingTop = '';
+    }
+  }
+
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+  // Check current state once DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateOnlineStatus);
+  } else {
+    updateOnlineStatus();
+  }
+
+  // ── Install prompt (BeforeInstallPrompt) ──
+  let _deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    _deferredPrompt = e;
+
+    // Show the install bar only if not already installed
+    const bar = document.getElementById('pwa-install-bar');
+    if (bar) bar.style.display = 'flex';
+  });
+
+  // Called by the Install button in the banner
+  window.pwaInstall = async function () {
+    if (!_deferredPrompt) return;
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    console.log('[PWA] Install outcome:', outcome);
+    _deferredPrompt = null;
+    const bar = document.getElementById('pwa-install-bar');
+    if (bar) bar.style.display = 'none';
+  };
+
+  // Hide banner if already installed (standalone display mode)
+  window.addEventListener('appinstalled', () => {
+    const bar = document.getElementById('pwa-install-bar');
+    if (bar) bar.style.display = 'none';
+    console.log('[PWA] App installed successfully');
+    if (typeof showToast === 'function') showToast('✅ StudyBuddy installed!', 3000);
+  });
+
+  // On iOS, BeforeInstallPrompt doesn't fire.
+  // Show a manual "Add to Home Screen" hint on Safari instead.
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
+    || window.navigator.standalone === true;
+
+  if (isIOS && !isInStandaloneMode) {
+    // Show hint after 4 seconds on iOS Safari
+    setTimeout(() => {
+      const bar = document.getElementById('pwa-install-bar');
+      if (!bar) return;
+      bar.querySelector('#pwa-install-btn').textContent = 'How to install';
+      bar.querySelector('#pwa-install-btn').onclick = () => {
+        alert('To install: tap the Share button (□↑) in Safari, then tap "Add to Home Screen".');
+      };
+      bar.style.display = 'flex';
+    }, 4000);
+  }
+
+})();
 </script>
 </body>
 </html>

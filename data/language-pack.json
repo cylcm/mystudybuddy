@@ -1,0 +1,127 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "MyStudyBuddy language corner configuration and topic categories",
+    "lastUpdated": "2026-05",
+    "schema": "language-pack-v1"
+  },
+  "languages": {
+    "english": {
+      "flag": "🇬🇧",
+      "name": "English",
+      "code": "en",
+      "tts": "en-GB",
+      "isBase": true
+    },
+    "chinese": {
+      "flag": "🇨🇳",
+      "name": "Mandarin Chinese",
+      "code": "zh",
+      "tts": "zh-CN",
+      "pronGuide": "Include Pinyin romanization for every word."
+    },
+    "cantonese": {
+      "flag": "🇭🇰",
+      "name": "Cantonese",
+      "code": "yue",
+      "tts": "zh-HK",
+      "pronGuide": "Include Jyutping romanization (Cantonese phonetic system) for every word."
+    },
+    "japanese": {
+      "flag": "🇯🇵",
+      "name": "Japanese",
+      "code": "ja",
+      "tts": "ja-JP",
+      "pronGuide": "Include Hiragana and Romaji for every word."
+    },
+    "french": {
+      "flag": "🇫🇷",
+      "name": "French",
+      "code": "fr",
+      "tts": "fr-FR",
+      "pronGuide": "Include romanized pronunciation guide for every word."
+    },
+    "german": {
+      "flag": "🇩🇪",
+      "name": "German",
+      "code": "de",
+      "tts": "de-DE",
+      "pronGuide": "Include romanized pronunciation guide for every word."
+    },
+    "filipino": {
+      "flag": "🇵🇭",
+      "name": "Filipino",
+      "code": "fil",
+      "tts": "fil-PH",
+      "pronGuide": "Include romanized pronunciation guide for every word."
+    },
+    "malay": {
+      "flag": "🇲🇾",
+      "name": "Malay",
+      "code": "ms",
+      "tts": "ms-MY",
+      "pronGuide": "Include romanized pronunciation guide for every word."
+    }
+  },
+  "categories": {
+    "english": [
+      "Vocabulary Building", "Grammar & Usage", "Idioms & Phrases",
+      "Reading Comprehension", "Creative Writing", "Business English",
+      "Academic English", "Pronunciation", "Spelling & Phonics",
+      "Conversation", "Synonyms & Antonyms", "Sentence Structure",
+      "Story Telling", "Literature", "Debate & Discussion"
+    ],
+    "chinese": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Time", "Emotions", "Sports", "Hobbies", "Body Parts"
+    ],
+    "cantonese": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Time", "Emotions", "Sports", "Hobbies", "Daily Life"
+    ],
+    "japanese": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Seasons", "Time", "Politeness", "Daily Life", "Nature"
+    ],
+    "french": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Café & Restaurant", "Travel",
+      "Directions", "Time", "Fashion", "Sports", "Culture"
+    ],
+    "german": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Directions", "Time", "Occupations", "Transport", "Culture"
+    ],
+    "filipino": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Directions", "Time", "Emotions", "Sports", "Celebrations"
+    ],
+    "malay": [
+      "Greetings", "Family", "Food", "Numbers", "Colors",
+      "Animals", "School", "Weather", "Shopping", "Travel",
+      "Directions", "Time", "Emotions", "Sports", "Culture"
+    ]
+  },
+  "learnTypes": {
+    "default": [
+      "vocabulary with pronunciation",
+      "basic sentences and phrases",
+      "a short story with translation",
+      "common questions and answers"
+    ],
+    "english": [
+      "vocabulary building with definitions and examples",
+      "grammar rules with examples",
+      "idioms and common phrases",
+      "reading comprehension passage",
+      "creative writing prompts and examples"
+    ]
+  },
+  "readAloudFormats": ["story", "poem", "dialogue", "news", "description"],
+  "readAloudDifficulties": ["beginner", "intermediate", "advanced"]
+}

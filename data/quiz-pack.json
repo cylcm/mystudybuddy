@@ -1,0 +1,111 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "description": "MyStudyBuddy quiz content pack — Singapore MOE curriculum",
+    "lastUpdated": "2026-05",
+    "schema": "quiz-pack-v1"
+  },
+  "subjects": {
+    "Kinder 1": [
+      "English Language", "Mother Tongue Language",
+      "Numeracy", "Literacy", "Arts & Crafts",
+      "Music & Movement", "Social Skills", "Physical Play"
+    ],
+    "Kinder 2": [
+      "English Language", "Mother Tongue Language",
+      "Numeracy", "Literacy", "Arts & Crafts",
+      "Music & Movement", "Social Skills", "Physical Play",
+      "Basic Science Concepts", "Thinking Skills"
+    ],
+    "Primary 1": [
+      "Mathematics", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Art", "Music", "Physical Education"
+    ],
+    "Primary 2": [
+      "Mathematics", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Art", "Music", "Physical Education"
+    ],
+    "Primary 3": [
+      "Mathematics", "Science", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Social Studies", "Art", "Music", "Physical Education"
+    ],
+    "Primary 4": [
+      "Mathematics", "Science", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Social Studies", "Art", "Music", "Physical Education"
+    ],
+    "Primary 5": [
+      "Mathematics", "Science", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Social Studies", "Art", "Music", "Physical Education"
+    ],
+    "Primary 6": [
+      "Mathematics", "Science", "English Language",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Social Studies", "Art", "Music", "Physical Education"
+    ],
+    "Secondary 1": [
+      "Mathematics", "English Language", "General Science",
+      "Geography", "History", "Social Studies",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Art", "Music", "Physical Education", "Design & Technology",
+      "Food & Consumer Education", "Computer Applications"
+    ],
+    "Secondary 2": [
+      "Mathematics", "English Language", "General Science",
+      "Geography", "History", "Social Studies",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Art", "Music", "Physical Education", "Design & Technology",
+      "Food & Consumer Education", "Computer Applications"
+    ],
+    "Secondary 3": [
+      "Mathematics", "Additional Mathematics", "English Language",
+      "Biology", "Chemistry", "Physics", "Combined Science",
+      "Geography", "History", "Literature in English",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Economics", "Commerce", "Principles of Accounts",
+      "Art", "Music", "Physical Education", "Design & Technology",
+      "Computer Applications", "Business Studies"
+    ],
+    "Secondary 4": [
+      "Mathematics", "Additional Mathematics", "English Language",
+      "Biology", "Chemistry", "Physics", "Combined Science",
+      "Geography", "History", "Literature in English",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Economics", "Commerce", "Principles of Accounts",
+      "Art", "Music", "Physical Education", "Design & Technology",
+      "Computer Applications", "Business Studies"
+    ],
+    "Secondary 5": [
+      "Mathematics", "Additional Mathematics", "English Language",
+      "Biology", "Chemistry", "Physics", "Combined Science",
+      "Geography", "History", "Literature in English",
+      "Chinese Language", "Malay Language", "Tamil Language",
+      "Economics", "Commerce", "Principles of Accounts",
+      "Art", "Music", "Physical Education", "Design & Technology",
+      "Computer Applications", "Business Studies"
+    ]
+  },
+  "difficulties": {
+    "beginner": {
+      "label": "🟢 Beginner",
+      "description": "Simple vocabulary, straightforward recall questions",
+      "promptHint": "Use simple vocabulary and straightforward recall questions."
+    },
+    "intermediate": {
+      "label": "🟡 Intermediate",
+      "description": "Mix of recall and understanding",
+      "promptHint": "Mix recall and understanding questions at a moderate level."
+    },
+    "advanced": {
+      "label": "🔴 Advanced",
+      "description": "Analysis, evaluation and nuanced options",
+      "promptHint": "Use challenging analysis and evaluation questions with nuanced options."
+    }
+  },
+  "defaultCount": 10,
+  "countOptions": [10, 15, 20]
+}

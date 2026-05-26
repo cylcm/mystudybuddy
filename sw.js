@@ -1,11 +1,11 @@
 // ═══════════════════════════════════════════════════════════
-// MyStudyBuddy Service Worker  v5.2
+// MyStudyBuddy Service Worker  v5.3
 // Strategy: Network-first with cache fallback.
 //   • Online  → fetch from network, update cache in background.
 //   • Offline → serve from cache; AI calls fail gracefully.
 // ═══════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'studybuddy-v5.2';
+const CACHE_NAME = 'studybuddy-v5.3';
 
 // Files to pre-cache on install.
 // Only local assets — the app shell that must work offline.
@@ -22,9 +22,9 @@ const PRECACHE_URLS = [
 // External origins that should always go network-only.
 // Never cache API calls or auth tokens.
 const NETWORK_ONLY_ORIGINS = [
-  'api.anthropic.com',
-  'fonts.googleapis.com',
-  'fonts.gstatic.com'
+  'api.anthropic.com',      // AI API — never cache auth'd requests
+  'fonts.googleapis.com',   // Google Fonts CSS
+  'fonts.gstatic.com'       // Google Fonts files
 ];
 
 // ── Install: pre-cache the app shell ──────────────────────

@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#5b5ef4">
 <meta name="apple-mobile-web-app-title" content="StudyBuddy">
 <link rel="manifest" href="manifest.json">
-<title>MyStudyBuddy v5.2</title>
+<title>MyStudyBuddy v5.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -134,10 +134,10 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .res-badge.red{background:#fff0f4;color:#cc1144;border:1px solid #ffaacc;}
 .res-badge.blue{background:#e8f4ff;color:#1565c0;border:1px solid #90caf9;}
 .res-badge.purple{background:#f3e5f5;color:#6a1b9a;border:1px solid #ce93d8;}
-.res-divider{border:none;border-top:1.5px dashed var(--border);margin:10px 0;}
+
 
 /* ─── FLEX/GRID helpers ─── */
-.flex-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;}
+
 .flex-row>*{flex:1;min-width:0;}
 .flex-row>.btn{flex:0;}
 .grid-2{display:grid;grid-template-columns:1fr;gap:8px;}
@@ -194,11 +194,11 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .sudoku-cell{background:#fff;width:100%;padding-bottom:0;display:flex;align-items:center;justify-content:center;font-size:clamp(12px,3vw,16px);font-weight:700;cursor:pointer;border:none;font-family:'Space Mono',monospace;transition:background .15s;-webkit-tap-highlight-color:transparent;min-width:0;}
 .sudoku-cell:nth-child(3n){border-right:2px solid #555;}
 .sudoku-cell:nth-child(9n){border-right:none;}
-.sudoku-row-break{border-bottom:2px solid #555;}
+
 .sudoku-cell.given{background:#f0f4ff;color:#333;font-weight:900;}
 .sudoku-cell.selected{background:#d4d0ff!important;}
 .sudoku-cell.error{background:#fff0f4!important;color:#cc1144;}
-.sudoku-cell.correct-fill{background:#e6fff3!important;color:#007a40;}
+.sudoku-cell
 .sudoku-numpad{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:340px;margin:12px auto 0;}
 .sudoku-numpad button{background:#f0f4ff;border:1.5px solid var(--border);border-radius:8px;padding:10px 0;font-size:16px;font-weight:800;cursor:pointer;font-family:'Space Mono',monospace;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
 .sudoku-numpad button:active{background:var(--accent);color:#fff;}
@@ -207,7 +207,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 /* ─── FILL IN BLANK ─── */
 .fib-sentence{background:#f8f9ff;border:1.5px solid #c5d0f5;border-radius:12px;padding:14px;margin-bottom:10px;}
 .fib-sentence p{font-size:14px;line-height:1.8;margin-bottom:10px;}
-.fib-blank{display:inline-block;border-bottom:2px solid var(--accent);min-width:80px;text-align:center;padding:2px 6px;color:var(--accent);font-weight:800;}
+
 .fib-input{display:inline-block;border:1.5px solid var(--border);border-radius:6px;padding:3px 8px;font-size:14px;font-family:'Nunito',sans-serif;width:100px;-webkit-appearance:none;text-align:center;}
 .fib-fb{font-size:12px;font-weight:800;margin-top:6px;}
 .fib-fb.correct{color:#007a40;}
@@ -247,7 +247,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .story-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow);}
 .story-card.selected{border-color:var(--accent);background:#f0f0ff;box-shadow:0 0 0 3px rgba(91,94,244,.2);}
 .story-title{font-size:14px;font-weight:800;margin-bottom:5px;}
-.story-meta{font-size:11px;color:var(--text3);}
+
 .story-preview{font-size:12px;color:var(--text2);margin-top:6px;line-height:1.5;}
 .narration-panel{background:linear-gradient(135deg,#f0f4ff,#f5e8ff);border:2px solid var(--border);border-radius:16px;padding:18px;margin-top:14px;}
 .narration-title{font-size:15px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
@@ -286,11 +286,11 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .hist-title{font-weight:800;font-size:12px;}
 .hist-meta{font-size:10px;color:var(--text3);margin-top:2px;}
 .hist-badge{padding:2px 8px;border-radius:50px;font-size:9px;font-weight:800;flex-shrink:0;}
-.badge-quiz{background:rgba(91,94,244,.15);color:var(--accent);}
-.badge-grammar{background:rgba(255,77,141,.15);color:var(--accent2);}
-.badge-lang{background:rgba(0,153,230,.15);color:var(--accent5);}
-.badge-explain{background:rgba(0,201,107,.15);color:var(--accent3);}
-.badge-brain{background:rgba(255,140,0,.15);color:var(--accent4);}
+
+
+
+
+
 
 /* ─── EXPLAIN HISTORY ─── */
 .expl-hist-item{background:#f8f9ff;border:1.5px solid #c5d0f5;border-radius:12px;overflow:hidden;margin-bottom:8px;}
@@ -387,6 +387,48 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .streak-ring{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff8c00,#ffcc00);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px;box-shadow:0 4px 16px rgba(255,140,0,.4);}
 .streak-ring .sr-num{font-size:1.4rem;font-weight:900;color:#fff;line-height:1;}
 .streak-ring .sr-label{font-size:8px;font-weight:800;color:rgba(255,255,255,.85);}
+/* ─── PARENT DASHBOARD ─── */
+#parent-dash-modal{position:fixed;inset:0;z-index:2200;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px;}
+#parent-dash-modal.open{display:flex;}
+.parent-dash{background:var(--surface);border-radius:18px;width:min(540px,100%);max-height:90vh;overflow-y:auto;box-shadow:0 12px 48px rgba(0,0,0,.3);}
+.parent-dash-header{background:linear-gradient(135deg,#5b5ef4,#ff4d8d);color:#fff;padding:18px 20px;border-radius:18px 18px 0 0;display:flex;align-items:center;justify-content:space-between;}
+.parent-dash-header h2{font-size:16px;font-weight:900;margin:0;}
+.parent-dash-body{padding:16px 18px;}
+.parent-section{margin-bottom:16px;}
+.parent-section-title{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);margin-bottom:8px;}
+.parent-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.parent-stat{background:var(--surface2);border-radius:12px;padding:12px 14px;}
+.parent-stat-val{font-size:1.4rem;font-weight:900;color:var(--accent);}
+.parent-stat-lbl{font-size:10px;color:var(--text3);margin-top:2px;}
+.parent-subject-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.parent-subject-row:last-child{border:none;}
+.parent-subj-bar-track{flex:1;background:var(--surface2);border-radius:50px;height:7px;overflow:hidden;}
+.parent-subj-bar-fill{height:100%;border-radius:50px;transition:width .5s;}
+.parent-badge-row{display:flex;flex-wrap:wrap;gap:7px;}
+.parent-badge-chip{background:var(--surface2);border-radius:50px;padding:4px 11px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:5px;}
+.parent-badge-chip.earned{background:#e6fff3;color:#007a40;}
+.parent-week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:4px;}
+.parent-day-cell{aspect-ratio:1;border-radius:5px;background:var(--surface2);}
+.parent-day-cell.active{background:var(--accent);opacity:.8;}
+.parent-day-cell.today{ring:2px solid var(--accent);}
+.parent-print-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--text2);cursor:pointer;width:100%;margin-top:10px;}
+.parent-print-btn:hover{border-color:var(--accent);color:var(--accent);}
+@media print{
+  body>*:not(#parent-dash-modal){display:none!important;}
+  #parent-dash-modal{position:static;display:block!important;background:none;}
+  .parent-dash{box-shadow:none;max-height:none;}
+}
+/* ─── VOICE MODULE ─── */
+.voice-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:7px 13px;border-radius:50px;border:2px solid var(--border);background:#fff;font-size:12px;font-weight:800;cursor:pointer;transition:all .2s;touch-action:manipulation;user-select:none;-webkit-tap-highlight-color:transparent;}
+.voice-btn:disabled{opacity:.4;cursor:not-allowed;}
+.voice-btn.idle{color:var(--text2);border-color:var(--border);}
+.voice-btn.idle:hover{border-color:var(--accent);color:var(--accent);}
+.voice-btn.listening{color:#fff;background:linear-gradient(135deg,#ff4d8d,#e53935);border-color:transparent;animation:pulse-rec .8s ease infinite alternate;box-shadow:0 3px 14px rgba(255,77,141,.4);}
+.voice-btn.processing{color:var(--accent);border-color:var(--accent);opacity:.7;}
+.voice-btn.unsupported{display:none;}
+@keyframes pulse-rec{0%{box-shadow:0 3px 10px rgba(255,77,141,.4);}100%{box-shadow:0 3px 18px rgba(255,77,141,.8);}}
+.voice-transcript{font-size:11px;color:var(--text3);font-style:italic;min-height:14px;margin-top:4px;transition:color .2s;}
+.voice-transcript.heard{color:var(--accent3);font-style:normal;font-weight:700;}
 /* ─── AI INSIGHT PANEL ─── */
 #ai-insight-panel{margin-top:14px;border-radius:14px;overflow:hidden;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#5b5ef4,#ff4d8d,#43e97b) border-box;}
 #ai-insight-panel.hidden{display:none;}
@@ -432,7 +474,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .panel{contain:layout style;}
 .card{contain:layout style;}
 .tab-btn,.mod-tab,.btn{will-change:transform;}
-.lang-tabs-wrap{contain:layout;}
+
 /* Passive scroll for all scrollable containers */
 .wrapper,.modal,.result-box,.explain-rendered{
   -webkit-overflow-scrolling:touch;
@@ -459,7 +501,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   .plan-weekly-grid{grid-template-columns:repeat(7,1fr);}
   .modal{border-radius:20px;max-width:500px;margin:auto;}
   .modal-overlay{align-items:center;}
-  .flex-row{flex-wrap:nowrap;}
+  
 }
 @media(min-width:1024px){
   .wrapper{padding:20px 20px 40px;}
@@ -477,7 +519,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   .mod-tab{padding:6px 9px;font-size:10px;}
   .plan-weekly-grid{grid-template-columns:repeat(4,1fr)!important;}
   #plan-view-effort .grid-2{display:flex;flex-direction:column;}
-  .effort-step-box{padding:10px!important;}
+  
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   .btn{font-size:12px;padding:9px 12px;}
   .score-bar{font-size:11px;}
@@ -545,7 +587,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 <div class="wrapper">
   <div class="header">
     <h1>📚 MyStudyBuddy</h1>
-    <p>Smart Study Companion on the GO ✈️ <span style="font-size:10px;background:rgba(91,94,244,.15);color:var(--accent);padding:2px 8px;border-radius:50px;font-weight:800;">v5.1 · 2026</span></p>
+    <p>Smart Study Companion on the GO ✈️ <span style="font-size:10px;background:rgba(91,94,244,.15);color:var(--accent);padding:2px 8px;border-radius:50px;font-weight:800;">v5.3 · 2026</span></p>
     <div class="header-profile">
       <span id="header-avatar" style="font-size:1.3rem;"></span>
       <span id="header-name" style="font-weight:800;font-size:13px;color:var(--text2);"></span>
@@ -776,6 +818,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <button class="btn btn-secondary btn-sm" onclick="navSpell(1)">Next ▶</button>
             </div>
             <div style="display:flex;gap:7px;justify-content:center;">
+              <button id="spell-voice-btn" class="voice-btn idle" onclick="toggleSpellVoice()" title="Say the word to auto-mark spelling">🎙 Speak</button>
               <button class="btn btn-success btn-sm" onclick="markSpell(true)">✅ Correct</button>
               <button class="btn btn-danger btn-sm" onclick="markSpell(false)">❌ Wrong</button>
             </div>
@@ -1331,6 +1374,10 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   <!-- ═══════════ MY SCORES ═══════════ -->
   <div id="panel-scores" class="panel">
     <!-- GAMIFICATION CARD -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span style="font-size:12px;color:var(--text3);font-weight:700;">Track your progress</span>
+      <button class="btn btn-secondary btn-sm" onclick="openParentDash()" title="Parent summary report">👨‍👩‍👧 Parent Summary</button>
+    </div>
     <div class="card" id="gamification-card">
       <h2>⚡ XP &amp; Level Progress</h2>
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap;">
@@ -1377,6 +1424,35 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <h2>🏅 Achievements</h2>
       <div class="badge-grid" id="badge-grid"></div>
     </div>
+    <!-- AI Cache Management -->
+    <div class="card" id="ai-cache-card">
+      <h2>💾 AI Generation Cache</h2>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">
+        Generated quizzes and insights are reused for <strong>10 days</strong> to save API tokens. Clear entries to force fresh generation.
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="cache-quiz-count" style="color:var(--accent);">0</div>
+          <div class="stat-label">Quizzes</div>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="cache-insight-count" style="color:var(--accent3);">0</div>
+          <div class="stat-label">Insights</div>
+        </div>
+        <div class="stat-card" style="text-align:center;">
+          <div class="stat-number" id="cache-rec-count" style="color:var(--accent4);">0</div>
+          <div class="stat-label">Recs</div>
+        </div>
+      </div>
+      <div id="cache-entries-list" style="max-height:200px;overflow-y:auto;margin-bottom:10px;"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;">
+        <button class="btn btn-secondary btn-sm" onclick="renderCachePanel()">🔄 Refresh</button>
+        <button class="btn btn-secondary btn-sm" onclick="AICache.clearType('quiz');renderCachePanel();showToast('Quiz cache cleared');">🗑 Clear Quizzes</button>
+        <button class="btn btn-secondary btn-sm" onclick="AICache.clearType('insight');renderCachePanel();showToast('Insight cache cleared');">🗑 Clear Insights</button>
+        <button class="btn btn-secondary btn-sm" style="color:var(--accent2);border-color:var(--accent2);" onclick="if(confirm('Clear all cached AI content?')){AICache.clearAll();renderCachePanel();}">🗑 Clear All</button>
+      </div>
+    </div>
+
     <!-- Overall Performance -->
     <div class="card">
       <h2>🏆 Overall Performance</h2>
@@ -1498,6 +1574,22 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   </div>
 </div>
 
+<!-- PARENT SUMMARY MODAL -->
+<div id="parent-dash-modal" onclick="if(event.target===this)closeParentDash()">
+  <div class="parent-dash" id="parent-dash-content">
+    <div class="parent-dash-header">
+      <div>
+        <h2>👨‍👩‍👧 Parent Summary</h2>
+        <div style="font-size:11px;opacity:.8;" id="parent-dash-subtitle">Loading…</div>
+      </div>
+      <button onclick="closeParentDash()" style="background:rgba(255,255,255,.2);border:none;border-radius:8px;color:#fff;padding:6px 10px;cursor:pointer;font-size:16px;">✕</button>
+    </div>
+    <div class="parent-dash-body" id="parent-dash-body">
+      <div style="text-align:center;padding:30px;color:var(--text3);">Generating report…</div>
+    </div>
+  </div>
+</div>
+
 <!-- GAMIFICATION XP HUD -->
 <div id="xp-hud" onclick="switchTab('scores',document.querySelector('.tab-btn[data-tab=scores]'))" title="View your XP & badges">
   <span class="xp-avatar" id="xp-avatar">🌱</span>
@@ -1542,23 +1634,16 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
 <script>
 // ══════════════════════════════════════════════
-// CONSTANTS & STATE
 // ══════════════════════════════════════════════
 
 // ─────────────────────────────────────────────
-// CONFIG — Centralised runtime configuration
-// All magic values live here. Existing constants
-// (KEYS, LANG_CONFIG, DEFAULT_SUBJECTS, etc.)
-// remain untouched for backward compatibility.
-// To change a limit or default, edit CONFIG only.
 // ─────────────────────────────────────────────
 const CONFIG = Object.freeze({
-  // App identity
   APP_NAME:    'MyStudyBuddy',
-  APP_VERSION: '5.2',
+  APP_VERSION: '5.3',
+  APP_BUILD: '2026-05-26',
   APP_SUBTITLE:'Smart Study Companion on the GO ✈️',
 
-  // AI model
   AI_MODEL:        'claude-haiku-4-5-20251001',
   AI_DEFAULT_MAX:  1200,
   AI_BATCH_MAX:    800,
@@ -1580,31 +1665,24 @@ const CONFIG = Object.freeze({
   STORAGE_SESSION_LIMIT: 'sb_session_limit',
   STORAGE_SYLLABUS:      'sb_syllabus_v1',
 
-  // Quiz
   QUIZ_MIN_TOKENS:      2000,
   QUIZ_TOKENS_PER_Q:     200,
 
-  // Flashcards
   FC_MIN_TOKENS:        800,
   FC_TOKENS_PER_CARD:    60,
 
-  // Toast
   TOAST_MS:            2800,
 
-  // Error log
   ERR_LOG_MAX:           50,
 
-  // Sudoku
   SUDOKU_POOL_TARGET:     5,
 
-  // Read aloud word count ranges by difficulty
   READ_WORD_RANGES: Object.freeze({
     beginner:     '50-80',
     intermediate: '80-120',
     advanced:     '120-160',
   }),
 
-  // Effort planner defaults
   EFFORT_SESSION_MINS:   30,
   EFFORT_BREAK_MINS:     15,
   EFFORT_STUDY_DAYS:      7,
@@ -1620,7 +1698,9 @@ const KEYS={api:'sb_ak',profile:'sb_pf',quiz:'sb_qh',plan:'sb_sp',
   langHist:'sb_lh',transHist:'sb_th',fibHist:'sb_fh',
   ttHist:'sb_tth',readHist:'sb_rh',activated:'sb_act',
   fcHist:'sb_fc',convoHist:'sb_cvh',cultureNotes:'sb_cult',
-  pronHist:'sb_pron',podcastHist:'sb_pod'};
+  pronHist:'sb_pron',podcastHist:'sb_pod',
+  aiCache:'sb_aic',      // ← AI generation cache
+  analytics:'sb_analytics'};  // ← parent summary analytics
 
 let apiKey='';
 let profile={name:'',level:'Secondary 1',avatar:'🧑',subjects:[]};
@@ -1634,14 +1714,10 @@ let cultureNotes={};
 let pronHistory=[],pronSR=null;
 let podcastEpisodes=[],podcastHistory=[],currentPodcast=null;
 
-// Quiz
 let quizData=[],quizCurrent=0,quizScore=0,quizAnswered=0,quizHistoryStore=[];
 let quizStartTime=0; // timestamp when current quiz began (for duration tracking)
-// Scramble
 let scrManualWords=[],scrambleWords=[],scrambleIdx=0,scrambleScore=0,scrambleAnswered=0,scrambleRevealed=false,scrHistory=[];
-// Spelling
 let spellManualWords=[],spellWords=[],spellIdx=0,spellResults={},spellHistory=[],currentSpellSessionId=null,spellingMode='manual';
-// Brain Teasers
 let fibHistory=[],currentFIBSession=null;
 let ttHistory=[],selectedTT=null;
 // Default 5 tongue twisters — available without API
@@ -1654,11 +1730,8 @@ const DEFAULT_TT_DATA=[
 ];
 let ttList=[...DEFAULT_TT_DATA];
 let sudokuPuzzle=[],sudokuSolution=[],sudokuSelected=null,sudokuErrors=0,sudokuTimer=0,sudokuTimerInterval=null;
-// Language
 let currentLang='chinese',langSessions={english:{},chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},langHistory={english:[],chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},transHistory=[],readHistory=[];
-// Explain
 let explainHistory=[];
-// Plan
 let planTasks=[],planDayOffset=0,planWeekOffset=0,planMonthOffset=0,planCurrentView='daily';
 
 const DEFAULT_SUBJECTS={
@@ -1769,12 +1842,9 @@ const LANG_CATEGORIES={
 
 // ══════════════════════════════════════════════
 // SECTION: Utilities
-// Shared helpers used across all modules.
-// escHtml, showToast, ls_get/set/del, setLoading.
 // getSubjectMap() — sync accessor for subject data.
 // ══════════════════════════════════════════════
 
-// Synchronous subject map accessor.
 // Uses localStorage-cached pack if available, otherwise inline DEFAULT_SUBJECTS.
 // DataLoader.prewarm() runs 1.5s after startup so the cache is usually warm.
 function getSubjectMap() {
@@ -1795,7 +1865,6 @@ function requireField(id,msg){const el=document.getElementById(id);if(!el||(el.v
 
 // ══════════════════════════════════════════════
 // SECTION: Activation Gate
-// Access-code check on first run. XOR-encoded.
 // ══════════════════════════════════════════════
 function checkGate(){
   const val=document.getElementById('gate-input').value.trim();
@@ -1821,9 +1890,6 @@ function forgetApiKey(){if(!confirm('Remove API key from this device?'))return;a
 
 // ══════════════════════════════════════════════
 // SECTION: Token Tracking  (→ App.rewards)
-// Tracks per-request, session, and daily token
-// usage. Updates the floating token bar and
-// profile card. Limits enforced before callClaude.
 // ══════════════════════════════════════════════
 let tokenStats={sessionUsed:0,dailyUsed:0,lastReqTokens:0,dailyDate:new Date().toDateString()};
 const TOKEN_STATS_KEY=CONFIG.STORAGE_TOKEN_STATS;
@@ -1831,7 +1897,6 @@ function loadTokenStats(){
   const r=ls_get(TOKEN_STATS_KEY);
   if(r)try{
     const saved=JSON.parse(r);
-    // Reset daily if different date
     if(saved.dailyDate===new Date().toDateString()){
       tokenStats.dailyUsed=saved.dailyUsed||0;
     }
@@ -1906,7 +1971,6 @@ function updateProfileTokenCard(){
   if(el('pt-daily-limit'))el('pt-daily-limit').textContent=dailyLimit>0?fmt(dailyLimit):'Unlimited';
   const dailyPct=dailyLimit>0?Math.min(100,Math.round(tokenStats.dailyUsed/dailyLimit*100)):0;
   const prog=el('pt-daily-prog');if(prog)prog.style.width=dailyPct+'%';
-  // Set selects to saved values
   const dlSel=el('prof-daily-limit');if(dlSel&&dailyLimit)dlSel.value=String(dailyLimit);
   const slSel=el('prof-session-limit');if(slSel&&sessionLimit)slSel.value=String(sessionLimit);
 }
@@ -1916,7 +1980,6 @@ function updateProfileTokenCard(){
 
 // ── Session result cache ──
 // OPT: Avoids redundant API calls for identical inputs within a session.
-// In-memory only — cleared on page reload (intentional: keeps content fresh).
 const _resultCache = new Map();
 const RESULT_CACHE_MAX = 30;
 function _cacheKey(...args){ return args.map(String).join(' '); }
@@ -1926,10 +1989,7 @@ function _cacheSet(key,val){
   _resultCache.set(key,val);
 }
 
-// callClaude  — single request with optional
 //              cache_control for prompt caching.
-// callClaudeBatch — parallel multi-request.
-// All AI generator functions live further below.
 // ══════════════════════════════════════════════
 
 // Shared system prompt cached across calls (cache_control="ephemeral" reuses prefix)
@@ -1963,7 +2023,6 @@ const CACHED_SYSTEM_PROMPT = `You are MyStudyBuddy AI — an expert educational 
 async function callClaude(prompt, maxTokens=1200, useCache=false){
   if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
   
-  // Check session limit before calling
   const {sessionLimit} = getTokenLimits();
   if(sessionLimit > 0 && tokenStats.sessionUsed >= sessionLimit){
     showToast('⚠️ Session token limit reached. Reset in Profile.');
@@ -2006,23 +2065,18 @@ async function callClaude(prompt, maxTokens=1200, useCache=false){
     const cacheCreation = d.usage.cache_creation_input_tokens||0;
     addTokenUsage(inp + cacheCreation, out);
     if(d.usage.cache_read_input_tokens > 0){
-      console.log('💾 Cache hit! Saved ~'+d.usage.cache_read_input_tokens+' tokens');
-    }
+          }
   }
   return d.content.map(b=>b.text||'').join('');
 }
 
 // Batch API: send multiple prompts in one call, returns array of results
-// Used for: quiz generation (multiple questions), flashcard batches, FIB sentences
 async function callClaudeBatch(requests){
-  // requests = [{id:'r1', prompt:'...', maxTokens:500}, ...]
   // Returns map of id -> response text
   if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
   if(!requests||!requests.length) return {};
 
-  // For browser usage, we simulate batch by sending a single merged prompt
   // True batch API requires server-side polling — we use parallel requests instead
-  // which is semantically equivalent and works in browser context
   const results = {};
   const promises = requests.map(async req => {
     try {
@@ -2037,7 +2091,6 @@ async function callClaudeBatch(requests){
 }
 
 // ── Tabs ──
-// showPanel(name) — convenience alias for switchTab; looks up the tab button automatically
 function showPanel(name){
   const btn=document.querySelector('.tab-btn[data-tab="'+name+'"]');
   if(btn)switchTab(name,btn);
@@ -2065,24 +2118,22 @@ function _buildRegistries(){
 
 function switchTab(name,btn){
   _buildRegistries();
-  // Hide previous panel and deactivate its button
   if(_currentTabName && _currentTabName !== name){
     const prev = _panelRegistry[_currentTabName];
     if(prev) prev.classList.remove('active');
     const prevBtn = _tabBtnRegistry[_currentTabName];
     if(prevBtn) prevBtn.classList.remove('active');
   }
-  // Show new panel
   const panel = _panelRegistry[name] || document.getElementById('panel-'+name);
   if(panel) panel.classList.add('active');
-  // Activate button
   const activeBtn = btn || _tabBtnRegistry[name];
   if(activeBtn) activeBtn.classList.add('active');
   _currentTabName = name;
-  // On-demand panel updates (only when switching TO that panel)
   if(name==='scores')   updateScoresPanel();
   if(name==='plan')     renderCurrentPlanView();
   if(name==='language') _langPanelOnce();
+  // OPT: trim explanation/podcast history from memory when leaving those panels
+  if(_currentTabName==='explain'&&name!=='explain'&&explainHistory.length>10) explainHistory.length=10;
 }
 
 // ── Profile ──
@@ -2102,9 +2153,6 @@ function saveProfile(){
 }
 // ══════════════════════════════════════════════
 // SECTION: Profile & Settings  (→ App.ui + App.storage)
-// Student name, level, avatar, subject list.
-// Token daily/session limits. Renders avatar grid,
-// subject tags, and token usage card.
 // ══════════════════════════════════════════════
 function openProfile(){
   const nameEl=document.getElementById('prof-name');
@@ -2173,7 +2221,6 @@ async function populateSubjectDropdowns(){
   const subjects=profile.subjects.length>0?profile.subjects:(subjectMap[profile.level]||subjectMap['Primary 1']);
   const opts=subjects.map(s=>`<option value="${escHtml(s)}">${escHtml(s)}</option>`).join('');
   ['quiz-subject','fib-subject'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
-  // Level dropdowns — default to profile level, allow higher levels only
   const lvOpts=levelOptsFromProfile();
   ['quiz-level','fib-level','explain-level','spell-level','scramble-level','fc-level','vm-level'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.innerHTML=lvOpts;
@@ -2238,13 +2285,10 @@ function mdToHtml(md,cls='explain-rendered'){
 }
 // ══════════════════════════════════════════════
 // SECTION: Shared Styled Output Renderer  (→ App.ui)
-// renderStyledResult() converts raw AI text into
-// consistent .res-card/.res-label/.res-highlight
 // card layout. Also handles JSON fallback rendering.
 // ══════════════════════════════════════════════
 
 // ──────────────────────────────────────────────
-// Converts plain AI text into consistent styled cards
 // ══════════════════════════════════════════════
 function renderStyledResult(rawText, targetEl){
   if(!targetEl)return;
@@ -2252,7 +2296,6 @@ function renderStyledResult(rawText, targetEl){
 
   const text = rawText.trim();
 
-  // If it's JSON — convert to styled cards
   if(text.startsWith('[') || text.startsWith('{')){
     try{
       const parsed = JSON.parse(text);
@@ -2267,7 +2310,6 @@ function renderStyledResult(rawText, targetEl){
     }catch(e){/* fall through to text rendering */}
   }
 
-  // Split on common section markers (emoji headers, numbered sections, dashes)
   const lines = text.split(/\r?\n/);
   let html = '';
   let currentSection = '';
@@ -2287,7 +2329,6 @@ function renderStyledResult(rawText, targetEl){
       return;
     }
 
-    // Detect section headers
     const isHeader = sectionEmojis.test(t) || numberedHeader.test(t) || dashHeader.test(t) || /^#{1,3}\s/.test(t);
     if(isHeader && currentSection){
       html += `<div class="res-card" style="margin-bottom:8px;white-space:pre-wrap;">${escHtml(currentSection.trim())}</div>`;
@@ -2313,14 +2354,9 @@ function renderStyledResult(rawText, targetEl){
 // SECTION: Smart Quiz  (→ App.ai + App.ui + App.cache)
 // generateQuiz → renderQuiz → answerQuiz →
 // showQuizSummary → reviewQuizAnswers
-// Syllabus-aware: injects topic list into prompt.
-// Difficulty: beginner | intermediate | advanced
-// SMART QUIZ
 // ══════════════════════════════════════════════
 // ══════════════════════════════════════════════
 // SECTION: Syllabus Management  (→ App.storage + App.ai)
-// Upload/paste/parse subject syllabi. Topics feed
-// the Smart Quiz generator dropdown.
 // ══════════════════════════════════════════════
 // ── SYLLABUS MANAGEMENT ──
 const SYLLABUS_KEY=CONFIG.STORAGE_SYLLABUS;
@@ -2404,7 +2440,6 @@ function deleteSyllabus(subject){
   delete syllabusStore[subject];saveSyllabusStore();renderSyllabusList();showToast('Deleted');
 }
 function useSyllabusForQuiz(subject){
-  // Navigate to quiz panel via main tab switcher
   const _quizTab=document.querySelector('.tab-btn[data-tab="quiz"]');
   if(_quizTab)switchTab('quiz',_quizTab);
   setTimeout(()=>{
@@ -2457,6 +2492,20 @@ async function generateQuiz(){
   const diffGuide=difficulty==='beginner'?'Use simple vocabulary and straightforward recall questions.':
     difficulty==='advanced'?'Use challenging analysis and evaluation questions with nuanced options.':
     'Mix recall and understanding questions at a moderate level.';
+  // ── Cache-first: serve from AICache if available ──
+  const _quizCacheParams={level,subject,count,difficulty,topic:topic||''};
+  const _quizCacheHit=AICache.get('quiz',_quizCacheParams);
+  if(_quizCacheHit){
+    quizData=_quizCacheHit.data;
+    quizCurrent=0;quizScore=0;quizAnswered=0;
+    quizStartTime=Date.now();
+    renderQuiz(level,subject+(topic?' — '+topic:'')+' ['+difficulty+'] 💾');
+    saveQuizToHistory(level,subject,count,topic,quizData,0);
+    addHistory('quiz',level+' '+subject+' Quiz ('+count+'Q '+difficulty+') [cached]');
+    showToast('💾 Loaded from cache · '+_quizCacheHit.meta.cachedAt,2500);
+    setLoading('quiz-gen-btn','quiz-gen-icon',false,'');
+    return;
+  }
   try{
     const prompt=`Generate exactly ${count} multiple choice questions for ${level} students on ${subject}${topicStr}.\nDifficulty: ${difficulty}. ${diffGuide}${syllabusCtx}\nReturn ONLY a JSON array (no markdown):\n[{"q":"Question?","options":["A) opt","B) opt","C) opt","D) opt"],"answer":"A","explanation":"Why."}]\nExactly ${count} items.`;
     const raw=await callClaude(prompt,Math.max(CONFIG.QUIZ_MIN_TOKENS,count*CONFIG.QUIZ_TOKENS_PER_Q),true);
@@ -2465,7 +2514,9 @@ async function generateQuiz(){
     if(fb===-1)throw new Error('Invalid format returned. Try again.');
     quizData=JSON.parse(jsonStr.slice(fb,lb+1));
     quizCurrent=0;quizScore=0;quizAnswered=0;
-    quizStartTime=Date.now(); // track duration for AI Insight
+    quizStartTime=Date.now();
+    // ── Persist to AICache ──
+    AICache.set('quiz',_quizCacheParams,quizData,{subject,topic:topic||'',level,difficulty});
     renderQuiz(level,subject+(topic?' — '+topic:'')+' ['+difficulty+']');
     saveQuizToHistory(level,subject,count,topic,quizData,0);
     addHistory('quiz',level+' '+subject+' Quiz ('+count+'Q '+difficulty+')');
@@ -2484,7 +2535,8 @@ function renderQuiz(level,subject){
   quizData.forEach((q,i)=>{
     const card=document.createElement('div');card.className='quiz-q-card';card.id='qcard-'+i;
     if(i===0)card.classList.add('show');
-    card.innerHTML=`<div class="quiz-q-text">Q${i+1}. ${escHtml(q.q)}</div><div class="quiz-opts" id="qopts-${i}">${q.options.map((opt,j)=>`<button class="quiz-opt" onclick="answerQuiz(${i},'${['A','B','C','D'][j]}',this)">${escHtml(opt)}</button>`).join('')}</div><div class="quiz-fb" id="qfeed-${i}"></div>`;
+    const voiceSupported=Voice.supported();
+    card.innerHTML=`<div class="quiz-q-text">Q${i+1}. ${escHtml(q.q)}</div><div class="quiz-opts" id="qopts-${i}">${q.options.map((opt,j)=>`<button class="quiz-opt" onclick="answerQuiz(${i},'${['A','B','C','D'][j]}',this)">${escHtml(opt)}</button>`).join('')}</div>${voiceSupported?`<div style="margin-top:6px;display:flex;align-items:center;gap:8px;"><button class="voice-btn idle" id="qvoice-${i}" onclick="toggleQuizVoice(${i})" title="Say A, B, C or D">🎙 Answer</button><span class="voice-transcript" id="qvoice-txt-${i}"></span></div>`:'<div style="font-size:10px;color:var(--text3);margin-top:4px;">Type-to-answer: tap an option above</div>'}<div class="quiz-fb" id="qfeed-${i}"></div>`;
     container.appendChild(card);
   });
 }
@@ -2513,7 +2565,8 @@ function showQuizSummary(){
   updateScoreDisplay();
   rewardSessionComplete('Smart Quiz');
   refreshRewardsUI();
-  // Trigger AI Insight (non-blocking)
+  logSession({module:'Smart Quiz',subject:quizHistoryStore[0]?.subject||'',
+    durationSec,correct:quizScore,total:quizData.length,level:profile.level});
   const lastEntry=quizHistoryStore[0]||{};
   generateInsight({
     score:quizScore,
@@ -2530,32 +2583,224 @@ function showQuizSummary(){
 }
 // ═══════════════════════════════════════════════════════════════
 // SECTION: AI Insight Review  (→ App.ai + App.storage)
-//
-// Generates a 🧠 AI-powered post-quiz analysis covering:
-//   strengths, weaknesses, next activity, recommended difficulty.
-//
 // Data model — each session stored in localStorage (last 20):
-// {
-//   id:         number,     // Date.now()
-//   date:       string,     // toLocaleDateString
-//   subject:    string,
-//   topic:      string,
-//   level:      string,
-//   difficulty: string,     // beginner | intermediate | advanced
-//   score:      number,
-//   total:      number,
-//   pct:        number,     // 0-100
-//   durationSec:number,
-//   attempts:   number,
-//   insight: {
-//     strengths:        string,
-//     weaknesses:       string,
-//     nextActivity:     string,
-//     recDifficulty:    string,   // beginner | intermediate | advanced
-//     recDifficultyReason: string
-//   }
-// }
 // ═══════════════════════════════════════════════════════════════
+
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: Voice Module  (→ App.voice)
+// Fallback: if SpeechRecognition unavailable, voice buttons are hidden
+//           and existing keyboard/tap input works unchanged.
+// API:
+//   Voice.supported()              → boolean
+//   Voice.start(mode, opts)        → start listening
+//   Voice.stop()                   → stop immediately
+//   Voice.isListening()            → boolean
+//   Voice.makeBtn(mode, opts, label) → returns <button> DOM element
+// Modes:
+// ═══════════════════════════════════════════════════════════════
+
+const Voice = (() => {
+
+  // ── Feature detection ─────────────────────────────────────────
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const _supported = !!SR;
+
+  // ── Active recognition instance ──────────────────────────────
+  let _sr = null;
+  let _activeBtn = null;  // currently-listening button element
+  let _activeMode = null;
+
+  // ── Stop any running session ──────────────────────────────────
+  function stop(){
+    if(_sr){ try{ _sr.abort(); }catch(e){} _sr=null; }
+    if(_activeBtn){ _setIdle(_activeBtn); _activeBtn=null; }
+    _activeMode=null;
+  }
+
+  function _setIdle(btn){ btn.className=btn.className.replace(/\b(listening|processing)\b/g,'').trim()+' idle'; btn.innerHTML='🎙 Speak'; }
+  function _setListening(btn){ btn.className=btn.className.replace(/\b(idle|processing)\b/g,'').trim()+' listening'; btn.innerHTML='⏹ Stop'; }
+  function _setProcessing(btn){ btn.className=btn.className.replace(/\b(idle|listening)\b/g,'').trim()+' processing'; btn.innerHTML='⏳'; }
+
+  // ── Build a SpeechRecognition instance with common settings ───
+  function _build(lang, continuous){
+    const sr = new SR();
+    sr.lang = lang || 'en-GB';
+    sr.continuous = !!continuous;
+    sr.interimResults = false;
+    sr.maxAlternatives = 3;
+    return sr;
+  }
+
+  // ── Transcript display helper ──────────────────────────────────
+  function _showTranscript(elId, text, isHeard){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    el.textContent = text;
+    el.className = 'voice-transcript' + (isHeard?' heard':'');
+  }
+
+  // ══ MODE: SPELL ══════════════════════════════════════════════
+  function _startSpell(btn, opts){
+    const targetWord = spellWords[spellIdx]?.word?.toLowerCase();
+    if(!targetWord){ showToast('⚠️ No word to spell'); return; }
+
+    _sr = _build('en-GB', false);
+    _setListening(btn);
+
+    _sr.onresult = e => {
+      _setProcessing(btn);
+      const alts = Array.from(e.results[0]).map(r => r.transcript.trim().toLowerCase());
+      const heard = alts[0] || '';
+      _showTranscript(opts.transcriptId, '"' + heard + '"', true);
+      const correct = alts.some(a => a === targetWord || a.replace(/\s/g,'') === targetWord);
+      setTimeout(() => {
+        stop();
+        if(typeof opts.onResult === 'function') opts.onResult(heard, correct);
+        else markSpell(correct);  // default: use existing markSpell
+        speakText(targetWord, 'en');
+      }, 300);
+    };
+
+    _sr.onerror = e => {
+      stop();
+      if(e.error === 'no-speech') showToast('🎙 No speech detected — try again');
+      else showToast('🎙 ' + e.error);
+    };
+
+    _sr.onend = () => { if(_activeBtn===btn) _setIdle(btn); };
+    _sr.start();
+  }
+
+  // ══ MODE: QUIZ ════════════════════════════════════════════════
+  function _startQuiz(btn, opts){
+    const qIdx = opts.qIdx;
+    if(quizData[qIdx]?.answered){ stop(); return; }
+
+    _sr = _build('en-GB', false);
+    _setListening(btn);
+
+    _sr.onresult = e => {
+      _setProcessing(btn);
+      const alts = Array.from(e.results[0]).map(r => r.transcript.trim().toUpperCase());
+      // Accept: "A", "B", "C", "D" and common alternatives ("ay"→A, "be"→B, "see"→C, "dee"→D)
+      const synonyms = {A:['A','AY','AH'],B:['B','BE','BEE'],C:['C','SEE','SEA'],D:['D','DEE','THE']};
+      let chosen = null;
+      for(const [letter, words] of Object.entries(synonyms)){
+        if(alts.some(a => words.includes(a.trim()))){ chosen=letter; break; }
+      }
+      _showTranscript(opts.transcriptId, alts[0] || '?', !!chosen);
+      stop();
+      if(chosen){
+        if(typeof opts.onResult === 'function') opts.onResult(chosen);
+        else {
+          const optBtns = document.querySelectorAll('#qopts-'+qIdx+' .quiz-opt');
+          const idx = ['A','B','C','D'].indexOf(chosen);
+          if(optBtns[idx] && !optBtns[idx].disabled) optBtns[idx].click();
+        }
+      } else {
+        showToast('🎙 Say A, B, C, or D clearly');
+      }
+    };
+
+    _sr.onerror = e => { stop(); if(e.error !== 'no-speech') showToast('🎙 ' + e.error); };
+    _sr.onend  = () => { if(_activeBtn===btn) _setIdle(btn); };
+    _sr.start();
+  }
+
+  // ══ MODE: VOCAB ═══════════════════════════════════════════════
+  function _startVocab(btn, opts){
+    _sr = _build('en-GB', false);
+    _setListening(btn);
+
+    _sr.onresult = e => {
+      _setProcessing(btn);
+      const heard = e.results[0][0].transcript.trim().toLowerCase();
+      _showTranscript(opts.transcriptId, '"' + heard + '"', true);
+      stop();
+      const tiles = document.querySelectorAll('.vm-word');
+      let matched = null;
+      tiles.forEach(tile => {
+        if(tile.dataset.matched === '1') return;
+        const word = tile.textContent.trim().toLowerCase();
+        if(word === heard || heard.includes(word) || word.includes(heard)) matched = tile;
+      });
+      if(matched){
+        vmSelectWord(matched);
+        if(typeof opts.onResult === 'function') opts.onResult(heard, matched);
+      } else {
+        showToast('🎙 Heard "' + heard + '" — no matching word found');
+      }
+    };
+
+    _sr.onerror = e => { stop(); if(e.error !== 'no-speech') showToast('🎙 ' + e.error); };
+    _sr.onend  = () => { if(_activeBtn===btn) _setIdle(btn); };
+    _sr.start();
+  }
+
+  // ══ MODE: PRON (language practice) ════════════════════════════
+  function _startPron(btn, opts){
+    const lang = opts.lang || LANG_CONFIG[currentLang]?.tts || 'en-GB';
+    _sr = _build(lang, false);
+    _setListening(btn);
+
+    _sr.onresult = e => {
+      _setProcessing(btn);
+      const transcript = e.results[0][0].transcript.trim();
+      _showTranscript(opts.transcriptId, '"' + transcript + '"', true);
+      stop();
+      if(typeof opts.onResult === 'function') opts.onResult(transcript);
+    };
+
+    _sr.onerror = e => {
+      stop();
+      const msgs = { 'no-speech':'No speech detected', 'not-allowed':'Microphone blocked', 'network':'Network error' };
+      showToast('🎙 ' + (msgs[e.error] || e.error));
+    };
+
+    _sr.onend = () => { if(_activeBtn===btn) _setIdle(btn); };
+    _sr.start();
+  }
+
+  // ── Public: start(mode, opts) ─────────────────────────────────
+  function start(mode, opts={}){
+    if(!_supported){ showToast('⚠️ Voice input not supported on this browser'); return; }
+    stop();  // stop any previous session
+    const btn = opts.btn;
+    _activeBtn = btn || null;
+    _activeMode = mode;
+
+    if(mode==='spell')  _startSpell(btn, opts);
+    else if(mode==='quiz')   _startQuiz(btn, opts);
+    else if(mode==='vocab')  _startVocab(btn, opts);
+    else if(mode==='pron')   _startPron(btn, opts);
+    else showToast('⚠️ Unknown voice mode: ' + mode);
+  }
+
+  // ── Public: makeBtn(mode, opts, label) ───────────────────────
+  // Returns a ready-to-use <button> element. Pass it wherever you need a mic.
+  function makeBtn(mode, opts={}, label='🎙 Speak'){
+    const btn = document.createElement('button');
+    btn.className = 'voice-btn ' + (_supported ? 'idle' : 'unsupported');
+    btn.type = 'button';
+    btn.innerHTML = label;
+    btn.title = _supported ? 'Voice input' : 'Voice input not supported on this browser';
+    if(!_supported) return btn;
+    btn.addEventListener('click', () => {
+      if(_activeBtn === btn){ stop(); return; }  // toggle off
+      start(mode, { ...opts, btn });
+    });
+    return btn;
+  }
+
+  return Object.freeze({
+    supported: () => _supported,
+    start, stop,
+    isListening: () => !!_sr,
+    makeBtn,
+  });
+
+})();
 
 const INSIGHT_KEY = 'sb_ai_insights';
 const INSIGHT_MAX  = 20;
@@ -2631,31 +2876,33 @@ function renderInsightHistoryList(sessions){
 
 // ── Main insight generator ────────────────────────────────────
 async function generateInsight(ctx){
-  // ctx: { score, total, pct, durationSec, attempts, subject, level, topic, difficulty, wrongQuestions[] }
   const panel  = document.getElementById('ai-insight-panel');
   const body   = document.getElementById('insight-body');
   if(!panel||!body)return;
 
-  // Show and expand the panel immediately
   panel.classList.remove('hidden');
   body.classList.add('open');
   const chev=document.getElementById('insight-chevron');
   if(chev)chev.classList.add('open');
 
-  // Show loading skeleton
   body.innerHTML = `<div class="insight-loading"><div class="spinner"></div><span>Generating your personalised insight…</span></div>`;
 
   // Compute recommendation without API
   const rec = recommendDifficulty(ctx.pct);
 
-  // Load session history
   const sessions = loadInsightHistory();
   const avgPct = sessions.length ? Math.round(sessions.reduce((a,s)=>a+s.pct,0)/sessions.length) : ctx.pct;
 
   let insight = { strengths:'—', weaknesses:'—', nextActivity:'—', recDifficulty:rec.diff, recDifficultyReason:rec.reason };
 
-  // Call AI if API key is available
-  if(apiKey){
+  // ── Cache-first: check AICache before calling AI ──
+  const _insightBandCheck=Math.round(ctx.pct/5)*5;
+  const _insightCacheHit=AICache.get('insight',
+    {subject:ctx.subject,topic:ctx.topic||'',difficulty:ctx.difficulty,pctBand:_insightBandCheck});
+  if(_insightCacheHit){
+    Object.assign(insight,_insightCacheHit.data);
+    // Skip AI call — render immediately from cache then save session
+  } else if(apiKey){
     try{
       const wrongSample=(ctx.wrongQuestions||[]).slice(0,3).join('; ')||'none';
       const prompt=`You are an educational AI coach. A student just completed a quiz.
@@ -2688,15 +2935,14 @@ Return ONLY a JSON object (no markdown):
       insight.weaknesses  = ctx.pct<85?`Review the topics you found tricky in ${ctx.subject}.`:'Push yourself with harder questions to find new gaps.';
       insight.nextActivity= rec.diff==='advanced'?`Try an advanced ${ctx.subject} quiz`:rec.diff==='beginner'?`Start with flashcards for ${ctx.subject} basics`:`Continue practising ${ctx.subject} at intermediate level`;
     }
-  } else {
-    // No API key — generate helpful defaults from score alone
+  } else if(!_insightCacheHit) {
+    // No API key and no cache — generate helpful defaults from score alone
     insight.strengths   = ctx.pct>85?'Great accuracy — you clearly know this material well.':ctx.pct>=50?'You have a solid foundation to build on.':'You took the quiz — every attempt builds your knowledge.';
     insight.weaknesses  = ctx.pct<50?`Focus on the core concepts of ${ctx.subject||'this topic'} before the next quiz.`:ctx.pct<85?`A few topics in ${ctx.subject||'this area'} need more practice.`:'Challenge yourself further to uncover any remaining gaps.';
     insight.nextActivity= rec.diff==='advanced'?`Try an advanced ${ctx.subject||'subject'} quiz or explain a concept to someone`:rec.diff==='beginner'?`Review ${ctx.subject||'this subject'} notes and use flashcards`:` Take another ${ctx.subject||'subject'} quiz or study the wrong answers`;
     insight.encouragement= ctx.pct>85?'🌟 Outstanding work!':ctx.pct>=50?'💪 Keep going — you\'re making great progress!':'🎯 Every quiz makes you smarter. Don\'t give up!';
   }
 
-  // Save session
   const session={
     id:Date.now(), date:new Date().toLocaleDateString(),
     subject:ctx.subject, topic:ctx.topic, level:ctx.level, difficulty:ctx.difficulty,
@@ -2706,9 +2952,16 @@ Return ONLY a JSON object (no markdown):
   };
   sessions.unshift(session);
   saveInsightHistory(sessions);
+  // ── Persist insight to AICache ──
+  // Key uses pct-band (nearest 5) so ±5% gets the same cached insight
+  const _insightBand=Math.round(ctx.pct/5)*5;
+  AICache.set('insight',
+    {subject:ctx.subject,topic:ctx.topic||'',difficulty:ctx.difficulty,pctBand:_insightBand},
+    insight,
+    {subject:ctx.subject,topic:ctx.topic,level:ctx.level,difficulty:ctx.difficulty,score:ctx.score+'/'+ctx.total}
+  );
   AppEvents.emit('insight:generated',{pct:ctx.pct,recDifficulty:rec.diff,subject:ctx.subject});
 
-  // Render
   body.innerHTML=`
     ${insight.encouragement?`<div style="text-align:center;font-size:13px;font-weight:800;padding:8px 0 12px;color:var(--accent);">${escHtml(insight.encouragement)}</div>`:''}
 
@@ -2761,7 +3014,6 @@ function applyRecommendedDifficulty(diff){
   if(sel){
     sel.value=diff;
     showToast('✅ Difficulty set to '+diff+' — ready for your next quiz!',3000);
-    // Scroll back up to quiz setup
     document.getElementById('quiz-area')?.scrollIntoView({behavior:'smooth'});
     document.getElementById('quiz-summary')?.scrollIntoView({behavior:'smooth'});
   }
@@ -2773,7 +3025,6 @@ function resetQuiz(){
   document.getElementById('quiz-summary').style.display='none';
   quizData=[];
   quizStartTime=0;
-  // Reset insight panel
   const insightPanel=document.getElementById('ai-insight-panel');
   const insightBody=document.getElementById('insight-body');
   if(insightPanel)insightPanel.classList.add('hidden');
@@ -2804,14 +3055,9 @@ function renderQuizHistoryPanel(){
 function recallQuiz(idx){const e=quizHistoryStore[idx];if(!e)return;quizData=e.data;quizCurrent=0;quizScore=0;quizAnswered=0;renderQuiz(e.level,e.subject);document.getElementById('quiz-history-panel').style.display='none';showToast('📋 Loaded: '+e.level+' '+e.subject);}
 
 // ══════════════════════════════════════════════
-// GRAMMAR & SPELLING
 // ══════════════════════════════════════════════
 // ══════════════════════════════════════════════
 // SECTION: Grammar Workshop  (→ App.ai + App.ui)
-// Tabs: sentences | grammar check | synonyms |
-//       POS | spelling | flashcards | vocab match
-// switchGTab() controls which sub-panel is shown.
-// Each tab has a generate function + history list.
 // ══════════════════════════════════════════════
 function switchGTab(tab){
   ['sentences','check','synonyms','pos','spelling','flashcards','vocab'].forEach(t=>{
@@ -2820,7 +3066,6 @@ function switchGTab(tab){
   });
   const el=document.getElementById('grammar-'+tab),tb=document.getElementById('gtab-'+tab);
   if(el)el.style.display='block';if(tb)tb.classList.add('active');
-  // Always refresh level dropdowns when switching to tabs that use them
   if(tab==='flashcards'||tab==='vocab'){
     populateSubjectDropdowns();
   }
@@ -3035,7 +3280,6 @@ async function identifyPOS(){
     document.getElementById('pos-tagged').innerHTML=taggedHtml;
     document.getElementById('pos-legend').style.display='flex';
     document.getElementById('pos-result').style.display='block';
-    // Also get explanation
     const explanation=await callClaude(`For the sentence: "${text}"\nBriefly explain the grammatical structure in simple terms for a secondary school student. Mention subject, predicate, objects if present. Keep it under 100 words.`,300);
     const posBox=document.getElementById('pos-explanation');if(posBox){posBox.classList.add('show');renderStyledResult(explanation,posBox);}
     addHistory('grammar','Parts of Speech: "'+text.substring(0,30)+'"');
@@ -3141,13 +3385,14 @@ function renderSpellBadges(){
 function updateSpellScore(){const correct=Object.values(spellResults).filter(v=>v===true).length;const total=Object.keys(spellResults).length;const el=document.getElementById('spell-score-summary');if(el)el.textContent=total>0?`✅ ${correct} correct / ❌ ${total-correct} wrong of ${total} answered`:'Mark words using ✅ / ❌ buttons';}
 function endSpellingPractice(){document.getElementById('spell-practice-area').style.display='none';spellWords=[];spellResults={};
   rewardSessionComplete('Spelling Practice');
+  const _spellCorrect=Object.values(spellResults).filter(v=>v===true).length;
+  const _spellTotal=spellWords.length;
+  logSession({module:'Spelling',subject:'English',
+    durationSec:_spellTotal*30,correct:_spellCorrect,total:_spellTotal,level:profile.level});
 }
 // ══════════════════════════════════════════════
 // SECTION: Brain Teasers  (→ App.ai + App.cache)
-// Tabs: FIB | scramble | tongue twisters | sudoku
-// Sudoku runs fully offline (local algorithm).
 // FIB/Scramble/TT use API with history caching.
-// BRAIN TEASER HUB
 // ══════════════════════════════════════════════
 function switchBTab(tab){
   ['scramble','fib','sudoku','tongue'].forEach(t=>{document.getElementById('brain-'+t).style.display='none';document.getElementById('btab-'+t).classList.remove('active');});
@@ -3199,14 +3444,13 @@ function renderScrambleCard(){const w=scrambleWords[scrambleIdx];document.getEle
 function checkScramble(){if(scrambleRevealed)return;const ans=document.getElementById('scramble-answer').value.trim().toUpperCase();const correct=scrambleWords[scrambleIdx].word.toUpperCase();const el=document.getElementById('scramble-result');if(ans===correct){el.textContent='✅ Correct! "'+correct+'"'+(scrambleWords[scrambleIdx].meaning?' — '+scrambleWords[scrambleIdx].meaning:'');el.className='scr-result show correct';scrambleScore++;globalStats.scrambleCorrect++;rewardCorrectAnswer();autoCompletePlanTask('Brain Teaser Hub','Scramble');}else{el.textContent='❌ Not quite! Try again or tap 👁';el.className='scr-result show wrong';return;}globalStats.scrambleTotal++;scrambleAnswered++;document.getElementById('scramble-score').textContent=scrambleScore;document.getElementById('scramble-next-btn').style.display='inline-flex';updateScoreDisplay();}
 function revealScramble(){const correct=scrambleWords[scrambleIdx].word.toUpperCase();document.getElementById('scramble-result').textContent='👁 Answer: "'+correct+'"';document.getElementById('scramble-result').className='scr-result show wrong';scrambleRevealed=true;globalStats.scrambleTotal++;scrambleAnswered++;document.getElementById('scramble-next-btn').style.display='inline-flex';updateScoreDisplay();}
 function nextScramble(){scrambleIdx++;if(scrambleIdx>=scrambleWords.length)showScrambleSummary();else renderScrambleCard();}
-function showScrambleSummary(){const pct=Math.round((scrambleScore/scrambleWords.length)*100);document.getElementById('scr-correct').textContent=scrambleScore;document.getElementById('scr-wrong').textContent=scrambleWords.length-scrambleScore;document.getElementById('scr-pct').textContent=pct+'%';document.getElementById('scramble-summary').style.display='block';rewardSessionComplete('Word Scramble');}
+function showScrambleSummary(){const pct=Math.round((scrambleScore/scrambleWords.length)*100);document.getElementById('scr-correct').textContent=scrambleScore;document.getElementById('scr-wrong').textContent=scrambleWords.length-scrambleScore;document.getElementById('scr-pct').textContent=pct+'%';document.getElementById('scramble-summary').style.display='block';rewardSessionComplete('Word Scramble');logSession({module:'Scramble',subject:'English',durationSec:scrambleWords.length*25,correct:scrambleScore,total:scrambleWords.length,level:profile.level});}
 function resetScramble(){document.getElementById('scramble-game').style.display='none';document.getElementById('scramble-summary').style.display='none';scrambleWords=[];}
 function resetScrambleAuto(){const s=document.getElementById('scramble-theme-sel'),i=document.getElementById('scramble-theme');if(s)s.value='';if(i)i.value='';document.getElementById('scramble-game').style.display='none';document.getElementById('scramble-summary').style.display='none';scrambleWords=[];showToast('🔄 Reset');}
 
 // ── Fill in the Blank ──
 function loadFIBHistory(){const r=ls_get(KEYS.fibHist);if(r)try{fibHistory=JSON.parse(r);}catch(e){}renderFIBHistoryList();}
 function saveFIBHistory(entry){
-  // Optimize: store only essential fields, trim sentences content
   const slim={id:entry.id,level:entry.level,subject:entry.subject,count:entry.count,date:entry.date,
     sentences:entry.sentences.map(s=>({sentence:s.sentence.slice(0,120),answer:s.answer,hint:(s.hint||'').slice(0,60),options:s.options}))};
   fibHistory.unshift(slim);if(fibHistory.length>20)fibHistory=fibHistory.slice(0,20);
@@ -3253,11 +3497,9 @@ function checkFIB(idx,answer){
 
 // ── Sudoku ──
 function generateSudokuPuzzle(difficulty){
-  // Create a valid completed sudoku board
   const board=Array(9).fill(null).map(()=>Array(9).fill(0));
   solveSudokuBoard(board);
   const solution=board.map(r=>[...r]);
-  // Remove cells based on difficulty
   const remove={easy:30,medium:45,hard:55}[difficulty]||45;
   const cells=[];for(let r=0;r<9;r++)for(let c=0;c<9;c++)cells.push([r,c]);
   shuffleArr(cells);
@@ -3268,7 +3510,6 @@ function shuffleArr(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math
 function solveSudokuBoard(board){
   for(let r=0;r<9;r++){for(let c=0;c<9;c++){if(board[r][c]===0){const nums=[1,2,3,4,5,6,7,8,9];shuffleArr(nums);for(const n of nums){if(isValidSudoku(board,r,c,n)){board[r][c]=n;if(solveSudokuBoard(board))return true;board[r][c]=0;}}return false;}}}return true;}
 function isValidSudoku(board,row,col,num){for(let i=0;i<9;i++){if(board[row][i]===num||board[i][col]===num)return false;}const br=Math.floor(row/3)*3,bc=Math.floor(col/3)*3;for(let r=br;r<br+3;r++)for(let c=bc;c<bc+3;c++)if(board[r][c]===num)return false;return true;}
-// Sudoku puzzle pool (50 pre-generated, stored in memory + localStorage)
 let sudokuPool=[];
 const SUDOKU_POOL_KEY='sb_sdp';
 
@@ -3285,7 +3526,6 @@ function saveSudokuPoolCache(){
     d:p.diff
   }));
   try{ls_set(SUDOKU_POOL_KEY,JSON.stringify(compact));}catch(e){
-    // If too large, keep only 20
     sudokuPool=sudokuPool.slice(0,20);
     const c2=sudokuPool.map(p=>({p:p.puzzle.map(r=>r.join('')).join('|'),s:p.solution.map(r=>r.join('')).join('|'),d:p.diff}));
     ls_set(SUDOKU_POOL_KEY,JSON.stringify(c2));
@@ -3307,7 +3547,6 @@ async function loadSudokuPool(){
   // Generate 50 puzzles locally (no API needed — Sudoku is pure math)
   const btn=document.getElementById('sudoku-load-pool-btn');
   if(btn){btn.disabled=true;btn.textContent='⏳ Generating 50...';}
-  // Use setTimeout chunks to avoid blocking UI
   sudokuPool=[];
   const diffs=['easy','easy','easy','easy','medium','medium','medium','medium','medium','hard'];
   function genChunk(start){
@@ -3329,14 +3568,12 @@ async function loadSudokuPool(){
 function newSudoku(){
   const diff=document.getElementById('sudoku-diff').value;
   let puzzle,solution;
-  // Try to get from pool first
   const poolIdx=sudokuPool.findIndex(p=>p.diff===diff);
   if(poolIdx>=0){
     const p=sudokuPool.splice(poolIdx,1)[0];
     puzzle=p.puzzle.map(r=>[...r]);solution=p.solution;
     saveSudokuPoolCache();updateSudokuPoolStatus();
   } else {
-    // Generate on the fly
     const gen=generateSudokuPuzzle(diff);
     puzzle=gen.puzzle.map(r=>[...r]);solution=gen.solution;
   }
@@ -3348,15 +3585,9 @@ function newSudoku(){
   renderSudokuGrid();buildSudokuNumpad();
 }
 function clearSudoku(){
-  // Clear only user-entered cells, keep given numbers
   if(!sudokuSolution.length){showToast('No puzzle loaded');return;}
-  // Re-generate from solution: restore original puzzle state
   // We need to track which were original given cells
-  // Simple approach: any cell that == solution is kept only if it was given (non-zero in original)
-  // Since we don't store original, just clear all non-given by comparing current != original fill
-  // Best approach: newSudoku but keep same puzzle — re-load same solution
   const origPuzzle=sudokuPuzzle.map(r=>r.map((v,ci)=>sudokuSolution[sudokuPuzzle.indexOf(r)][ci]===v?v:0));
-  // Actually simplest: just reload from same solution with original given cells preserved
   // Store original puzzle alongside solution
   if(window._sudokuOriginalPuzzle){
     sudokuPuzzle=window._sudokuOriginalPuzzle.map(r=>[...r]);
@@ -3389,12 +3620,10 @@ function buildSudokuNumpad(){
 }
 function sudokuInput(num){
   if(!sudokuSelected)return;const[r,c]=sudokuSelected;
-  // Can't change given cells
   const originalPuzzle=sudokuSolution;if(sudokuPuzzle[r][c]!==0&&num!==0)return;
   if(num===0){sudokuPuzzle[r][c]=0;renderSudokuGrid();return;}
   if(num!==sudokuSolution[r][c]){sudokuErrors++;document.getElementById('sudoku-errors').textContent=sudokuErrors;}
   sudokuPuzzle[r][c]=num;renderSudokuGrid();
-  // Check if complete
   const complete=sudokuPuzzle.every((row,ri)=>row.every((v,ci)=>v===sudokuSolution[ri][ci]));
   if(complete){clearInterval(sudokuTimerInterval);document.getElementById('sudoku-status').textContent='🎉 Puzzle complete! Time: '+document.getElementById('sudoku-timer').textContent;showToast('🎉 Sudoku complete!');}
 }
@@ -3411,7 +3640,6 @@ function checkSudoku(){
 
 // ── Tongue Twisters ──
 function loadTTHistory(){const r=ls_get(KEYS.ttHist);if(r)try{ttHistory=JSON.parse(r);}catch(e){}renderTTHistoryList();}
-// enrichTTFromPack — upgrades ttList with the extended pack after it loads
 async function enrichTTFromPack(){
   const pack = await DataLoader.vocab();
   if(pack && pack.tongueTwisters && pack.tongueTwisters.length > DEFAULT_TT_DATA.length){
@@ -3420,7 +3648,6 @@ async function enrichTTFromPack(){
   }
 }
 function saveTTHistory(entry){
-  // Optimize: trim twister text to save space
   const slim={id:entry.id,difficulty:entry.difficulty,date:entry.date,
     twisters:entry.twisters.map(t=>({text:t.text.slice(0,150),tip:(t.tip||'').slice(0,80)}))};
   ttHistory.unshift(slim);if(ttHistory.length>20)ttHistory=ttHistory.slice(0,20);
@@ -3471,13 +3698,9 @@ function speakTT(rate){
 }
 // ══════════════════════════════════════════════
 // SECTION: Language Corner  (→ App.ai + App.ui)
-// 8 languages: en zh yue ja fr de fil ms
 // Modes: learn | translate | read-aloud | convo |
-//        culture | pronounce | podcast
-// renderLangPanel() rebuilds the full panel on
 // language switch. Future: diff-patch instead.
 // ══════════════════════════════════════════════
-// LANGUAGE CORNER
 // ══════════════════════════════════════════════
 let _langTabsCurrent=null;
 function buildLangTabs(){
@@ -3497,8 +3720,6 @@ function switchLang(lang){
   AppEvents.emit('lang:switched',{lang});
 }
 // OPT: _langPanelOnce — build full panel on first visit,
-// then only patch the language-specific parts on subsequent switches.
-// This avoids rebuilding 18KB of innerHTML on every tab/language click.
 let _langPanelBuilt = false;
 
 function _langPanelOnce(){
@@ -3510,27 +3731,16 @@ function _langPanelOnce(){
   }
 }
 
-// Patch only the language-specific dynamic parts:
-//   1. Category dropdown options
-//   2. Type dropdown options
-//   3. History accordion HTML
-//   4. Previously-generated result visibility
-//   5. Button icon/label (flag)
 function _patchLangPanel(){
   const cfg  = getLangConfig()[currentLang]||LANG_CONFIG[currentLang];
   const cats = getLangCategories()[currentLang]||LANG_CATEGORIES[currentLang]||[];
   const sess = langSessions[currentLang]||{};
 
-  // 1. Category dropdown
   const catSel = document.getElementById('lang-cat-'+currentLang);
   if(!catSel){
-    // Dropdown has the old lang id — rebuild the input IDs by re-rendering
     renderLangPanel(); return;
   }
 
-  // The select id encodes the language — on lang change the ids change,
-  // so we must re-render the inputs. But we can skip rebuilding the mode tabs
-  // and the static chrome. Use a targeted innerHTML on only lang-mode-learn:
   const learnDiv = document.getElementById('lang-mode-learn');
   if(!learnDiv){ renderLangPanel(); return; }
 
@@ -3560,7 +3770,6 @@ function _patchLangPanel(){
       <div id="lang-rendered-${currentLang}">${sess.rawResult?mdToLangHtml(sess.rawResult,cfg.code):''}</div>
     </div>`;
 
-  // Reset to learn mode
   switchLangMode('learn');
 }
 
@@ -3801,7 +4010,6 @@ function renderLangPanel(){
       </div>
     </div>
   `;
-  // Restore sessions
   if(sess.rawResult){const rendEl=document.getElementById('lang-rendered-'+currentLang);if(rendEl)rendEl.innerHTML=mdToLangHtml(sess.rawResult,cfg.code);}
   if(sess.translateInput){const inp=document.getElementById('lang-trans-input');if(inp)inp.value=sess.translateInput;}
   if(sess.translateResult){const box=document.getElementById('lang-trans-result');if(box){box.innerHTML=sess.translateResult;box.classList.add('show');}}
@@ -3809,7 +4017,6 @@ function renderLangPanel(){
 }
 
 // ══════════════════════════════════════════════════════════
-// FLASHCARDS (Item 1) — K1–Secondary, with images+pronunciation
 // ══════════════════════════════════════════════════════════
 const FC_HIST_KEY='sb_fc';
 
@@ -3860,7 +4067,6 @@ function renderFCCard(){
     cardEl.style.transform='rotateY(0deg)';
     cardEl.style.webkitTransform='rotateY(0deg)';
     cardEl.style.msTransform='rotateY(0deg)';
-    // Re-enable transition after reset
     setTimeout(()=>{if(cardEl)cardEl.style.transition='transform 0.6s cubic-bezier(.4,0,.2,1)';},50);
   }
   document.getElementById('fc-idx').textContent=fcIdx+1;
@@ -3888,10 +4094,13 @@ function markFC(correct){fcResults[fcIdx]=correct;updateFCProgress();if(fcIdx<fc
 function updateFCProgress(){const done=Object.keys(fcResults).length;const got=Object.values(fcResults).filter(v=>v).length;document.getElementById('fc-score-label').textContent=got+'/'+done;const pct=fcCards.length>0?Math.round(done/fcCards.length*100):0;const bar=document.getElementById('fc-prog-bar');if(bar)bar.style.width=pct+'%';}
 function endFlashcards(){document.getElementById('fc-area').style.display='none';fcCards=[];fcResults={};
   rewardSessionComplete('Flashcards');
+  const _fcCorrect=fcResults?Object.values(fcResults).filter(v=>v==='got').length:0;
+  const _fcTotal=fcCards.length;
+  logSession({module:'Flashcards',subject:document.getElementById('fc-subject')?.value||'',
+    durationSec:_fcTotal*20,correct:_fcCorrect,total:_fcTotal,level:profile.level});
 }
 
 // ══════════════════════════════════════════════════════════
-// VOCAB MATCH (Item 2) — K1–P3 picture matching game
 // ══════════════════════════════════════════════════════════
 const VOCAB_EMOJI_SETS={
   Animals:{cat:'🐱',dog:'🐶',fish:'🐟',bird:'🐦',rabbit:'🐰',elephant:'🐘',lion:'🦁',monkey:'🐒',tiger:'🐯',cow:'🐄',sheep:'🐑',duck:'🦆'},
@@ -3911,9 +4120,7 @@ async function generateVocabMatch(forceRefresh=false){
   const level=document.getElementById('vm-level')?.value||profile.level;
   const diff=document.getElementById('vm-diff').value;
   const count={easy:4,medium:6,hard:8}[diff]||6;
-  // Reset state
   vmMatched=[];vmSelected=null;window._vmEmojiSel=null;vmScore=0;vmAttempts=0;_vmWordIdx=null;_vmEmojiIdx=null;
-  // Hide old game area
   const area=document.getElementById('vm-area');if(area)area.style.display='none';
   const scoreBar=document.getElementById('vm-score-bar');if(scoreBar)scoreBar.style.display='none';
   // Use local emoji sets for basic categories (no API needed!)
@@ -3923,7 +4130,6 @@ async function generateVocabMatch(forceRefresh=false){
   const emojiSet=emojiSets[cat];
   if(emojiSet&&!forceRefresh){
     const entries=Object.entries(emojiSet);
-    // Shuffle and take count
     const shuffled=[...entries].sort(()=>Math.random()-0.5).slice(0,count);
     vmPairs=shuffled.map(([word,emoji])=>({word,emoji}));
   } else {
@@ -3942,7 +4148,6 @@ async function generateVocabMatch(forceRefresh=false){
 function renderVocabMatch(){
   const area=document.getElementById('vm-area');
   area.style.display='block';
-  // Create shuffled index arrays so we match by vmPairs index (no encoding issues)
   const wordOrder=[...Array(vmPairs.length).keys()].sort(()=>Math.random()-0.5);
   const emojiOrder=[...Array(vmPairs.length).keys()].sort(()=>Math.random()-0.5);
   
@@ -3962,6 +4167,7 @@ function renderVocabMatch(){
     <div style="text-align:center;margin-bottom:10px;">
       <span style="font-weight:900;font-size:14px;">🎯 Match the word to the picture!</span>
       <div style="font-size:11px;color:var(--text3);margin-top:3px;">Tap a word, then tap its picture</div>
+      ${Voice.supported()?'<div style=\"margin-top:6px;text-align:center;\"><button class=\"voice-btn idle\" id=\"vm-voice-btn\" onclick=\"toggleVocabVoice()\">🎙 Say a word</button></div>':''}
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
       <div>
@@ -3976,7 +4182,6 @@ function renderVocabMatch(){
     <div style="margin-top:12px;min-height:36px;text-align:center;font-weight:800;font-size:13px;" id="vm-status"></div>
   `;
   
-  // Show score bar
   const scoreBar=document.getElementById('vm-score-bar');
   if(scoreBar)scoreBar.style.display='flex';
   vmUpdateScoreBar();
@@ -3991,12 +4196,10 @@ function vmUpdateScoreBar(){
   const sp=document.getElementById('vm-score-prog');if(sp)sp.style.width=pct+'%';
 }
 
-// Index-based selection — no encoding issues
 let _vmWordIdx=null, _vmEmojiIdx=null;
 
 function vmSelectWord(el){
   if(el.dataset.matched==='1')return;
-  // Deselect all words
   document.querySelectorAll('.vm-word').forEach(e=>{
     if(e.dataset.matched!=='1') e.style.borderColor='var(--border)';
   });
@@ -4009,7 +4212,6 @@ function vmSelectWord(el){
 
 function vmSelectEmoji(el){
   if(el.dataset.matched==='1')return;
-  // Deselect all emojis
   document.querySelectorAll('.vm-emoji').forEach(e=>{
     if(e.dataset.matched!=='1') e.style.borderColor='#ffd080';
   });
@@ -4028,13 +4230,11 @@ function vmCheckMatch(){
   const wordIdx=wordSel.idx;
   const emojiIdx=emojiSel.idx;
   
-  // Reset selection state
   vmSelected=null; window._vmEmojiSel=null;
   _vmWordIdx=null; _vmEmojiIdx=null;
   vmAttempts++;
   
   if(wordIdx===emojiIdx){
-    // CORRECT MATCH — same pair index
     vmMatched.push(wordIdx);
     vmScore++;
     
@@ -4064,7 +4264,6 @@ function vmCheckMatch(){
       if(status)status.innerHTML=`<span style="color:var(--accent3);">✅ ${escHtml(word)} matched!</span> <span style="color:var(--text3);font-size:11px;">${vmMatched.length}/${vmPairs.length} done</span>`;
     }
   } else {
-    // WRONG MATCH
     [wordSel.el, emojiSel.el].forEach(el=>{
       el.style.borderColor='#ff4477';
       el.style.boxShadow='0 0 0 3px rgba(255,68,119,.2)';
@@ -4082,7 +4281,6 @@ function vmCheckMatch(){
 }
 
 // ══════════════════════════════════════════════════════════
-// LANGUAGE CORNER — new features, switchLangMode extended
 // ══════════════════════════════════════════════════════════
 
 // ── CONVERSATION PRACTICE (Item 3) ──
@@ -4227,7 +4425,6 @@ async function generateCultureNote(forceRefresh=false){
         ${item.didYouKnow?`<div class="res-section"><div class="res-label">💡 Did You Know?</div><div class="res-card info">${escHtml(item.didYouKnow)}</div></div>`:''}
       `;
     }
-    // Also populate the note fields for saving
     const plainText=[item.headline,item.overview,...(item.facts||[]),item.funFact,item.didYouKnow].filter(Boolean).join('\n\n');
     const noteBody=document.getElementById('culture-note-body');if(noteBody)noteBody.value=plainText;
     const noteTitle=document.getElementById('culture-note-title');if(noteTitle)noteTitle.value=cat+' — '+cfg.name;
@@ -4239,11 +4436,7 @@ async function generateCultureNote(forceRefresh=false){
 const PRON_KEY='sb_pron';
 const PRON_PHRASES={zh:['你好','谢谢你','再见','我爱你'],ja:['こんにちは','ありがとう','さようなら','おはよう'],fr:['Bonjour','Merci beaucoup','Au revoir','Comment allez-vous?'],de:['Guten Morgen','Danke schön','Auf Wiedersehen','Wie geht es Ihnen?']};
 function loadPronHistory(){const r=ls_get(PRON_KEY);if(r)try{pronHistory=JSON.parse(r);}catch(e){}renderPronHistoryList();}
-function savePronEntry(entry){
-  pronHistory.unshift({id:entry.id,lang:entry.lang,phrase:entry.phrase.slice(0,80),score:entry.score,transcript:entry.transcript.slice(0,80),date:entry.date});
-  if(pronHistory.length>10)pronHistory=pronHistory.slice(0,10);
-  ls_set(PRON_KEY,JSON.stringify(pronHistory));renderPronHistoryList();
-}
+
 function deletePronItem(id){pronHistory=pronHistory.filter(e=>e.id!==id);ls_set(PRON_KEY,JSON.stringify(pronHistory));renderPronHistoryList();showToast('🗑 Removed');}
 function clearAllPronHistory(){if(!confirm('Clear all pronunciation history?'))return;pronHistory=[];ls_del(PRON_KEY);renderPronHistoryList();showToast('🗑 Cleared');}
 function renderPronHistoryList(){
@@ -4261,32 +4454,22 @@ function speakPronTarget(){
   window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(phrase);u.lang=LANG_CONFIG[currentLang]?.tts||'en-GB';u.rate=0.8;window.speechSynthesis.speak(u);
 }
 function startPronRec(){
-  const phrase=document.getElementById('pron-phrase')?.value.trim();if(!phrase){showToast('⚠️ Enter a phrase to practice');return;}
-  if(!('SpeechRecognition' in window||'webkitSpeechRecognition' in window)){showToast('⚠️ Speech recognition not supported on this browser');return;}
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;pronSR=new SR();
-  pronSR.lang=LANG_CONFIG[currentLang]?.tts||'en-GB';pronSR.interimResults=false;pronSR.maxAlternatives=1;
-  pronSR.onresult=e=>{
-    const transcript=e.results[0][0].transcript;const confidence=Math.round(e.results[0][0].confidence*100)||50;
-    // Local scoring: compare transcript to phrase
-    const score=scorePronunciation(phrase,transcript);
-    document.getElementById('pron-transcript').style.display='block';
-    document.getElementById('pron-transcript-text').textContent=transcript;
-    const col=score>=80?'#007a40':score>=50?'#ff8c00':'#cc1144';
-    const msg=score>=80?'🎉 Excellent!':score>=60?'👍 Good effort!':score>=40?'📚 Keep practising!':'💪 Try again!';
-    document.getElementById('pron-score').innerHTML='<span style="font-size:1.2rem;font-weight:900;color:'+col+'">'+score+'% — '+msg+'</span>';
-    document.getElementById('pron-api-btn').style.display='inline-flex';
-    savePronEntry({id:Date.now(),lang:LANG_CONFIG[currentLang]?.name,phrase,transcript,score,date:new Date().toLocaleDateString()});
-    document.getElementById('pron-rec-status').textContent='Done';
-    document.getElementById('pron-stop-btn').style.display='none';document.getElementById('pron-rec-btn').style.display='inline-flex';
-  };
-  pronSR.onerror=e=>{showToast('⚠️ '+e.error);document.getElementById('pron-rec-status').textContent='Error';document.getElementById('pron-stop-btn').style.display='none';document.getElementById('pron-rec-btn').style.display='inline-flex';};
-  pronSR.start();
-  document.getElementById('pron-rec-status').textContent='🔴 Listening...';
-  document.getElementById('pron-rec-btn').style.display='none';document.getElementById('pron-stop-btn').style.display='inline-flex';
+  const phrase=document.getElementById('pron-phrase')?.value.trim();
+  if(!phrase){showToast('Please enter a phrase first');return;}
+  const btn=document.getElementById('pron-rec-btn');
+  Voice.start('pron',{
+    btn,
+    lang:LANG_CONFIG[currentLang]?.tts||'en-GB',
+    transcriptId:'pron-voice-transcript',
+    onResult:transcript=>{
+      document.getElementById('pron-transcript-text').textContent=transcript;
+      const score=scorePronunciation(phrase,transcript);
+      document.getElementById('pron-local-score').textContent='Score: '+score+'%';
+    }
+  });
 }
-function stopPronRec(){if(pronSR)pronSR.stop();}
+function stopPronRec(){Voice.stop();}
 function scorePronunciation(target,transcript){
-  // Normalize both strings
   const t1=target.toLowerCase().replace(/[^a-z一-鿿぀-ゟ゠-ヿ]/g,' ').split(/\s+/).filter(Boolean);
   const t2=transcript.toLowerCase().replace(/[^a-z一-鿿぀-ゟ゠-ヿ]/g,' ').split(/\s+/).filter(Boolean);
   if(!t1.length)return 50;
@@ -4368,7 +4551,6 @@ async function generatePodcast(forceRefresh=false){
 function renderPodcastList(eps){
   podcastEpisodes=eps;
   const list=document.getElementById('podcast-list');if(!list)return;
-  // Estimate duration: ~130 words per minute speech for intermediate
   list.innerHTML=eps.map((ep,i)=>{
     const wordCount=(ep.content||ep.c||'').split(/\s+/).filter(Boolean).length;
     const durationSec=Math.round(wordCount/2.1); // ~2.1 words/sec at 0.9x speed
@@ -4403,7 +4585,6 @@ function playPodcast(){
   const rate=parseFloat(document.getElementById('podcast-speed')?.value||0.9);
   const content=currentPodcast.content||currentPodcast.c||'';
   const u=new SpeechSynthesisUtterance(content);u.lang=LANG_CONFIG[currentLang]?.tts||'en-GB';u.rate=rate;
-  // Highlight words during playback
   const tw=document.getElementById('podcast-transcript-wrap');
   if(tw){const words=content.split(' ');tw.innerHTML=words.map((w,i)=>'<span id="pw-'+i+'">'+escHtml(w)+' </span>').join('');let wi=0;u.onboundary=e=>{if(e.name==='word'){document.querySelectorAll('[id^="pw-"]').forEach(s=>s.style.background='');const el=document.getElementById('pw-'+wi);if(el){el.style.background='var(--accent)';el.style.color='#fff';el.style.borderRadius='3px';}wi++;}};u.onend=()=>{document.querySelectorAll('[id^="pw-"]').forEach(s=>{s.style.background='';s.style.color='';});};}
   window.speechSynthesis.speak(u);
@@ -4444,7 +4625,6 @@ async function learnLanguage(){
   const type=typeEl?typeEl.value:'vocabulary with pronunciation';
   setLoading('lang-learn-btn','lang-learn-icon',true,cfg.flag);
 
-  // Build pronunciation guide instruction per language
   const pronGuide=
     cfg.code==='zh'?'Include Pinyin romanization for every word.':
     cfg.code==='yue'?'Include Jyutping romanization (Cantonese phonetic system) for every word.':
@@ -4453,7 +4633,6 @@ async function learnLanguage(){
     cfg.code==='en'?'Provide British English pronunciation guide using simple phonetics (e.g. "hel-OH").':
     'Include romanized pronunciation guide for every word.';
 
-  // English gets a tailored prompt; all others use the foreign language template
   const isEnglish=cfg.code==='en';
   const prompt=isEnglish
     ? `You are an expert English language teacher for students aged 11-16.
@@ -4487,12 +4666,10 @@ Add a short cultural note at the end. Do NOT output JSON format under any circum
 
   try{
     const result=await callClaude(prompt,1800,true);
-    // Safety check: if result looks like JSON, wrap it nicely instead of rendering raw
     const trimmed=result.trim();
     const looksLikeJson=trimmed.startsWith('[') || trimmed.startsWith('{');
     let html;
     if(looksLikeJson){
-      // Parse and render as a table gracefully
       try{
         const parsed=JSON.parse(trimmed);
         const items=Array.isArray(parsed)?parsed:[parsed];
@@ -4502,7 +4679,6 @@ Add a short cultural note at the end. Do NOT output JSON format under any circum
         }).join('');
         html=`<div class="lang-rich-rendered"><h1>${cfg.flag} ${escHtml(topic)}</h1><table><tbody>${tableRows}</tbody></table></div>`;
       }catch(e2){
-        // Not valid JSON either — just show as preformatted text
         html=`<div class="lang-rich-rendered"><pre style="white-space:pre-wrap;font-size:13px;">${escHtml(trimmed)}</pre></div>`;
       }
     } else {
@@ -4514,7 +4690,6 @@ Add a short cultural note at the end. Do NOT output JSON format under any circum
     if(richEl)richEl.style.display='block';
     if(rendEl){
       rendEl.innerHTML=html;
-      // Add speak + hint bar
       const btn=document.createElement('div');
       btn.style.cssText='margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;';
       btn.innerHTML=`<button class="btn btn-secondary btn-sm" onclick="speakText('${topic.replace(/'/g,"\'")}','${cfg.code}')">🔊 Hear topic</button><span style="font-size:10px;color:var(--text3);">Tap 🔊 on any table row to hear pronunciation</span>`;
@@ -4525,25 +4700,22 @@ Add a short cultural note at the end. Do NOT output JSON format under any circum
     langSessions[currentLang]=sess;
     ls_set(KEYS.langSess,JSON.stringify(langSessions));
     saveLangHistEntry(currentLang,topic,type,result);
-    addHistory('lang',cfg.name+': '+topic);rewardSessionComplete('Language Corner');rewardLangPractised(cfg.code);rewardDailyBonus();
+    addHistory('lang',cfg.name+': '+topic);rewardSessionComplete('Language Corner');rewardLangPractised(cfg.code);rewardDailyBonus();logSession({module:'Language',subject:cfg.name,durationSec:120,level:profile.level});
     autoCompletePlanTask('Language Corner',cfg.name);
   }catch(e){logError(arguments.callee&&arguments.callee.name||'unknown',e);showToast('❌ '+e.message);}
   setLoading('lang-learn-btn','lang-learn-icon',false,cfg.flag);
 }
 function mdToLangHtml(md,langCode){
-  // Safety: if response is pure JSON, don't render it raw
   const trimmed=(md||'').trim();
   if((trimmed.startsWith('[') || trimmed.startsWith('{'))){
     try{
       const parsed=JSON.parse(trimmed);
       const items=Array.isArray(parsed)?parsed:[parsed];
       if(items.length===0)return '<div class="lang-rich-rendered"><p>No content returned.</p></div>';
-      // Convert JSON array to a markdown-style table
       const keys=Object.keys(items[0]);
       let tableHtml='<table><thead><tr>'+keys.map(k=>'<th>'+escHtml(k)+'</th>').join('')+'</tr></thead><tbody>';
       items.forEach(item=>{
         const cells=keys.map(k=>String(item[k]||''));
-        // First cell gets speak button
         const native=cells[0];
         const speakBtn=`<button class="speak-btn" data-text="${native.replace(/"/g,'&quot;')}" data-lang="${langCode}" onclick="speakBtn(this,this.dataset.text,this.dataset.lang)">🔊</button>`;
         tableHtml+='<tr><td><span style="font-size:1.05rem;font-weight:900;">'+escHtml(native)+'</span> '+speakBtn+'</td>'+cells.slice(1).map(v=>'<td>'+escHtml(v)+'</td>').join('')+'</tr>';
@@ -4566,20 +4738,16 @@ function mdToLangHtml(md,langCode){
   h=h.split('\n').map(l=>{const t=l.trim();if(!t||t.charAt(0)==='<')return l;return '<p>'+t+'</p>';}).join('\n');
   return '<div class="lang-rich-rendered">'+h+'</div>';
 }
-// TTS
 function speakText(text,lang){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[lang]||'en-GB';u.rate=0.85;window.speechSynthesis.speak(u);}
 function speakBtn(btn,text,langCode){if(!window.speechSynthesis){showToast('⚠️ Speech not supported');return;}if(btn.classList.contains('speaking')){window.speechSynthesis.cancel();btn.classList.remove('speaking');btn.textContent='🔊';return;}document.querySelectorAll('.speak-btn.speaking').forEach(b=>{b.classList.remove('speaking');b.textContent='🔊';});btn.classList.add('speaking');btn.textContent='⏹';const u=new SpeechSynthesisUtterance(text);const map={'zh':'zh-CN','ja':'ja-JP','fr':'fr-FR','de':'de-DE','fil':'fil-PH','ms':'ms-MY','yue':'zh-HK','en':'en-GB'};u.lang=map[langCode]||'en-GB';u.rate=0.8;u.onend=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};u.onerror=()=>{btn.classList.remove('speaking');btn.textContent='🔊';};window.speechSynthesis.speak(u);}
-// Lang History
 function loadLangHistory(){const r=ls_get(KEYS.langHist);if(r)try{langHistory=Object.assign({english:[],chinese:[],cantonese:[],japanese:[],french:[],german:[],filipino:[],malay:[]},JSON.parse(r));}catch(e){}}
 function saveLangHistEntry(lang,topic,type,rawResult){if(!langHistory[lang])langHistory[lang]=[];const entry={id:Date.now(),topic,type,rawResult:rawResult.slice(0,2000),date:new Date().toLocaleDateString()};langHistory[lang].unshift(entry);if(langHistory[lang].length>5)langHistory[lang]=langHistory[lang].slice(0,5);ls_set(KEYS.langHist,JSON.stringify(langHistory));}
 function deleteLangHistItem(lang,id){if(!langHistory[lang])return;langHistory[lang]=langHistory[lang].filter(e=>e.id!==id);ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Removed');}
 function clearAllLangHistory(lang){if(!confirm('Clear all sessions for this language?'))return;langHistory[lang]=[];ls_set(KEYS.langHist,JSON.stringify(langHistory));renderLangPanel();showToast('🗑 Cleared');}
 function recallLangHistory(lang,id){const e=(langHistory[lang]||[]).find(x=>x.id===id);if(!e)return;const cfg=LANG_CONFIG[lang];const rich=document.getElementById('lang-rich-'+lang);const rend=document.getElementById('lang-rendered-'+lang);if(rich)rich.style.display='block';if(rend)rend.innerHTML=mdToLangHtml(e.rawResult,cfg.code);showToast('📖 Loaded: '+e.topic);}
 function loadLangSessions(){const r=ls_get(KEYS.langSess);if(r)try{langSessions=Object.assign({english:{},chinese:{},cantonese:{},japanese:{},french:{},german:{},filipino:{},malay:{}},JSON.parse(r));}catch(e){}}
-// Translate
 function loadTransHistory(){const r=ls_get(KEYS.transHist);if(r)try{transHistory=JSON.parse(r);}catch(e){}renderTransHistoryList();}
 function saveTransHistory(from,to,input,result){
-  // Optimize: keep input short, result trimmed
   const entry={id:Date.now(),from,to,
     input:input.slice(0,300),
     result:result.slice(0,1500),
@@ -4623,10 +4791,8 @@ async function translateToLang(){
   if(icon)icon.innerHTML='🔄';
 }
 function clearLangTranslate(){const inp=document.getElementById('lang-trans-input'),box=document.getElementById('lang-trans-result');if(inp)inp.value='';if(box){box.innerHTML='';box.classList.remove('show');}const sess=langSessions[currentLang]||{};delete sess.translateInput;delete sess.translateResult;langSessions[currentLang]=sess;ls_set(KEYS.langSess,JSON.stringify(langSessions));}
-// Read Aloud
 function loadReadHistory(){const r=ls_get(KEYS.readHist);if(r)try{readHistory=JSON.parse(r);}catch(e){}renderReadHistoryList();}
 function saveReadHistory(entry){
-  // Optimize: store only title+summary in history, not full content
   const slim={id:entry.id,topic:entry.topic,format:entry.format,difficulty:entry.difficulty,
     count:entry.count,date:entry.date,
     stories:entry.stories.map(s=>({title:s.title.slice(0,60),summary:(s.summary||s.content.slice(0,80)).slice(0,100),content:s.content.slice(0,600)}))};
@@ -4652,7 +4818,6 @@ async function generateReadAloud(forceRefresh=false){
   const isEnglish=cfg.code==='en';
   setLoading('ra-gen-btn','ra-gen-icon',true,'📖');
   try{
-    // Build prompt using template literal for clarity and to avoid quote escaping bugs
     const wordRange=CONFIG.READ_WORD_RANGES[difficulty]||CONFIG.READ_WORD_RANGES.intermediate;
     const transInstruction=isEnglish?'':'For each item, include a translation field with full English translation.';
     const transExample=isEnglish?'':',\n  "translation": "English translation here"';
@@ -4669,7 +4834,6 @@ Format:
 Exactly 20 items. Make sure content field uses simple quotation marks, not smart quotes, to avoid JSON parse errors.`;
 
     const raw=await callClaude(prompt,4500,true);
-    // Robust JSON extraction — strip anything before [ and after ]
     const jsonStr=raw.replace(/```json|```/g,'').trim();
     const firstBracket=jsonStr.indexOf('[');
     const lastBracket=jsonStr.lastIndexOf(']');
@@ -4697,7 +4861,6 @@ function selectStory(idx){
   const panel=document.getElementById('ra-narration-panel');
   panel.style.display='block';
 
-  // Build English translation block if non-English and translation exists
   const hasTranslation=!isEnglish&&(story.translation||story.t);
   const translationHtml=hasTranslation
     ? `<div style="margin-top:14px;background:linear-gradient(135deg,#f0f8ff,#e8f4ff);border:1.5px solid #90caf9;border-radius:12px;padding:14px;">
@@ -4731,14 +4894,12 @@ function selectStory(idx){
   document.getElementById('narration-speed').addEventListener('input',function(){document.getElementById('narration-speed-val').textContent=this.value+'x';});
   panel.scrollIntoView({behavior:'smooth'});
   window._narrationText=story.content;
-  // Populate voice dropdown with device voices filtered to current language
   populateVoiceDropdown();
 }
 function populateVoiceDropdown(){
   const sel=document.getElementById('narration-voice');if(!sel)return;
   if(!window.speechSynthesis){sel.parentElement.style.display='none';return;}
   const langCode=LANG_CONFIG[currentLang]?.tts||'en';
-  // Wait for voices to load (iOS needs this)
   function fillVoices(){
     const voices=window.speechSynthesis.getVoices();
     // Filter voices matching current language, fallback to all
@@ -4759,12 +4920,10 @@ function startNarration(){
   const rate=parseFloat(document.getElementById('narration-speed')?.value||0.9);
   const u=new SpeechSynthesisUtterance(window._narrationText);
   u.lang=LANG_CONFIG[currentLang]?.tts||'en-GB';u.rate=rate;
-  // Use selected voice if available
   const voiceSel=document.getElementById('narration-voice');
   if(voiceSel&&window._availableVoices&&window._availableVoices[parseInt(voiceSel.value)]){
     u.voice=window._availableVoices[parseInt(voiceSel.value)];
   }
-  // Highlight words during narration
   const textEl=document.getElementById('narration-text');
   if(textEl){
     const words=window._narrationText.split(' ');
@@ -4787,9 +4946,7 @@ function speakEnTranslation(){
 // ══════════════════════════════════════════════
 // SECTION: Explain It  (→ App.ai + App.ui)
 // explainTopic() → AI text + SVG diagram + images
-// History, recall, speak, review.
 // ══════════════════════════════════════════════
-// EXPLAIN IT
 // ══════════════════════════════════════════════
 function speakExplainContent(){
   const renderedEl=document.getElementById('explain-rendered');
@@ -4893,10 +5050,6 @@ function renderExplainHistoryList(){
 
 // ══════════════════════════════════════════════
 // SECTION: Study Planner  (→ App.storage + App.ui + App.ai)
-// Views: daily | weekly | monthly task planner.
-// Effort Planner: AI-generated session schedule.
-// Syllabus upload lives here (feeds Smart Quiz).
-// STUDY PLAN
 // ══════════════════════════════════════════════
 function loadPlanTasks(){const r=ls_get(KEYS.plan);if(r)try{planTasks=JSON.parse(r);}catch(e){}setDefaultPlanDate();renderCurrentPlanView();renderPlanStats();}
 function savePlanTasks(){ls_set(KEYS.plan,JSON.stringify(planTasks));}
@@ -4911,7 +5064,6 @@ function addPlanTask(){
   const task={id:Date.now(),type,name,date,duration,priority,done:false,autoCompleted:false};
   planTasks.push(task);
   savePlanTasks();renderCurrentPlanView();renderPlanStats();
-  // Also refresh scores panel if visible
   if(document.getElementById('panel-scores').classList.contains('active'))updateScoresPanel();
   document.getElementById('plan-task-name').value='';
   showToast('✅ Task added!');
@@ -4921,11 +5073,8 @@ function autoCompletePlanTask(activityType,subject){
   let changed=false;
   planTasks.forEach(t=>{
     if(t.done||t.date!==today)return;
-    // Type must match exactly
     if(t.type!==activityType)return;
-    // If task has no specific topic name, complete it (it's a general activity task)
     if(!t.name){t.done=true;t.autoCompleted=true;changed=true;return;}
-    // If subject provided, do a bidirectional fuzzy match
     if(subject){
       const tn=t.name.toLowerCase().trim();
       const sn=(subject||'').toLowerCase().trim();
@@ -4933,7 +5082,6 @@ function autoCompletePlanTask(activityType,subject){
         t.done=true;t.autoCompleted=true;changed=true;
       }
     } else {
-      // No subject provided — complete any matching type task
       t.done=true;t.autoCompleted=true;changed=true;
     }
   });
@@ -5007,43 +5155,207 @@ function renderMonthlyView(){
 function renderPlanStats(){const total=planTasks.length;const done=planTasks.filter(t=>t.done).length;document.getElementById('plan-stat-total').textContent=total;document.getElementById('plan-stat-done').textContent=done;document.getElementById('plan-stat-pending').textContent=total-done;document.getElementById('plan-stat-pct').textContent=total>0?Math.round((done/total)*100)+'%':'0%';}
 
 // ══════════════════════════════════════════════
-// MY SCORES
 // ══════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════
 // SECTION: Gamification — XP, Levels, Streak, Badges (→ App.rewards)
-//
-// XP rules:
-//   +10  per correct answer (quiz, scramble, spelling)
-//   +50  per session completed (any module)
-//   +20  daily login bonus (once per calendar day)
-//
-// Levels:
-//   0–99    🌱 Seedling
-//   100–299 🧭 Explorer
-//   300–799 📘 Scholar
-//   800+    🎓 Master
-//
-// Achievements (badges):
-//   first_quiz      First Quiz Completed
-//   five_sessions   5 Sessions Completed
-//   hundred_correct 100 Correct Answers
-//   polyglot        Practised 3 Languages
-//   streak_3        3-Day Streak
-//   streak_7        7-Day Streak
-//   scholar         Reached Scholar level
-//   master          Reached Master level
-//
 // Data stored in localStorage (key: sb_rewards):
-// {
-//   xp:            number,
-//   dailyDate:     string,   // last bonus date
-//   sessionsCount: number,
-//   correctCount:  number,
-//   langPractised: string[], // distinct language codes used
-//   badges: { [id]: { earned:bool, date:string } }
-// }
 // ═══════════════════════════════════════════════════════════════
+
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: AICache — Persistent AI generation cache (→ App.cache)
+// saveXHistory) but adds per-entry TTL and cache-key lookup.
+// Cached types: 'quiz' | 'insight' | 'recommendation'
+// Storage schema (localStorage key: sb_aic):
+//     [cacheKey]: {
+//       key:       string,     // deterministic cache key
+//       data:      any,        // the cached payload
+// Usage:
+//   const hit = AICache.get('quiz', {level,subject,count,difficulty,topic});
+//   if (hit) { /* use hit.data */ } else { /* call AI, then: */ }
+//   AICache.set('quiz', {level,subject,count,difficulty,topic}, quizArray, {subject,topic});
+//   AICache.remove(key)           — clear one entry
+//   AICache.clearType('quiz')     — clear all quiz entries
+//   AICache.clearAll()            — wipe everything (also clears session _resultCache)
+//   AICache.list()                — array of all entries (for UI display)
+//   AICache.pruneExpired()        — evict stale entries (called on init)
+// ═══════════════════════════════════════════════════════════════
+
+const AICache = (() => {
+
+  const STORAGE_KEY  = KEYS.aiCache;
+  const TTL_MS       = 10 * 24 * 60 * 60 * 1000;   // 10 days
+  const MAX_ENTRIES  = 50;                            // cap storage use
+  const SCHEMA_VER   = 1;
+
+  // ── Internal store (loaded once, written on every mutation) ──
+  let _store = null;
+
+  function _load() {
+    if (_store) return _store;
+    try {
+      const raw = ls_get(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.version === SCHEMA_VER && parsed.entries) {
+          _store = parsed;
+          return _store;
+        }
+      }
+    } catch (e) { /* fall through */ }
+    _store = { version: SCHEMA_VER, entries: {} };
+    return _store;
+  }
+
+  function _save() {
+    try { ls_set(STORAGE_KEY, JSON.stringify(_store)); } catch (e) {}
+  }
+
+  // ── Cache key builder — deterministic from inputs ──
+  function _buildKey(type, params) {
+    // Sort param keys so order doesn't matter
+    const sorted = Object.keys(params).sort().map(k => k + '=' + String(params[k]||'').trim().toLowerCase()).join('|');
+    return type + ':' + sorted;
+  }
+
+  // ── Public API ────────────────────────────────────────────────
+
+  // get(type, params) → entry.data or null
+  function get(type, params) {
+    const store = _load();
+    const key   = _buildKey(type, params);
+    const entry = store.entries[key];
+    if (!entry) return null;
+    if (Date.now() > entry.expiresAt) {
+      delete store.entries[key];
+      _save();
+      return null;
+    }
+    return entry;   // caller reads .data, .meta, .createdAt
+  }
+
+  // set(type, params, data, meta) → cacheKey
+  function set(type, params, data, meta = {}) {
+    const store = _load();
+    const key   = _buildKey(type, params);
+    const now   = Date.now();
+    store.entries[key] = {
+      key, type, data,
+      createdAt: now,
+      expiresAt: now + TTL_MS,
+      meta: { ...meta, cachedAt: new Date().toLocaleDateString() }
+    };
+    const keys = Object.keys(store.entries);
+    if (keys.length > MAX_ENTRIES) {
+      keys.sort((a,b) => store.entries[a].createdAt - store.entries[b].createdAt);
+      keys.slice(0, keys.length - MAX_ENTRIES).forEach(k => delete store.entries[k]);
+    }
+    _save();
+    return key;
+  }
+
+  // remove(key) — remove one entry by its cache key string
+  function remove(key) {
+    const store = _load();
+    if (store.entries[key]) {
+      delete store.entries[key];
+      _save();
+      return true;
+    }
+    return false;
+  }
+
+  function clearType(type) {
+    const store = _load();
+    let count = 0;
+    Object.keys(store.entries).forEach(k => {
+      if (store.entries[k].type === type) { delete store.entries[k]; count++; }
+    });
+    _save();
+    return count;
+  }
+
+  // clearAll() — wipe the entire cache + session _resultCache
+  function clearAll() {
+    _store = { version: SCHEMA_VER, entries: {} };
+    _save();
+    // Also clear in-memory session cache
+    if (typeof _resultCache !== 'undefined') _resultCache.clear();
+    showToast('🗑 AI cache cleared', 2500);
+  }
+
+  function pruneExpired() {
+    const store = _load();
+    const now   = Date.now();
+    let pruned  = 0;
+    Object.keys(store.entries).forEach(k => {
+      if (store.entries[k].expiresAt < now) { delete store.entries[k]; pruned++; }
+    });
+    if (pruned) _save();
+    return pruned;
+  }
+
+  function list(type) {
+    const store = _load();
+    return Object.values(store.entries)
+      .filter(e => !type || e.type === type)
+      .filter(e => Date.now() <= e.expiresAt)
+      .sort((a,b) => b.createdAt - a.createdAt);
+  }
+
+  function stats() {
+    const store = _load();
+    const all   = Object.values(store.entries);
+    const now   = Date.now();
+    return {
+      total:   all.length,
+      quiz:    all.filter(e => e.type==='quiz').length,
+      insight: all.filter(e => e.type==='insight').length,
+      rec:     all.filter(e => e.type==='recommendation').length,
+      expired: all.filter(e => e.expiresAt < now).length,
+      ttlDays: TTL_MS / 86400000,
+    };
+  }
+
+  return Object.freeze({ get, set, remove, clearType, clearAll, pruneExpired, list, stats });
+
+})();
+
+// ── Cache panel renderer ──────────────────────────────────────
+function renderCachePanel(){
+  const stats = AICache.stats();
+  const el = id => document.getElementById(id);
+  if(el('cache-quiz-count'))    el('cache-quiz-count').textContent    = stats.quiz;
+  if(el('cache-insight-count')) el('cache-insight-count').textContent = stats.insight;
+  if(el('cache-rec-count'))     el('cache-rec-count').textContent     = stats.rec;
+
+  const list = el('cache-entries-list'); if(!list) return;
+  const entries = AICache.list();
+  if(!entries.length){
+    list.innerHTML='<div style="font-size:11px;color:var(--text3);padding:6px;">No cached entries yet.</div>';
+    return;
+  }
+  const typeIcon = t => t==='quiz'?'🧠':t==='insight'?'💡':'📊';
+  const ageLabel = ms => {
+    const d = Math.floor(ms/86400000); if(d>0) return d+'d ago';
+    const h = Math.floor(ms/3600000);  if(h>0) return h+'h ago';
+    return Math.floor(ms/60000)+'m ago';
+  };
+  list.innerHTML = entries.map(e=>{
+    const age = Date.now()-e.createdAt;
+    const daysLeft = Math.ceil((e.expiresAt-Date.now())/86400000);
+    const label = e.meta.subject?(e.meta.subject+(e.meta.topic?' — '+e.meta.topic:'')):(e.meta.label||e.type);
+    return `<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px;">
+      <span style="font-size:1rem;">${typeIcon(e.type)}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(label)}</div>
+        <div style="color:var(--text3);">${escHtml(e.meta.difficulty||'')} · ${ageLabel(age)} · expires in ${daysLeft}d</div>
+      </div>
+      <button onclick="AICache.remove('${e.key}');renderCachePanel();" style="background:none;border:none;color:var(--accent2);cursor:pointer;font-size:14px;padding:0 4px;" title="Remove">✕</button>
+    </div>`;
+  }).join('');
+}
 
 const REWARDS_KEY = 'sb_rewards';
 
@@ -5116,14 +5428,12 @@ function _doRefreshRewardsUI(){
   const rd=loadRewards();
   const {lvl,next,progressXP,rangeXP,pct}=getLevelInfo(rd.xp);
 
-  // HUD (top-left fixed)
   const el=id=>document.getElementById(id);
   if(el('xp-avatar'))    el('xp-avatar').textContent   = lvl.emoji;
   if(el('xp-level-label'))el('xp-level-label').textContent = lvl.name;
   if(el('xp-pts-label')) el('xp-pts-label').textContent = rd.xp+' XP';
   if(el('xp-bar-fill'))  el('xp-bar-fill').style.width = pct+'%';
 
-  // Scores panel — gamification card
   if(el('gam-level-display')) el('gam-level-display').textContent = lvl.emoji+' '+lvl.name;
   if(el('gam-xp-display'))    el('gam-xp-display').textContent    = rd.xp+' XP total';
   if(el('gam-level-fill'))    el('gam-level-fill').style.width    = pct+'%';
@@ -5134,7 +5444,6 @@ function _doRefreshRewardsUI(){
   if(el('gam-sessions'))      el('gam-sessions').textContent      = rd.sessionsCount;
   if(el('gam-correct-total')) el('gam-correct-total').textContent = rd.correctCount;
 
-  // Streak ring
   const streak=calcStudyStreak();
   if(el('gam-streak-num'))el('gam-streak-num').textContent=streak;
   if(el('gam-streak-ring')){
@@ -5142,7 +5451,6 @@ function _doRefreshRewardsUI(){
       streak>=3?'linear-gradient(135deg,#ff8c00,#ffcc00)':'linear-gradient(135deg,#aaa,#ccc)';
   }
 
-  // Badge grid
   const earned=Object.values(rd.badges).filter(b=>b.earned).length;
   if(el('gam-badges-count'))el('gam-badges-count').textContent=earned;
   renderBadgeGrid(rd);
@@ -5195,7 +5503,6 @@ function addXP(amount, reason){
   const newLvl=getLevelInfo(rd.xp).lvl;
   saveRewards(rd);
   showXPToast('+'+amount+' XP'+(reason?' · '+reason:''));
-  // Level-up notification
   if(newLvl.name!==oldLvl){
     setTimeout(()=>showToast('🎉 Level up! You are now a '+newLvl.emoji+' '+newLvl.name+'!',5000),400);
     AppEvents.emit('level:up',{level:newLvl.name,xp:rd.xp});
@@ -5260,7 +5567,6 @@ function updateScoreDisplay(){
   if(el('gs-pct'))el('gs-pct').textContent=globalStats.quizTotal>0?Math.round((globalStats.quizCorrect/globalStats.quizTotal)*100)+'%':'–';
 }
 function calcStudyStreak(){
-  // Count consecutive days with at least 1 completed plan task
   const today=new Date();let streak=0;
   for(let i=0;i<60;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
@@ -5271,17 +5577,15 @@ function calcStudyStreak(){
   return streak;
 }
 function updateScoresPanel(){
-  // OPT: Skip if scores panel is not visible — avoids invisible DOM work
   const scorePanel = document.getElementById('panel-scores');
   if(scorePanel && !scorePanel.classList.contains('active')) return;
   updateScoreDisplay();
   refreshRewardsUI();
+  renderCachePanel();
   const el=id=>document.getElementById(id);
-  // Streak
   const streak=calcStudyStreak();
   if(el('gs-streak'))el('gs-streak').textContent=streak+(streak>=3?'🔥':streak>0?'⭐':'');
   if(el('gs-sessions'))el('gs-sessions').textContent=activityHistory.length;
-  // Plan stats
   const today=fmtDate(new Date());
   const total=planTasks.length;
   const done=planTasks.filter(t=>t.done).length;
@@ -5291,7 +5595,6 @@ function updateScoresPanel(){
   if(el('sc-plan-done'))el('sc-plan-done').textContent=done;
   if(el('sc-plan-missed'))el('sc-plan-missed').textContent=missed;
   if(el('sc-plan-pct'))el('sc-plan-pct').textContent=pct+'%';
-  // Activity breakdown by type
   const typeLabels={
     'Smart Quiz':'🧠 Smart Quiz','Word Wizards':'🪄 Word Wizards','Brain Teaser Hub':'🧩 Brain Teaser',
     'Language Corner':'🈳 Language','Explain It':'💡 Explain It','General Study':'📖 General Study'
@@ -5312,7 +5615,6 @@ function updateScoresPanel(){
         +'</div>';
     }).join('');
   }
-  // Quiz by subject breakdown
   const subjBreakdown=el('sc-subject-breakdown');
   if(subjBreakdown&&quizHistoryStore.length){
     const bySubj={};
@@ -5342,7 +5644,6 @@ function updateScoresPanel(){
       subjBreakdown.innerHTML='<div style="font-size:12px;color:var(--text3);">Complete some quizzes to see subject breakdown.</div>';
     }
   }
-  // Module usage grid
   const moduleGrid=el('sc-module-usage');
   if(moduleGrid){
     const modules=[
@@ -5359,7 +5660,6 @@ function updateScoresPanel(){
         +'<div class="stat-label">'+m.label+'</div></div>';
     }).join('');
   }
-  // Activity history list
   const list=el('history-list');
   if(!list)return;
   if(!activityHistory.length){
@@ -5375,13 +5675,10 @@ function updateScoresPanel(){
 
 
 // ══════════════════════════════════════════════
-// EFFORT PLANNER
 // ══════════════════════════════════════════════
 
 // ══════════════════════════════════════════════
-// SCHOOL TERM CALENDARS
 // ══════════════════════════════════════════════
-// Year is dynamic — uses current year. Format: MM-DD
 const SCHOOL_TERMS={
   SG:{
     name:'Singapore MOE',
@@ -5523,11 +5820,7 @@ const SCHOOL_TERMS={
   }
 };
 
-function getTermYear(monthDay){
-  // Returns a full date string for current or next year
-  const y=new Date().getFullYear();
-  return y+'-'+monthDay;
-}
+
 function getTermsForCountry(country){
   return SCHOOL_TERMS[country]||SCHOOL_TERMS.SG;
 }
@@ -5554,10 +5847,8 @@ function applyTermDates(){
   // Look in key exams first, then terms
   const all=[...(data.keyExams||[]),...(data.terms||[])];
   const found=all.find(t=>t.id===termId);if(!found)return;
-  // Set dates — work backwards from exam: start = 6 weeks before
   const endDate=yr+'-'+found.end;
   const startDate=yr+'-'+found.start;
-  // For exams, set start = 6 weeks before exam
   if(found.exam||data.keyExams?.find(e=>e.id===termId)){
     const examEnd=new Date(endDate);const studyStart=new Date(examEnd);
     studyStart.setDate(examEnd.getDate()-42); // 6 weeks preparation
@@ -5591,7 +5882,6 @@ function renderTermCalendarVisual(country){
     html+='</div>';
   });
   html+='</div>';
-  // Count school vs holiday days in study range
   if(studyStart&&studyEnd){
     let schoolDays=0,holidayDays=0,pubHolDays=0;
     const phSet=new Set((data.publicHolidays||[]).map(h=>yr+'-'+h.date));
@@ -5620,7 +5910,6 @@ function showExamInfo(country,termId){
   let html='<div style="font-weight:800;margin-bottom:4px;">📝 '+escHtml(exam.label)+'</div>';
   html+='<div>Exam period: <strong>'+yr+'-'+exam.start+' → '+yr+'-'+exam.end+'</strong></div>';
   html+='<div style="margin-top:4px;color:#8a6600;">Study start date has been automatically set to 6 weeks before the exam.</div>';
-  // Warn about holidays in study period
   const studyStart=document.getElementById('effort-start')?.value;
   const studyEnd=document.getElementById('effort-end')?.value;
   if(studyStart&&studyEnd){
@@ -5632,7 +5921,6 @@ function showExamInfo(country,termId){
   el.innerHTML=html;el.style.display='block';
 }
 
-// Compute effective study days accounting for school terms
 function computeEffectiveStudyDays(startVal,endVal,country,studyDaysPerWeek){
   const data=getTermsForCountry(country);
   const yr=new Date().getFullYear();
@@ -5653,7 +5941,6 @@ function computeEffectiveStudyDays(startVal,endVal,country,studyDaysPerWeek){
   }
   return{totalStudyDays,schoolDays,holidayDays};
 }
-// Per-day study hours differ: school days have less free time than holidays
 function computeStudyHrsForDay(isSchoolDay,schoolHrs,sleepHrs,leisureHrs,ccaHrs,mealHrs){
   const busy=sleepHrs+mealHrs+(isSchoolDay?schoolHrs:0)+(isSchoolDay?ccaHrs:ccaHrs*0.5)+leisureHrs;
   return Math.max(0.5,24-busy);
@@ -5667,11 +5954,8 @@ function initEffortPlanner(){
   const endEl=document.getElementById('effort-end');
   if(startEl&&!startEl.value)startEl.value=fmtDate(today);
   if(endEl&&!endEl.value){const d=new Date(today);d.setMonth(d.getMonth()+2);endEl.value=fmtDate(d);}
-  // Default country to SG, populate term dropdown
   updateTermCalendar();
-  // Populate subject selector from profile
   const sel=document.getElementById('effort-subj-sel');if(!sel)return;
-  // Attach listeners for date changes to update term calendar
   ['effort-start','effort-end'].forEach(id=>{const el=document.getElementById(id);if(el&&!el._termListenerAdded){el.addEventListener('change',()=>renderTermCalendarVisual(document.getElementById('effort-country')?.value||'SG'));el._termListenerAdded=true;}});
   const subjects=profile.subjects.length>0?profile.subjects:(DEFAULT_SUBJECTS[profile.level]||[]);
   sel.innerHTML=subjects.map(s=>'<option value="'+escHtml(s)+'">'+escHtml(s)+'</option>').join('');
@@ -5723,7 +6007,6 @@ async function generateEffortPlan(){
 
   // ── Term-aware day counting ──
   const{totalStudyDays,schoolDays,holidayDays}=computeEffectiveStudyDays(startVal,endVal,country,studyDaysPerWeek);
-  // School days have less free time; holiday days have more
   const schoolDayHrs=computeStudyHrsForDay(true,schoolHrs,sleepHrs,leisureHrs,ccaHrs,mealHrs);
   const holidayDayHrs=computeStudyHrsForDay(false,schoolHrs,sleepHrs,leisureHrs,ccaHrs,mealHrs);
   const totalStudyHrs=Math.round((schoolDays*schoolDayHrs+holidayDays*holidayDayHrs)*10)/10;
@@ -5733,7 +6016,6 @@ async function generateEffortPlan(){
   const sessionsPerDay=Math.max(1,Math.floor(studyHrsPerDay/(sessionHrs+breakHrs)));
   const totalSessions=Math.floor(totalStudyHrs/sessionHrs);
 
-  // Grade-to-effort multiplier
   const gradeMultiplier={'A*':1.4,'A':1.2,'B':1.0,'C':0.8,'Pass':0.6};
   const currentMultiplier={'Struggling':1.6,'Below average':1.3,'Average':1.0,'Good':0.8,'Strong':0.6};
   const totalWeight=effortSubjects.reduce((sum,s)=>{
@@ -5742,7 +6024,6 @@ async function generateEffortPlan(){
     return sum+(gm*cm);
   },0);
 
-  // Build subject schedule
   const schedule=effortSubjects.map(s=>{
     const gm=gradeMultiplier[s.grade]||1;
     const cm=currentMultiplier[s.current]||1;
@@ -5753,7 +6034,6 @@ async function generateEffortPlan(){
     return {...s,hrs,sessions,hrsPerDay,weight};
   });
 
-  // Show results
   const resultEl=document.getElementById('effort-result');
   if(!resultEl)return;
 
@@ -5762,7 +6042,6 @@ async function generateEffortPlan(){
   let html='<div style="background:linear-gradient(135deg,#e8fff3,#e8f4ff);border:2px solid #80d8c0;border-radius:14px;padding:16px;">';
   html+='<div style="font-weight:900;font-size:15px;color:#005a80;margin-bottom:14px;">📊 Your Personalised Study Plan</div>';
 
-  // Summary row
   const termData=getTermsForCountry(country);
   html+='<div style="background:#fff3e0;border:1px solid #ffd080;border-radius:8px;padding:8px 11px;margin-bottom:10px;font-size:11px;font-weight:700;color:#8a5c00;">';
   html+='🗓 '+escHtml(termData.name)+' calendar applied · '+schoolDays+' school days + '+holidayDays+' holiday days in study period';
@@ -5776,7 +6055,6 @@ async function generateEffortPlan(){
   html+=statBox('🏖','Holiday Days',holidayDays+' days (more time!)','#007a40');
   html+='</div>';
 
-  // Time breakdown pie-like bar
   html+='<div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:14px;">';
   html+='<div style="font-weight:800;font-size:12px;margin-bottom:8px;color:var(--text2);">⏱ Your 24-Hour Day Breakdown</div>';
   const busyHrs=sleepHrs+mealHrs+schoolHrs+ccaHrs+leisureHrs;
@@ -5789,7 +6067,6 @@ async function generateEffortPlan(){
     {label:'Study',hrs:studyHrsPerDay,color:'#007a40'},
     {label:'Other',hrs:Math.max(0,24-busyHrs-studyHrsPerDay),color:'#aaa'},
   ].filter(x=>x.hrs>0);
-  // Horizontal stacked bar
   html+='<div style="display:flex;height:24px;border-radius:8px;overflow:hidden;margin-bottom:8px;">';
   timeItems.forEach(item=>{html+='<div style="width:'+(item.hrs/24*100).toFixed(1)+'%;background:'+item.color+';min-width:'+(item.hrs>0.5?'2px':'0')+'" title="'+item.label+': '+item.hrs+' hrs"></div>';});
   html+='</div>';
@@ -5797,7 +6074,6 @@ async function generateEffortPlan(){
   timeItems.forEach(item=>{html+='<span style="font-size:10px;font-weight:700;background:'+item.color+'22;color:'+item.color+';padding:2px 8px;border-radius:50px;border:1px solid '+item.color+'44;">'+item.label+' '+item.hrs+'h</span>';});
   html+='</div></div>';
 
-  // Per subject breakdown
   html+='<div style="font-weight:800;font-size:12px;color:var(--text2);margin-bottom:8px;">📚 Study Hours Per Subject</div>';
   schedule.forEach(s=>{
     const col=gradeColors[s.grade]||'#333';
@@ -5812,14 +6088,12 @@ async function generateEffortPlan(){
     html+='</div>';
   });
 
-  // Study schedule recommendations
   html+='<div style="background:#fff;border:1.5px solid #c5d0f5;border-radius:10px;padding:13px;margin-bottom:12px;">';
   html+='<div style="font-weight:800;font-size:12px;margin-bottom:8px;">💡 Daily Study Rhythm</div>';
   const sessionBlocks=buildDailySchedule(schedule,sessionsPerDay,sessionMins,breakMins,schoolHrs,mealHrs);
   html+=sessionBlocks;
   html+='</div>';
 
-  // Add to plan button
   html+='<button class="btn btn-primary" onclick="addEffortPlanToCalendar()" style="width:100%;justify-content:center;font-size:14px;padding:12px;">📅 Add All Sessions to Study Planner</button>';
   html+='</div>';
   resultEl.innerHTML=html;
@@ -5840,7 +6114,6 @@ function statBox(icon,label,value,color){
 }
 
 function buildDailySchedule(schedule,sessionsPerDay,sessionMins,breakMins,schoolHrs,mealHrs){
-  // Build a suggested daily timetable
   let hour=7+schoolHrs+1; // After school + 1hr transition
   let html='<div style="font-size:11px;color:var(--text3);margin-bottom:8px;">Suggested after-school schedule (adjust to your routine)</div>';
   const subjCycle=[];
@@ -5876,7 +6149,6 @@ function addEffortPlanToCalendar(){
   const start=new Date(es.start);const end=new Date(es.end);
   const totalDays=Math.ceil((end-start)/(1000*60*60*24));
   let added=0;
-  // Rotate through subjects day by day
   let subjIdx=0;
   const esCountry=es.country||'SG';const esTermData=getTermsForCountry(esCountry);
   const esYr=new Date().getFullYear();
@@ -5903,31 +6175,17 @@ function addEffortPlanToCalendar(){
 
 // ══════════════════════════════════════════════
 // SECTION: App Module Namespace  (→ App.*)
-//
-// Thin alias layer — all existing globals remain
-// at window scope. App.* adds named module access
-// for clarity in new code without breaking any
-// existing onclick=, function call, or reference.
-//
-// Convention for new features:
-//   READ  from App.storage.loadX()
-//   CALL  AI via App.ai.generateX()
 //   EMIT  events via AppEvents.emit('event', data)
 //   TRACK rewards via App.rewards.addTokenUsage()
 // ══════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════
 // SECTION: DataLoader — Lazy content pack loader  (→ App.data)
-//
-// Loads quiz-pack.json / vocab-pack.json / language-pack.json
 // on first use, caches in memory + localStorage for offline.
-//
-// Strategy:
 //   1. Return in-memory cache immediately if available.
 //   2. Try fetch from ./data/<pack>.json → store in memory + ls.
 //   3. If fetch fails → restore from localStorage.
 //   4. If localStorage also empty → callers use inline defaults.
-//
 // Usage:
 //   const pack = await DataLoader.quiz();
 //   const pack = await DataLoader.vocab();
@@ -5952,7 +6210,6 @@ const DataLoader = (() => {
   const PACK_VERSION = '1.0';
   const LS_VERSION_KEY = 'sb_pack_ver';
 
-  // Show shimmer skeleton over a container while loading
   function _showSkeleton(id) {
     const el = document.getElementById(id);
     if (!el) return null;
@@ -5978,7 +6235,6 @@ const DataLoader = (() => {
       ls_set(LS_VERSION_KEY, PACK_VERSION);
     }
 
-    // Try network
     try {
       const res = await fetch(PACK_URLS[pack], { cache: 'no-cache' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -5997,7 +6253,6 @@ const DataLoader = (() => {
         } catch(e) { /* fall through */ }
       }
       // Fallback 2: silently use inline defaults.
-      // Only log if NOT a 404 on a preview/local origin — those are expected.
       const isPreview = location.origin.includes('claudeusercontent.com')
         || location.origin.startsWith('blob:')
         || location.origin === 'null'
@@ -6007,8 +6262,7 @@ const DataLoader = (() => {
       if (!isPreview && !is404) {
         logError('DataLoader:' + pack, fetchErr);
       } else {
-        console.log('[DataLoader] ' + pack + ' pack not found — using built-in defaults.');
-      }
+              }
       return null;  // callers use inline DEFAULT_* constants
     }
   }
@@ -6017,15 +6271,13 @@ const DataLoader = (() => {
   async function vocab(skeletonId)   { const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('vocab');}   finally{_hideSkeleton(sk);} }
   async function language(skeletonId){ const sk=skeletonId?_showSkeleton(skeletonId):null; try{return await _load('language');}finally{_hideSkeleton(sk);} }
 
-  // Background pre-warm — called after app:ready, never blocks startup.
   // Skipped on preview origins where JSON files don't exist.
   function prewarm() {
     const isPreview = location.origin.includes('claudeusercontent.com')
       || location.origin.startsWith('blob:')
       || location.origin === 'null';
     if (isPreview) {
-      console.log('[DataLoader] Preview origin — skipping pack prewarm, using built-in defaults.');
-      return;
+            return;
     }
     setTimeout(() => {
       _load('quiz').catch(()=>{});
@@ -6084,6 +6336,9 @@ const App = (() => {
     parseSyllabusText,
   };
 
+  // ── App.voice ── Reusable voice input module
+  const voice = Voice;
+
   // ── App.ui ── Rendering, display, panel/tab switching
   const ui = {
     toast: showToast, setLoading, escHtml,
@@ -6112,7 +6367,6 @@ const App = (() => {
     loadTokenStats,   saveTokenStats,
     updateBar:  updateTokenBar,
     updateCard: updateProfileTokenCard,
-    // XP & gamification
     addXP,
     rewardCorrectAnswer,
     rewardSessionComplete,
@@ -6136,9 +6390,10 @@ const App = (() => {
     loadSudokuPool,     saveSudokuPoolCache,
     expandSudokuPool,
     logError,           renderErrLog,
-    // AI Insight session history
     loadInsightHistory, saveInsightHistory,
     generateInsight,
+    ai: AICache,
+    logSession, loadAnalytics, computeAnalytics,
   };
 
   // ── App.log ── Structured error logging
@@ -6155,18 +6410,12 @@ const App = (() => {
     invalidateLangPanel:()=>{_langPanelBuilt=false;_langTabsCurrent=null;},
     status:()=>({resultCacheSize:_resultCache.size,langPanelBuilt:_langPanelBuilt,registryBuilt:!!_panelRegistry}),
   };
-  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, data: DataLoader, perf, version: CONFIG.APP_VERSION });
+  return Object.freeze({ storage, ai, ui, rewards, cache, log, config: CONFIG, data: DataLoader, perf, voice, version: CONFIG.APP_VERSION });
 })();
 
 // ══════════════════════════════════════════════
 // SECTION: AppEvents — Centralized event bus
-//
-// Lightweight pub/sub for cross-module messaging.
-// Existing code does NOT need to use AppEvents.
 // New features should prefer it over direct calls
-// across module boundaries.
-//
-// Standard event names:
 //   'app:ready'          → DOMContentLoaded complete
 //   'api:call'           → { fn, prompt_len }
 //   'api:success'        → { fn, tokens_used }
@@ -6198,56 +6447,278 @@ const AppEvents = (() => {
   return Object.freeze({on,off,once,emit,list});
 })();
 
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: Analytics + Parent Dashboard  (→ App.analytics)
+// Analytics store (localStorage key: sb_analytics):
+// ═══════════════════════════════════════════════════════════════
+
+const ANALYTICS_KEY = 'sb_analytics';
+const ANALYTICS_DAYS = 90;
+
+// ── Helpers ───────────────────────────────────────────────────
+function _isoWeek(d){
+  const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  t.setUTCDate(t.getUTCDate()+4-(t.getUTCDay()||7));
+  return Math.ceil((((t-new Date(Date.UTC(t.getUTCFullYear(),0,1)))/86400000)+1)/7);
+}
+function _weekKey(ts){ const d=new Date(ts); return d.getFullYear()+'W'+String(_isoWeek(d)).padStart(2,'0'); }
+function _dayKey(ts){ return new Date(ts).toISOString().slice(0,10); }
+
+// ── Load / save analytics records ─────────────────────────────
+function loadAnalytics(){
+  try{ const r=ls_get(ANALYTICS_KEY); return r?JSON.parse(r):[]; }catch(e){ return []; }
+}
+function saveAnalytics(records){
+  const cutoff=Date.now()-ANALYTICS_DAYS*86400000;
+  const trimmed=records.filter(r=>r.ts>=cutoff).slice(0,2000);
+  try{ ls_set(ANALYTICS_KEY,JSON.stringify(trimmed)); }catch(e){}
+}
+
+// ── Log a session ──────────────────────────────────────────────
+function logSession({module='',subject='',durationSec=0,correct=0,total=0,level=''}={}){
+  const ts=Date.now();
+  const pct=total>0?Math.round(correct/total*100):null;
+  const record={ts,date:_dayKey(ts),week:_weekKey(ts),module,subject:subject||module,durationSec,correct,total,pct,level};
+  const records=loadAnalytics();
+  records.unshift(record);
+  saveAnalytics(records);
+}
+
+// ── Compute analytics for the parent dashboard ─────────────────
+function computeAnalytics(){
+  const records=loadAnalytics();
+  const now=Date.now();
+  const thisWeek=_weekKey(now);
+  const lastWeek=_weekKey(now-7*86400000);
+  const WEEK_MS=7*86400000;
+  const MONTH_MS=28*86400000;
+
+  const thisWeekRecs=records.filter(r=>r.week===thisWeek);
+  const lastWeekRecs=records.filter(r=>r.week===lastWeek);
+  const monthRecs=records.filter(r=>r.ts>=now-MONTH_MS);
+
+  // ── Study time ──
+  const weekMins=Math.round(thisWeekRecs.reduce((a,r)=>a+r.durationSec,0)/60);
+  const lastWeekMins=Math.round(lastWeekRecs.reduce((a,r)=>a+r.durationSec,0)/60);
+
+  // ── Overall accuracy ──
+  const weekWithPct=thisWeekRecs.filter(r=>r.pct!==null);
+  const weekAccuracy=weekWithPct.length?Math.round(weekWithPct.reduce((a,r)=>a+r.pct,0)/weekWithPct.length):null;
+
+  // ── Per-subject accuracy (month) ──
+  const subjectMap={};
+  monthRecs.forEach(r=>{
+    if(!r.subject||r.pct===null)return;
+    if(!subjectMap[r.subject])subjectMap[r.subject]={sum:0,count:0,mins:0};
+    subjectMap[r.subject].sum+=r.pct;
+    subjectMap[r.subject].count++;
+    subjectMap[r.subject].mins+=Math.round(r.durationSec/60);
+  });
+  const subjects=Object.entries(subjectMap)
+    .map(([name,d])=>({name,pct:Math.round(d.sum/d.count),mins:d.mins,count:d.count}))
+    .sort((a,b)=>b.count-a.count);
+
+  const bestSubject=subjects.length?subjects.reduce((a,b)=>a.pct>=b.pct?a:b):null;
+  const weakSubject=subjects.filter(s=>s.count>=2).reduce((a,b)=>!a||(b.pct<a.pct)?b:a,null);
+
+  // ── Activity heatmap (last 28 days, keyed by YYYY-MM-DD) ──
+  const heatmap={};
+  monthRecs.forEach(r=>{ heatmap[r.date]=(heatmap[r.date]||0)+1; });
+
+  // ── Session count ──
+  const weekSessions=thisWeekRecs.length;
+  const totalSessions=records.length;
+
+  // ── Modules breakdown ──
+  const modules={};
+  thisWeekRecs.forEach(r=>{ modules[r.module]=(modules[r.module]||0)+1; });
+
+  // ── Streak (consecutive days with activity) ──
+  const streak=loadRewards&&loadRewards()?calcStudyStreak():0;
+
+  return {weekMins,lastWeekMins,weekAccuracy,subjects,bestSubject,weakSubject,
+          heatmap,weekSessions,totalSessions,modules,streak,thisWeek};
+}
+
+// ── Render parent dashboard ────────────────────────────────────
+function openParentDash(){
+  const modal=document.getElementById('parent-dash-modal');
+  if(modal)modal.classList.add('open');
+  _renderParentDash();
+}
+function closeParentDash(){
+  const modal=document.getElementById('parent-dash-modal');
+  if(modal)modal.classList.remove('open');
+}
+
+function _renderParentDash(){
+  const body=document.getElementById('parent-dash-body');
+  const sub=document.getElementById('parent-dash-subtitle');
+  if(!body)return;
+
+  const a=computeAnalytics();
+  const rd=loadRewards();
+  const profile_name=(()=>{try{const p=ls_get(KEYS.profile);return p?JSON.parse(p).name||'Student':'Student';}catch(e){return'Student';}})();
+  const today=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+
+  if(sub)sub.textContent=profile_name+' · '+today;
+
+  // ── Trend arrow ──
+  const trend=a.weekMins>a.lastWeekMins?'↑':a.weekMins<a.lastWeekMins?'↓':'→';
+  const trendCol=trend==='↑'?'#43e97b':trend==='↓'?'#ff4d8d':'#aaa';
+
+  // ── Heatmap (4 weeks × 7 days) ──
+  const heatmapHtml=(()=>{
+    const days=[];
+    for(let i=27;i>=0;i--){
+      const d=new Date(Date.now()-i*86400000);
+      const key=d.toISOString().slice(0,10);
+      const active=a.heatmap[key]>0;
+      const isToday=i===0;
+      days.push(`<div class="parent-day-cell${active?' active':''}${isToday?' today':''}" title="${key}${active?' — '+a.heatmap[key]+' session(s)':' — no activity'}"></div>`);
+    }
+    return days.join('');
+  })();
+
+  // ── Subjects table ──
+  const subjectsHtml=a.subjects.slice(0,6).map(s=>{
+    const barCol=s.pct>=80?'#43e97b':s.pct>=55?'#ff8c00':'#ff4d8d';
+    const badge=s===a.bestSubject?'⭐':s===a.weakSubject?'💪':'';
+    return `<div class="parent-subject-row">
+      <div style="font-weight:800;width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(s.name)} ${badge}</div>
+      <div class="parent-subj-bar-track"><div class="parent-subj-bar-fill" style="width:${s.pct}%;background:${barCol};"></div></div>
+      <div style="font-weight:800;width:36px;text-align:right;color:${barCol};">${s.pct}%</div>
+      <div style="font-size:10px;color:var(--text3);width:40px;text-align:right;">${s.mins}m</div>
+    </div>`;
+  }).join('') || '<div style="font-size:12px;color:var(--text3);padding:6px 0;">No subject data yet this month.</div>';
+
+  // ── Badges ──
+  const earnedBadges=BADGE_DEFS.filter(b=>rd.badges[b.id]?.earned);
+  const badgesHtml=earnedBadges.length
+    ?earnedBadges.map(b=>`<div class="parent-badge-chip earned">${b.emoji} ${escHtml(b.name)}</div>`).join('')
+    :'<div style="font-size:11px;color:var(--text3);">No badges earned yet — keep studying!</div>';
+
+  // ── Modules this week ──
+  const modsHtml=Object.entries(a.modules).length
+    ?Object.entries(a.modules).map(([m,n])=>`<span class="parent-badge-chip">${escHtml(m)} ×${n}</span>`).join('')
+    :'<span style="font-size:11px;color:var(--text3);">No activity this week yet.</span>';
+
+  body.innerHTML=`
+    <!-- This Week -->
+    <div class="parent-section">
+      <div class="parent-section-title">📅 This Week</div>
+      <div class="parent-stat-grid">
+        <div class="parent-stat">
+          <div class="parent-stat-val">${a.weekMins}<span style="font-size:.9rem;font-weight:700;color:${trendCol};margin-left:4px;">${trend}</span></div>
+          <div class="parent-stat-lbl">Minutes studied${a.lastWeekMins?` (last week: ${a.lastWeekMins}m)`:''}</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val">${a.weekAccuracy!==null?a.weekAccuracy+'%':'—'}</div>
+          <div class="parent-stat-lbl">Average accuracy</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val">${a.weekSessions}</div>
+          <div class="parent-stat-lbl">Sessions completed</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val">${a.streak}🔥</div>
+          <div class="parent-stat-lbl">Day streak</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity heatmap -->
+    <div class="parent-section">
+      <div class="parent-section-title">📆 Activity — last 4 weeks</div>
+      <div style="display:flex;gap:3px;margin-bottom:4px;font-size:9px;color:var(--text3);">
+        <span style="flex:1;text-align:center;">Mon</span><span style="flex:1;text-align:center;">Tue</span>
+        <span style="flex:1;text-align:center;">Wed</span><span style="flex:1;text-align:center;">Thu</span>
+        <span style="flex:1;text-align:center;">Fri</span><span style="flex:1;text-align:center;">Sat</span>
+        <span style="flex:1;text-align:center;">Sun</span>
+      </div>
+      <div class="parent-week-grid">${heatmapHtml}</div>
+    </div>
+
+    <!-- Subject accuracy -->
+    <div class="parent-section">
+      <div class="parent-section-title">📚 Subject Accuracy — last 28 days</div>
+      ${a.bestSubject?`<div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap;">
+        <div style="font-size:11px;background:#e6fff3;border-radius:8px;padding:4px 10px;color:#007a40;font-weight:700;">⭐ Best: ${escHtml(a.bestSubject.name)} (${a.bestSubject.pct}%)</div>
+        ${a.weakSubject&&a.weakSubject!==a.bestSubject?`<div style="font-size:11px;background:#fff8e0;border-radius:8px;padding:4px 10px;color:#8a5c00;font-weight:700;">💪 Focus: ${escHtml(a.weakSubject.name)} (${a.weakSubject.pct}%)</div>`:''}
+      </div>`:''}
+      ${subjectsHtml}
+    </div>
+
+    <!-- Modules -->
+    <div class="parent-section">
+      <div class="parent-section-title">🧩 Modules used this week</div>
+      <div class="parent-badge-row">${modsHtml}</div>
+    </div>
+
+    <!-- Badges -->
+    <div class="parent-section">
+      <div class="parent-section-title">🏅 Achievements (${earnedBadges.length}/${BADGE_DEFS.length})</div>
+      <div class="parent-badge-row">${badgesHtml}</div>
+    </div>
+
+    <!-- XP + level -->
+    <div class="parent-section">
+      <div class="parent-section-title">⚡ Overall Progress</div>
+      <div class="parent-stat-grid">
+        <div class="parent-stat">
+          <div class="parent-stat-val" style="color:var(--accent);">${rd.xp}</div>
+          <div class="parent-stat-lbl">Total XP earned</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val">${rd.sessionsCount}</div>
+          <div class="parent-stat-lbl">All-time sessions</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val">${rd.correctCount}</div>
+          <div class="parent-stat-lbl">Correct answers</div>
+        </div>
+        <div class="parent-stat">
+          <div class="parent-stat-val" style="color:${rd.xp>=800?'#ff8c00':rd.xp>=300?'#5b5ef4':'#43e97b'};">${rd.xp>=800?'🎓 Master':rd.xp>=300?'📘 Scholar':rd.xp>=100?'🧭 Explorer':'🌱 Seedling'}</div>
+          <div class="parent-stat-lbl">Level</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="parent-print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+  `;
+}
+
+// ── Voice toggle functions (called from HTML onclick) ──
+function toggleSpellVoice(){
+  const btn=document.getElementById('spell-voice-btn');
+  if(Voice.isListening()){Voice.stop();return;}
+  Voice.start('spell',{btn,transcriptId:'spell-voice-txt'});
+}
+function toggleQuizVoice(qIdx){
+  const btn=document.getElementById('qvoice-'+qIdx);
+  if(Voice.isListening()){Voice.stop();return;}
+  Voice.start('quiz',{btn,qIdx,transcriptId:'qvoice-txt-'+qIdx});
+}
+function toggleVocabVoice(){
+  const btn=document.getElementById('vm-voice-btn');
+  if(Voice.isListening()){Voice.stop();return;}
+  Voice.start('vocab',{btn,transcriptId:'vm-voice-txt'});
+}
+
 // ── Wire AppEvents into existing key operations ──
 // These thin wrappers emit events WITHOUT changing existing function behaviour.
-// Existing callers remain completely unaffected.
-(function _wireEvents(){
-  // Token updates
-  const _origAddToken = addTokenUsage;
-  window.addTokenUsage = function(inp,out){
-    _origAddToken(inp,out);
-    AppEvents.emit('token:updated',{sessionUsed:tokenStats.sessionUsed,dailyUsed:tokenStats.dailyUsed,lastReq:tokenStats.lastReqTokens});
-  };
-
-  // Error logging
-  const _origLogError = logError;
-  window.logError = function(fn,err){
-    _origLogError(fn,err);
-    AppEvents.emit('error:logged',{fn,msg:err&&err.message?err.message:String(err)});
-  };
-
-  // Quiz answer
-  const _origAnswerQuiz = answerQuiz;
-  window.answerQuiz = function(idx){
-    _origAnswerQuiz(idx);
-    AppEvents.emit('quiz:answer',{score:quizScore,total:quizData.length,answered:quizAnswered});
-  };
-
-  // Language switch
-  const _origSwitchLang = switchLang;
-  window.switchLang = function(lang){
-    _origSwitchLang(lang);
-    AppEvents.emit('lang:switched',{lang});
-  };
-})();
 
 // ══════════════════════════════════════════════
 // SECTION: Error Log  (→ App.log)
 // logError() stores structured entries. The ⚠️
-// icon appears only when errors exist. All catch()
-// blocks call logError() for traceability.
 // ══════════════════════════════════════════════
 
 // ══════════════════════════════════════════════
 // SECTION: Initialisation
 // DOMContentLoaded wires up the app:
-//  1. load all persisted state from localStorage
-//  2. populate UI dropdowns and panels
-//  3. auto-load offline features (sudoku, TT)
-//  4. register global click-outside handlers
 //  5. emit 'app:ready' for AppEvents subscribers
 // ══════════════════════════════════════════════
-// INIT
 // ══════════════════════════════════════════════
 // ── ERROR LOG ──
 const _errLog=[];
@@ -6255,7 +6726,6 @@ function logError(fn,err){
   const entry={fn,msg:err&&err.message?err.message:String(err),stack:err&&err.stack?err.stack.slice(0,200):'',time:new Date().toLocaleTimeString()};
   _errLog.unshift(entry);
   if(_errLog.length>CONFIG.ERR_LOG_MAX)_errLog.length=CONFIG.ERR_LOG_MAX;
-  // Show icon
   const icon=document.getElementById('err-log-icon');
   if(icon){icon.style.display='flex';}
   renderErrLog();
@@ -6306,36 +6776,30 @@ window.addEventListener('DOMContentLoaded',function(){
   updateQuizTopicsFromSyllabus();
   // Emit app:ready so AppEvents subscribers can hook into startup
   // OPT: Add passive touch scroll listeners on high-scroll elements
-  // Prevents scroll janking on mobile by telling browser touch won't preventDefault
   ['wrapper','lang-panel-area','quiz-q-container','explain-rendered'].forEach(id=>{
     const el=document.getElementById(id)||document.querySelector('.'+id);
     if(el) el.addEventListener('touchstart',()=>{},{passive:true});
   });
   // OPT: Invalidate lang panel cache when data packs load (cats may change)
   AppEvents.on('pack:loaded',()=>{ _langPanelBuilt=false; });
-  // Activate default tab — seeds _currentTabName so first switch-away works correctly
+  AICache.pruneExpired();  // evict stale entries on every startup
   const _defaultTabBtn = document.querySelector('.tab-btn[data-tab="quiz"]');
   switchTab('quiz', _defaultTabBtn);
   AppEvents.emit('app:ready', { version: CONFIG.APP_VERSION });
-  // Award daily bonus XP on first activity of the day
   rewardDailyBonus();
-  // Initialise rewards UI
   refreshRewardsUI();
   // Pre-warm data packs in background (1.5s delay, non-blocking)
   DataLoader.prewarm();
-  // Enrich tongue twisters once pack is warm
   setTimeout(() => enrichTTFromPack(), 2000);
 });
 </script>
 
 <script>
 // ═══════════════════════════════════════════════════════
-// PWA: Service Worker registration + Install prompt
 // ═══════════════════════════════════════════════════════
 (function initPWA() {
 
   // ── Register service worker ──
-  // Only register SW when running from a real file server (GitHub Pages, localhost).
   // Skip on preview iframes (claudeusercontent.com, blob:, data:) where sw.js won't exist.
   const _swOrigin = location.origin;
   const _swOk = 'serviceWorker' in navigator
@@ -6372,7 +6836,6 @@ window.addEventListener('DOMContentLoaded',function(){
     if (!bar) return;
     if (!navigator.onLine) {
       bar.style.display = 'block';
-      // Push content down so bar doesn't overlap header
       const wrapper = document.querySelector('.wrapper');
       if (wrapper) wrapper.style.paddingTop = '46px';
     } else {
@@ -6384,7 +6847,6 @@ window.addEventListener('DOMContentLoaded',function(){
 
   window.addEventListener('online', updateOnlineStatus);
   window.addEventListener('offline', updateOnlineStatus);
-  // Check current state once DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', updateOnlineStatus);
   } else {
@@ -6398,7 +6860,6 @@ window.addEventListener('DOMContentLoaded',function(){
     e.preventDefault();
     _deferredPrompt = e;
 
-    // Show the install bar only if not already installed
     const bar = document.getElementById('pwa-install-bar');
     if (bar) bar.style.display = 'flex';
   });
@@ -6414,7 +6875,6 @@ window.addEventListener('DOMContentLoaded',function(){
     if (bar) bar.style.display = 'none';
   };
 
-  // Hide banner if already installed (standalone display mode)
   window.addEventListener('appinstalled', () => {
     const bar = document.getElementById('pwa-install-bar');
     if (bar) bar.style.display = 'none';
@@ -6422,14 +6882,11 @@ window.addEventListener('DOMContentLoaded',function(){
     if (typeof showToast === 'function') showToast('✅ StudyBuddy installed!', 3000);
   });
 
-  // On iOS, BeforeInstallPrompt doesn't fire.
-  // Show a manual "Add to Home Screen" hint on Safari instead.
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
     || window.navigator.standalone === true;
 
   if (isIOS && !isInStandaloneMode) {
-    // Show hint after 4 seconds on iOS Safari
     setTimeout(() => {
       const bar = document.getElementById('pwa-install-bar');
       if (!bar) return;

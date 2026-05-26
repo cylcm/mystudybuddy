@@ -1,134 +1,136 @@
-# 📚 MyStudyBuddy
+# 📚 MyStudyBuddy v5.3
 
-**Smart Study Companion on the GO 🚀**  
-An AI-powered, single-file study app for Singapore students from Kinder 1 to Secondary 5.
-
-🌐 **Live App:** https://cylcm.github.io/mystudybuddy
+**Smart Study Companion on the GO ✈️**  
+AI-powered educational suite for Singapore students K1–Secondary 5.  
+Single-file standalone HTML app — no build step, no backend, no server required.
 
 ---
 
 ## ✨ Features
 
-### 🪄 Word Wizards
-- **Sentence Builder** — build sentences from word tags with AI explanations
-- **Grammar Check** — analyse and correct grammar with tips
-- **Word Replacer** — find synonyms and antonyms with examples
-- **Parts of Speech** — colour-coded word tagging (noun/verb/adj/adv/prep/conj/article/pronoun)
-- **Spell Challenge** — manual words, file upload (.txt/.csv), or AI-generated (Random/Bee/Advanced); local TTS to hear words; 10-session history
-- **🃏 Flashcards** — AI-generated cards with emoji, pronunciation, example sentences and speak button; 10-set history
-- **🖼️ Vocab Match** — picture-word matching game for Kinder 1–Primary 3 (local emoji sets, no API for common categories)
-
-### 🧠 Smart Quiz
-- Multiple choice quiz for any subject and level
-- Auto-completes linked Study Plan tasks
-- Last 5 quiz sessions saved with recall
-
-### 🧩 Brain Teaser Hub
-- **Word Scramble** — manual words or AI auto-load by level/theme
-- **Fill in the Blank** — AI-generated sentences with dropdown answers; 20-session history
-- **Sudoku** — client-side generator (Easy/Medium/Hard), 50-puzzle pre-load pool, timer, error counter, hint and clear
-- **Tongue Twisters** — 4 speed levels, 20-session history
-
-### 🈳 Language Corner
-Languages: 🇨🇳 Mandarin · 🇯🇵 Japanese · 🇫🇷 French · 🇩🇪 German
-
-- **Learn** — vocabulary, sentences, stories or Q&A with speak buttons; 5-session history per language
-- **Translate** — any language pair with From/To selector; 20-session history
-- **Read Aloud** — generate 20 stories/poems/articles with word-by-word narration highlighting; voice selector; 20-session history
-- **💬 Conversation Practice** — simulated dialogues with audio recording, playback and delete; 10-session history (sticky)
-- **🏮 Culture Notes** — AI-generated or manually typed/dictated cultural tidbits; save, read aloud, edit and delete
-- **🎙️ Pronunciation Practice** — speech recognition for local feedback; optional AI feedback (1 API call with confirmation); 10-session history
-- **🎧 Mini Podcast** — 10 audio stories/dialogues per API call with follow-along transcript and word highlighting; 10-session history
-
-### 💡 Explain It Simply
-- AI explanation with SVG diagram, Unsplash images, and YouTube links
-- 4 styles: Fun & Simple, Detailed, Story/Analogy, Summary Notes
-- 20-entry history with accordion view
-
-### 📅 Study Planner
-- Daily / Weekly / Monthly calendar views
-- **🎯 Effort Planner** — set target grades, configure your daily schedule (school, sleep, leisure, CCA, meals), pick an exam from the school term calendar, and get a personalised study timetable auto-added to your planner
-- School term calendars: 🇸🇬 Singapore MOE · 🇲🇾 Malaysia KPM · 🇦🇺 Australia · 🇬🇧 UK · 🇺🇸 US
-- Tasks auto-complete when you finish the linked activity
-- Past incomplete tasks are locked (🔒); future tasks are deletable
-- Auto-deletes tasks older than 1 month
-
-### 📊 My Scores
-- Quiz accuracy by subject with grade letters (A–F)
-- Study streak counter 🔥
-- Module usage breakdown
-- Plan completion with per-activity-type progress bars
-
----
-
-## 🚀 Getting Started
-
-### 1. Open the App
-Visit **https://cylcm.github.io/mystudybuddy** in **Safari** (iPhone/iPad) or **Chrome** (Android/Desktop).
-
-### 2. Enter Access Code
-On first visit, enter the access code to unlock the app. Contact **me** for the code.
-
-### 3. Set Up Profile
-Tap ⚙️ (top-right) to set:
-- Your name and school level (Kinder 1 → Secondary 5)
-- Avatar
-- Custom subjects (shown in all dropdowns)
-
-### 4. Add Your API Key
-Tap 🔑 **API Key** (top-right) and paste your Anthropic API key.  
-Get one free at [console.anthropic.com](https://console.anthropic.com)
-
-> Your API key is stored only on your device — never uploaded to GitHub.
-
-### 5. Add to Home Screen (iPhone/iPad)
-Safari → Share → **Add to Home Screen** → works like a native app!
-
----
-
-## 💰 API Usage Guide
-
-| Feature | API calls |
+| Module | What it does |
 |---|---|
-| Quiz, Grammar, Explain It, Language Learn | 1 per session |
-| Flashcards, FIB, Tongue Twisters, Translate | 1 per session |
-| Read Aloud (20 stories) | 1 per session |
-| Mini Podcast (10 episodes) | 1 per session |
-| Pronunciation AI Feedback | Optional — asks before calling |
-| **Sudoku, Vocab Match, Spelling (manual), TTS playback** | **Free — local, no API** |
+| 🧠 **Smart Quiz** | AI-generated MCQ quizzes from your uploaded syllabus, beginner→advanced |
+| 🪄 **Word Wizards** | Sentence builder, grammar check, synonyms, POS, spelling, flashcards, vocab match |
+| 🧩 **Brain Teaser Hub** | Fill-in-blank, word scramble, tongue twisters, offline Sudoku |
+| 🈳 **Language Corner** | 8 languages (EN/ZH/YUE/JA/FR/DE/FIL/MS) with TTS, pronunciation coach |
+| 💡 **Explain It** | AI explanations with SVG diagrams for any topic |
+| 📅 **Study Planner** | Daily/weekly/monthly tasks, effort planner, syllabus upload |
+| 📊 **My Scores** | XP/level/streaks/badges, AI cache manager, parent summary report |
 
 ---
 
-## 📱 Device Compatibility
+## 🚀 GitHub Pages Setup
 
-| Device | Browser | Status |
+### Step 1 — Fork or upload
+
+```
+Your repo structure:
+├── index.html
+├── manifest.json
+├── sw.js
+└── data/
+    ├── quiz-pack.json
+    ├── vocab-pack.json
+    └── language-pack.json
+```
+
+### Step 2 — Enable Pages
+
+1. Go to your GitHub repo
+2. **Settings → Pages**
+3. Source: **Deploy from branch**
+4. Branch: `main` | Folder: `/ (root)`
+5. Click **Save**
+
+### Step 3 — Visit your site
+
+URL: `https://<your-username>.github.io/<repo-name>/`
+
+The app installs its service worker on first visit — after that it works offline.
+
+---
+
+## 🔑 API Key Setup
+
+1. Get a free API key from [console.anthropic.com](https://console.anthropic.com)
+2. Open the app → click the **🔑** button top-right
+3. Paste your key → Save
+4. The key is stored only in your browser's localStorage — never sent anywhere except Anthropic's API
+
+**Token budget:** Default 100K daily / 20K per session. Change in Profile → ⚙️.
+
+---
+
+## 📦 Architecture
+
+```
+index.html (420 KB — entire app, self-contained)
+│
+├── CONFIG          — all magic values (model, TTL, limits)
+├── KEYS            — localStorage key names
+├── DataLoader      — lazy loads /data/*.json packs
+├── AICache         — 10-day persistent AI generation cache
+├── Voice           — reusable SpeechRecognition module
+├── AppEvents       — lightweight pub/sub event bus
+├── App.*           — module namespaces (storage/ai/ui/rewards/cache/perf/voice)
+│
+├── App.storage     — localStorage helpers + all load/save functions
+├── App.ai          — Claude API + all generators
+├── App.ui          — rendering, tabs, panels
+├── App.rewards     — XP, levels, streaks, badges
+├── App.cache       — history, AICache, analytics, error log
+├── App.perf        — result cache, lazy render, registries
+└── App.voice       — SpeechRecognition (spell/quiz/vocab/pron modes)
+```
+
+---
+
+## 💾 Storage Map
+
+| Key | Contents | Max size |
 |---|---|---|
-| iPhone / iPad | Safari | ✅ Fully supported |
-| Android phone/tablet | Chrome | ✅ Fully supported |
-| Mac | Safari / Chrome | ✅ Fully supported |
-| Windows | Chrome / Edge | ✅ Fully supported |
+| `sb_aic` | AI generation cache (quizzes, insights) | 50 entries × 10 days TTL |
+| `sb_analytics` | Parent summary session records | 90 days, 2000 records |
+| `sb_rewards` | XP, badges, streak, session count | ~1 KB |
+| `sb_qh` | Quiz history | 5 entries |
+| `sb_ai_insights` | AI insight sessions | 20 entries |
+| `sb_pack_*` | DataLoader offline copies of JSON packs | ~15 KB |
+| `sb_syllabus_v1` | Uploaded syllabi | Per subject |
+| `sb_pf` | Student profile | ~1 KB |
+| `sb_tok` | Token usage stats | ~0.5 KB |
 
 ---
 
-## 🔒 Privacy & Security
+## 📱 PWA / Offline
 
-- All data stored in **localStorage on your device** only
-- API key never leaves your device
-- No accounts, no tracking, no ads
-- Access code is XOR-encrypted in the source code
-- Contact **me** for access code or support
+Installable on Chrome (desktop + Android) and Safari (iOS — use Share → Add to Home Screen).
 
----
+**Works offline:**
+- Sudoku (fully local algorithm)
+- Tongue Twisters (5 built-in + pack if cached)
+- Vocabulary Match (built-in sets)
+- Spelling / Scramble (manual word entry mode)
+- All history/recall functions
+- Study planner tasks
+- Gamification (XP, badges)
 
-## 🔄 Updating the App
-
-When a new version of `index.html` is available:
-1. Download the new `index.html`
-2. Go to **github.com/cylcm/mystudybuddy**
-3. Click `index.html` → click ✏️ edit icon → **Upload new file**
-4. Or drag-and-drop the new file → **Commit changes**
-5. Wait 2–3 minutes → live at **cylcm.github.io/mystudybuddy**
+**Requires internet:**
+- All AI generation (quiz, grammar, language, explain)
+- Pronunciation feedback (AI)
 
 ---
 
-*Built with ❤️ for students · Powered by Claude AI*
+## 🗂 Version History
+
+| Version | Date | Changes |
+|---|---|---|
+| v5.3 | 2026-05-26 | Production build — dead code removed, versioning, analytics, parent dashboard |
+| v5.2 | 2026-05 | Module namespaces, AppEvents, AICache, Voice module, gamification, PWA |
+| v5.0 | 2026-05 | Initial full-featured release |
+
+---
+
+## 📄 License
+
+Personal / educational use. AI content generated via Anthropic Claude API — subject to [Anthropic's usage policies](https://www.anthropic.com/legal/usage-policy).

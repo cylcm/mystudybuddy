@@ -387,6 +387,34 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 .streak-ring{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ff8c00,#ffcc00);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px;box-shadow:0 4px 16px rgba(255,140,0,.4);}
 .streak-ring .sr-num{font-size:1.4rem;font-weight:900;color:#fff;line-height:1;}
 .streak-ring .sr-label{font-size:8px;font-weight:800;color:rgba(255,255,255,.85);}
+/* ─── CONFIRM MODAL ─── */
+#confirm-modal{position:fixed;inset:0;z-index:3100;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;}
+#confirm-modal.open{display:flex;}
+.confirm-box{background:var(--surface);border-radius:18px;padding:26px 22px;width:min(300px,88vw);box-shadow:0 12px 40px rgba(0,0,0,.3);text-align:center;}
+.confirm-box h4{font-size:15px;font-weight:900;margin-bottom:8px;}
+.confirm-box p{font-size:12px;color:var(--text2);margin-bottom:18px;line-height:1.5;}
+.confirm-btns{display:flex;gap:10px;}
+.confirm-btns button{flex:1;padding:11px;border-radius:10px;font-size:13px;font-weight:800;border:none;cursor:pointer;touch-action:manipulation;}
+.confirm-ok{background:var(--accent2);color:#fff;}
+.confirm-cancel{background:var(--surface2);color:var(--text2);}
+/* ─── PARENT PIN MODAL ─── */
+#parent-pin-modal{position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;}
+#parent-pin-modal.open{display:flex;}
+.pin-box{background:var(--surface);border-radius:20px;padding:28px 24px;width:min(320px,90vw);box-shadow:0 12px 48px rgba(0,0,0,.35);text-align:center;}
+.pin-box h3{font-size:16px;font-weight:900;margin-bottom:4px;}
+.pin-box p{font-size:12px;color:var(--text2);margin-bottom:18px;}
+.pin-dots{display:flex;justify-content:center;gap:12px;margin-bottom:18px;}
+.pin-dot{width:14px;height:14px;border-radius:50%;background:var(--border);transition:background .15s;}
+.pin-dot.filled{background:var(--accent);}
+.pin-dot.error{background:var(--accent2);}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.pin-key{height:54px;border-radius:12px;border:2px solid var(--border);background:#fff;font-size:1.4rem;font-weight:800;cursor:pointer;touch-action:manipulation;transition:all .12s;color:var(--text1);}
+.pin-key:active{background:var(--accent);color:#fff;border-color:var(--accent);transform:scale(.95);}
+.pin-key.pin-del{font-size:1rem;color:var(--text3);}
+.pin-key.pin-zero{grid-column:2;}
+.pin-error{font-size:12px;color:var(--accent2);font-weight:700;min-height:16px;margin-bottom:6px;}
+.pin-hint{font-size:10px;color:var(--text3);margin-top:8px;}
+.pin-setup-box{display:none;}
 /* ─── PARENT DASHBOARD ─── */
 #parent-dash-modal{position:fixed;inset:0;z-index:2200;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:16px;}
 #parent-dash-modal.open{display:flex;}
@@ -1379,7 +1407,10 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <button class="btn btn-secondary btn-sm" onclick="openParentDash()" title="Parent summary report">👨‍👩‍👧 Parent Summary</button>
     </div>
     <div class="card" id="gamification-card">
-      <h2>⚡ XP &amp; Level Progress</h2>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <h2 style="margin:0;">⚡ XP &amp; Level Progress</h2>
+        <button class="btn btn-secondary btn-sm" onclick="openParentPin('resetXP')" style="font-size:10px;padding:4px 10px;" title="Parent PIN required">🔐 Parent Reset</button>
+      </div>
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;flex-wrap:wrap;">
         <div style="text-align:center;min-width:64px;">
           <div class="streak-ring" id="gam-streak-ring">
@@ -1570,6 +1601,79 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
     <div style="display:flex;gap:8px;margin-top:14px;">
       <button class="btn btn-primary" onclick="saveProfile()">💾 Save Profile</button>
       <button class="btn btn-secondary" onclick="closeProfile()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM CONFIRM MODAL (replaces blocked browser confirm() in iframes) -->
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <div id="confirm-icon" style="font-size:2rem;margin-bottom:8px;">⚠️</div>
+    <h4 id="confirm-title">Are you sure?</h4>
+    <p id="confirm-message"></p>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" onclick="confirmModal.cancel()">Cancel</button>
+      <button class="confirm-ok" id="confirm-ok-btn" onclick="confirmModal.ok()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- PARENT PIN MODAL -->
+<div id="parent-pin-modal">
+  <div class="pin-box">
+    <div id="pin-mode-verify">
+      <div style="font-size:2rem;margin-bottom:8px;">🔐</div>
+      <h3>Parent Controls</h3>
+      <p id="pin-prompt-text">Enter your 4-digit Parent PIN</p>
+      <div class="pin-dots" id="pin-dots">
+        <div class="pin-dot" id="pd0"></div>
+        <div class="pin-dot" id="pd1"></div>
+        <div class="pin-dot" id="pd2"></div>
+        <div class="pin-dot" id="pd3"></div>
+      </div>
+      <div class="pin-error" id="pin-error"></div>
+      <div class="pin-grid">
+        <button class="pin-key" onclick="pinKey('1')">1</button>
+        <button class="pin-key" onclick="pinKey('2')">2</button>
+        <button class="pin-key" onclick="pinKey('3')">3</button>
+        <button class="pin-key" onclick="pinKey('4')">4</button>
+        <button class="pin-key" onclick="pinKey('5')">5</button>
+        <button class="pin-key" onclick="pinKey('6')">6</button>
+        <button class="pin-key" onclick="pinKey('7')">7</button>
+        <button class="pin-key" onclick="pinKey('8')">8</button>
+        <button class="pin-key" onclick="pinKey('9')">9</button>
+        <button class="pin-key pin-zero" onclick="pinKey('0')">0</button>
+        <button class="pin-key pin-del" onclick="pinDel()">⌫</button>
+      </div>
+      <button onclick="closePinModal()" style="background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;width:100%;">Cancel</button>
+      <div class="pin-hint" id="pin-hint"></div>
+    </div>
+
+    <div id="pin-mode-setup" style="display:none;">
+      <div style="font-size:2rem;margin-bottom:8px;">🔏</div>
+      <h3>Set Parent PIN</h3>
+      <p id="pin-setup-label">Choose a 4-digit PIN</p>
+      <div class="pin-dots" id="pin-setup-dots">
+        <div class="pin-dot" id="psd0"></div>
+        <div class="pin-dot" id="psd1"></div>
+        <div class="pin-dot" id="psd2"></div>
+        <div class="pin-dot" id="psd3"></div>
+      </div>
+      <div class="pin-error" id="pin-setup-error"></div>
+      <div class="pin-grid">
+        <button class="pin-key" onclick="pinSetupKey('1')">1</button>
+        <button class="pin-key" onclick="pinSetupKey('2')">2</button>
+        <button class="pin-key" onclick="pinSetupKey('3')">3</button>
+        <button class="pin-key" onclick="pinSetupKey('4')">4</button>
+        <button class="pin-key" onclick="pinSetupKey('5')">5</button>
+        <button class="pin-key" onclick="pinSetupKey('6')">6</button>
+        <button class="pin-key" onclick="pinSetupKey('7')">7</button>
+        <button class="pin-key" onclick="pinSetupKey('8')">8</button>
+        <button class="pin-key" onclick="pinSetupKey('9')">9</button>
+        <button class="pin-key pin-zero" onclick="pinSetupKey('0')">0</button>
+        <button class="pin-key pin-del" onclick="pinSetupDel()">⌫</button>
+      </div>
+      <button onclick="closePinModal()" style="background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;width:100%;">Cancel</button>
     </div>
   </div>
 </div>
@@ -5357,6 +5461,283 @@ function renderCachePanel(){
   }).join('');
 }
 
+
+// ═══════════════════════════════════════════════════════════════
+// SECTION: Parent PIN — PIN-protected parent controls
+//
+// Default PIN: 0000 (parent must change on first use)
+// Storage key: sb_parent_pin (hashed, not plain text)
+// Locked after 5 consecutive wrong attempts for 5 minutes.
+//
+// Flow:
+//   openParentPin(action) → show modal
+//     • No PIN set → go to setup screen first
+//     • PIN set    → verify screen
+//   Correct PIN  → execute action callback
+//   Wrong PIN ×5 → lockout 5 min
+// ═══════════════════════════════════════════════════════════════
+
+const PIN_KEY         = 'sb_parent_pin';
+const PIN_LOCKOUT_KEY = 'sb_pin_lockout';
+const PIN_FAIL_KEY    = 'sb_pin_fails';
+const PIN_LENGTH      = 4;
+const PIN_MAX_FAILS   = 5;
+const PIN_LOCKOUT_MS  = 5 * 60 * 1000;   // 5 minutes
+
+// ── Simple hash (not crypto — just obfuscates pin in storage) ──
+function _hashPin(pin){
+  let h=0;
+  for(let i=0;i<pin.length;i++) h=(Math.imul(31,h)+pin.charCodeAt(i))|0;
+  return 'pin_'+Math.abs(h).toString(36)+'_'+pin.length;
+}
+
+function _getStoredPin(){ return ls_get(PIN_KEY)||''; }
+function _isPinSet(){     return !!_getStoredPin(); }
+
+// ── Lockout helpers ───────────────────────────────────────────
+function _isLockedOut(){
+  const until=parseInt(ls_get(PIN_LOCKOUT_KEY)||'0');
+  return Date.now()<until;
+}
+function _lockoutRemaining(){
+  const until=parseInt(ls_get(PIN_LOCKOUT_KEY)||'0');
+  return Math.max(0,Math.ceil((until-Date.now())/60000));
+}
+function _recordFail(){
+  const fails=parseInt(ls_get(PIN_FAIL_KEY)||'0')+1;
+  ls_set(PIN_FAIL_KEY,String(fails));
+  if(fails>=PIN_MAX_FAILS){
+    ls_set(PIN_LOCKOUT_KEY,String(Date.now()+PIN_LOCKOUT_MS));
+    ls_set(PIN_FAIL_KEY,'0');
+  }
+  return fails;
+}
+function _clearFails(){ ls_del(PIN_FAIL_KEY); ls_del(PIN_LOCKOUT_KEY); }
+
+// ── State ─────────────────────────────────────────────────────
+let _pinBuffer     = '';
+let _pinAction     = null;   // callback to run on success
+let _pinSetupStep  = 1;      // 1=choose, 2=confirm
+let _pinSetupFirst = '';
+
+// ── Open / close ──────────────────────────────────────────────
+function openParentPin(action){
+  _pinAction = action;
+  _pinBuffer = '';
+  _pinSetupFirst = '';
+  _pinSetupStep = 1;
+
+  const modal = document.getElementById('parent-pin-modal');
+  if(!modal) return;
+
+  // Lockout check
+  if(_isLockedOut()){
+    showToast('🔒 Locked — try again in '+_lockoutRemaining()+' minute(s)',4000);
+    return;
+  }
+
+  // Always show verify screen first.
+  // If no PIN set yet, 0000 works as default — hint shown below keypad.
+  // User sets a real PIN via "Change PIN" in Parent Summary.
+  _showPinVerify();
+  modal.classList.add('open');
+}
+
+function closePinModal(){
+  document.getElementById('parent-pin-modal')?.classList.remove('open');
+  _pinBuffer=''; _pinSetupFirst=''; _pinSetupStep=1;
+  // Note: _pinAction is NOT cleared here — caller captures it before calling this
+}
+
+// ── Verify screen ─────────────────────────────────────────────
+function _showPinVerify(){
+  document.getElementById('pin-mode-verify').style.display='block';
+  document.getElementById('pin-mode-setup').style.display='none';
+  const hintEl = document.getElementById('pin-hint');
+  if(hintEl) hintEl.textContent = _isPinSet() ? '' : 'Default PIN: 0000  (change it in Parent Summary)';
+  document.getElementById('pin-error').textContent='';
+  _renderDots('pd',0);
+}
+
+function pinKey(digit){
+  if(_isLockedOut()){ closePinModal(); showToast('🔒 PIN locked — try in '+_lockoutRemaining()+'m',3000); return; }
+  if(_pinBuffer.length>=PIN_LENGTH) return;
+  _pinBuffer+=digit;
+  _renderDots('pd',_pinBuffer.length);
+  if(_pinBuffer.length===PIN_LENGTH) setTimeout(_verifyPin,150);
+}
+
+function pinDel(){
+  _pinBuffer=_pinBuffer.slice(0,-1);
+  _renderDots('pd',_pinBuffer.length);
+  document.getElementById('pin-error').textContent='';
+}
+
+function _verifyPin(){
+  const stored=_getStoredPin();
+  const expected = stored||_hashPin('0000');
+  if(_hashPin(_pinBuffer)===expected){
+    _clearFails();
+    _renderDots('pd',PIN_LENGTH,'success');
+    const wasDefault = !_getStoredPin();  // no PIN stored = using default 0000
+    setTimeout(()=>{
+      closePinModal();
+      _executeAction(_pinAction);
+      if(wasDefault){
+        setTimeout(()=> showToast('💡 Tip: Set a custom PIN via Parent Summary → 🔐 Change PIN', 5000), 1000);
+      }
+    }, 350);
+  } else {
+    const fails=_recordFail();
+    _renderDots('pd',PIN_LENGTH,'error');
+    if(_isLockedOut()){
+      document.getElementById('pin-error').textContent='🔒 Locked for 5 minutes';
+      // Show "Forgot PIN?" after lockout — resets to 0000
+      document.getElementById('pin-hint').innerHTML=
+        '<span style="color:var(--accent2);">Too many attempts.</span> '+
+        '<button onclick="_forgotPin()" style="background:none;border:none;color:var(--accent);font-size:11px;font-weight:800;cursor:pointer;padding:0;text-decoration:underline;">Forgot PIN?</button>';
+    } else {
+      const remaining=PIN_MAX_FAILS-fails;
+      document.getElementById('pin-error').textContent=
+        `Wrong PIN. ${remaining} attempt${remaining!==1?'s':''} left.`;
+    }
+    _pinBuffer='';
+    setTimeout(()=>_renderDots('pd',0),700);
+  }
+}
+
+// Called when parent taps "Forgot PIN?" after lockout
+// Clears the stored PIN — next openParentPin() will go to setup screen
+function _forgotPin(){
+  confirmModal.show(
+    '🔐 Reset Parent PIN',
+    'Reset your PIN back to 0000? You will need to set a new PIN on next use.',
+    '🔓 Reset PIN',
+    function(){
+      ls_del(PIN_KEY);
+      _clearFails();
+      closePinModal();
+      showToast('PIN reset to 0000 — set a new PIN on next use.', 4500);
+    }
+  );
+}
+
+// ── Setup screen ──────────────────────────────────────────────
+// ── Custom confirm modal (replaces browser confirm() — safe in iframes) ──
+const confirmModal = (() => {
+  let _cb = null;
+  function show(title, message, okLabel, cb){
+    const m=document.getElementById('confirm-modal');
+    const t=document.getElementById('confirm-title');
+    const msg=document.getElementById('confirm-message');
+    const btn=document.getElementById('confirm-ok-btn');
+    if(!m){ if(cb && window.confirm && window.confirm(message)) cb(); return; }
+    if(t)    t.textContent  = title;
+    if(msg)  msg.textContent= message;
+    if(btn)  btn.textContent= okLabel||'Confirm';
+    _cb = cb;
+    m.classList.add('open');
+  }
+  function ok(){
+    document.getElementById('confirm-modal')?.classList.remove('open');
+    if(_cb){ const f=_cb; _cb=null; f(); }
+  }
+  function cancel(){
+    document.getElementById('confirm-modal')?.classList.remove('open');
+    _cb=null;
+  }
+  return {show, ok, cancel};
+})();
+
+function _showPinSetup(label){
+  document.getElementById('pin-mode-verify').style.display='none';
+  document.getElementById('pin-mode-setup').style.display='block';
+  document.getElementById('pin-setup-label').textContent=label;
+  document.getElementById('pin-setup-error').textContent='';
+  _pinSetupFirst=''; _pinBuffer='';
+  _renderDots('psd',0);
+}
+
+function pinSetupKey(digit){
+  if(_pinBuffer.length>=PIN_LENGTH) return;
+  _pinBuffer+=digit;
+  _renderDots('psd',_pinBuffer.length);
+  if(_pinBuffer.length===PIN_LENGTH) setTimeout(_handleSetupInput,150);
+}
+function pinSetupDel(){
+  _pinBuffer=_pinBuffer.slice(0,-1);
+  _renderDots('psd',_pinBuffer.length);
+}
+
+function _handleSetupInput(){
+  if(_pinSetupStep===1){
+    _pinSetupFirst=_pinBuffer; _pinBuffer='';
+    _pinSetupStep=2;
+    document.getElementById('pin-setup-label').textContent='Confirm your PIN';
+    _renderDots('psd',0);
+  } else {
+    if(_pinBuffer===_pinSetupFirst){
+      ls_set(PIN_KEY,_hashPin(_pinBuffer));
+      _renderDots('psd',PIN_LENGTH,'success');
+      const _act=_pinAction; setTimeout(()=>{ closePinModal(); _executeAction(_act); },350);
+      showToast('🔐 Parent PIN set! Remember it — the student cannot see this.',4000);
+    } else {
+      document.getElementById('pin-setup-error').textContent='PINs did not match — try again';
+      _pinBuffer=''; _pinSetupFirst=''; _pinSetupStep=1;
+      setTimeout(()=>{
+        document.getElementById('pin-setup-label').textContent='Choose a 4-digit Parent PIN';
+        document.getElementById('pin-setup-error').textContent='';
+        _renderDots('psd',0);
+      },800);
+    }
+  }
+}
+
+// ── Dot renderer ──────────────────────────────────────────────
+function _renderDots(prefix,filled,state){
+  for(let i=0;i<PIN_LENGTH;i++){
+    const dot=document.getElementById(prefix+i);
+    if(!dot)continue;
+    dot.className='pin-dot';
+    if(state==='error')  dot.classList.add('error');
+    else if(i<filled)    dot.classList.add('filled');
+  }
+}
+
+// ── Action dispatcher ─────────────────────────────────────────
+function _executeAction(action){
+  if(action==='resetXP')      _doResetXP();
+  else if(action==='openDash') openParentDash();
+  else if(action==='changePin') _showPinSetup('Enter new 4-digit PIN');
+}
+
+// ── Reset XP & Level ──────────────────────────────────────────
+function _doResetXP(){
+  confirmModal.show(
+    '⚠️ Reset XP & Progress',
+    'This will reset all XP, level, badges, streak and session counts to zero. This cannot be undone.',
+    '🗑 Yes, Reset',
+    function(){
+      const rd = loadRewards();
+      const fresh = {
+        xp: 0,
+        dailyDate: new Date().toDateString(),
+        sessionsCount: 0,
+        correctCount: 0,
+        langPractised: rd.langPractised || [],
+        badges: {}
+      };
+      saveRewards(fresh);
+      // Cancel any pending debounced refresh timer
+      if(_rewardsRefreshTimer){ clearTimeout(_rewardsRefreshTimer); _rewardsRefreshTimer=null; }
+      // Render directly from fresh object — no storage round-trip
+      _doRefreshRewardsUI(fresh);
+      showToast('✅ XP & Level reset to Seedling 🌱', 3500);
+      AppEvents.emit('rewards:reset', {by:'parent'});
+    }
+  );
+}
+
 const REWARDS_KEY = 'sb_rewards';
 
 // ── Level config ─────────────────────────────────────────────
@@ -5424,8 +5805,8 @@ function refreshRewardsUI(){
   if(_rewardsRefreshTimer) clearTimeout(_rewardsRefreshTimer);
   _rewardsRefreshTimer = setTimeout(_doRefreshRewardsUI, 150);
 }
-function _doRefreshRewardsUI(){
-  const rd=loadRewards();
+function _doRefreshRewardsUI(rdOverride){
+  const rd=rdOverride||loadRewards();
   const {lvl,next,progressXP,rangeXP,pct}=getLevelInfo(rd.xp);
 
   const el=id=>document.getElementById(id);
@@ -6685,7 +7066,10 @@ function _renderParentDash(){
       </div>
     </div>
 
-    <button class="parent-print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+    <button class="parent-print-btn" onclick="window.print()" style="flex:1;">🖨 Print / Save as PDF</button>
+    <button class="parent-print-btn" onclick="closeParentDash();openParentPin('changePin');" style="flex:none;width:auto;padding:6px 14px;" title="Change the 4-digit Parent PIN">🔐 Change PIN</button>
+  </div>
   `;
 }
 

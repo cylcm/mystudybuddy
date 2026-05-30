@@ -2,6 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!--
+  Content-Security-Policy (proxy mode).
+  connect-src is locked to 'self' so even if a script is injected, it cannot
+  exfiltrate data to an attacker-controlled host: the only network destination
+  the browser may reach is this origin (which includes the /api/ai proxy).
+  NOTE: this app uses inline <script>/<style> and inline on* handlers, so
+  'unsafe-inline' is required until those are externalized. Removing
+  'unsafe-inline' (via nonces/hashes + a JS refactor) is the next hardening
+  step — see SECURITY.md. Prefer sending this as a real HTTP response header
+  in production (see server config in SECURITY.md); the <meta> form is a
+  fallback for static hosting and cannot express frame-ancestors.
+-->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  base-uri 'self';
+  object-src 'none';
+  connect-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: https://source.unsplash.com;
+  manifest-src 'self';
+  form-action 'self';
+  frame-ancestors 'none';
+  upgrade-insecure-requests
+">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -13,6 +41,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- ===== BEGIN INLINE STYLES (extract to styles.css to decouple) ===== -->
 <style>
 :root{
   --bg:#f0f4ff;--surface:#fff;--surface2:#e8eeff;--border:#c5d0f5;
@@ -574,6 +603,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
   select{background-image:none;}
 }
 </style>
+<!-- ===== END INLINE STYLES ===== -->
 </head>
 <body>
 <!-- ACTIVATION GATE -->
@@ -583,7 +613,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
     <h1>MyStudyBuddy</h1>
     <p style="font-size:13px;font-weight:700;opacity:.85;margin-bottom:6px;">Smart Study Companion on the GO ✈️</p>
     <p style="opacity:.75;font-size:12px;">Enter access code to continue</p>
-    <input type="password" id="gate-input" placeholder="Enter access code..." onkeydown="if(event.key==='Enter')checkGate()" />
+    <input type="password" id="gate-input" placeholder="Enter access code..." onkeydown="if(event.key==='Enter')checkGate()" / maxlength="40" required>
     <button onclick="checkGate()">🔓 Unlock</button>
     <div class="gate-error" id="gate-error">❌ Wrong code. Please try again.</div>
   </div>
@@ -596,7 +626,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 <!-- API KEY PANEL -->
 <div id="api-panel">
   <div style="font-weight:800;font-size:13px;">🔑 Anthropic API Key</div>
-  <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." />
+  <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." / maxlength="200">
   <div id="api-panel-btns">
     <button onclick="saveApiKey()">💾 Save</button>
     <button class="danger" onclick="forgetApiKey()" id="forget-btn" style="display:none;">🗑 Forget</button>
@@ -668,7 +698,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <option value="__custom">✏️ Type custom topic</option>
             </select>
           </div>
-          <input type="text" id="quiz-topic" placeholder="e.g. Fractions, Photosynthesis..." style="margin-bottom:0;" /></div>
+          <input type="text" id="quiz-topic" placeholder="e.g. Fractions, Photosynthesis..." style="margin-bottom:0;" / maxlength="100"></div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
         <button class="btn btn-primary" id="quiz-gen-btn" onclick="generateQuiz()"><span id="quiz-gen-icon">⚡</span> Generate Quiz</button>
@@ -730,7 +760,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <div id="grammar-sentences">
         <label>Add words to build sentences:</label>
         <div style="display:flex;gap:7px;margin-bottom:8px;">
-          <input type="text" id="word-input" placeholder="Type word, press Enter..." onkeydown="if(event.key==='Enter')addWord()" style="margin-bottom:0;flex:1;min-width:0;" />
+          <input type="text" id="word-input" placeholder="Type word, press Enter..." onkeydown="if(event.key==='Enter')addWord()" style="margin-bottom:0;flex:1;min-width:0;" / maxlength="60">
           <button class="btn btn-secondary btn-sm" onclick="addWord()">+ Add</button>
         </div>
         <div class="word-tags" id="word-tags-container"></div>
@@ -741,7 +771,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <!-- Grammar Check -->
       <div id="grammar-check" style="display:none;">
         <label>Paste sentence to check:</label>
-        <textarea id="grammar-check-input" placeholder="e.g. She don't likes to eat vegetables..."></textarea>
+        <textarea id="grammar-check-input" placeholder="e.g. She don't likes to eat vegetables..." maxlength="1000" required></textarea>
         <button class="btn btn-primary" id="grammar-check-btn" onclick="checkGrammar()"><span id="grammar-check-icon">🔍</span> Check Grammar</button>
         <div class="result-box" id="grammar-check-result"></div>
       </div>
@@ -764,7 +794,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           </select>
           <div id="synonym-custom-wrap" style="display:none;">
             <label>Enter a word</label>
-            <input type="text" id="synonym-input" placeholder="e.g. happy, big..." style="margin-bottom:0;" />
+            <input type="text" id="synonym-input" placeholder="e.g. happy, big..." style="margin-bottom:0;" / maxlength="60">
           </div>
         </div>
         <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
@@ -779,7 +809,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <!-- Parts of Speech -->
       <div id="grammar-pos" style="display:none;">
         <label>Enter a sentence to identify parts of speech:</label>
-        <textarea id="pos-input" placeholder="e.g. The quick brown fox jumps over the lazy dog." style="min-height:70px;"></textarea>
+        <textarea id="pos-input" placeholder="e.g. The quick brown fox jumps over the lazy dog." style="min-height:70px;" maxlength="1000" required></textarea>
         <button class="btn btn-primary" id="pos-btn" onclick="identifyPOS()"><span id="pos-icon">🏷️</span> Identify Parts of Speech</button>
         <div id="pos-legend" class="pos-legend" style="margin-top:12px;display:none;">
           <span class="pos-leg-item pos-noun">Noun</span><span class="pos-leg-item pos-verb">Verb</span>
@@ -805,7 +835,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <div id="spell-manual">
           <div style="display:flex;gap:7px;align-items:flex-end;flex-wrap:wrap;margin-bottom:8px;">
             <div style="flex:1;min-width:0;"><label>Add word</label>
-              <input type="text" id="spell-word-input" placeholder="Type word, press Enter..." onkeydown="if(event.key==='Enter')addSpellWord()" style="margin-bottom:0;" /></div>
+              <input type="text" id="spell-word-input" placeholder="Type word, press Enter..." onkeydown="if(event.key==='Enter')addSpellWord()" style="margin-bottom:0;" / maxlength="60"></div>
             <button class="btn btn-secondary btn-sm" onclick="addSpellWord()" style="align-self:flex-end;">+ Add</button>
           </div>
           <div style="background:#f5f7ff;border:1.5px dashed #c5d0f5;border-radius:10px;padding:11px;margin-bottom:8px;">
@@ -823,7 +853,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <div id="spell-auto" style="display:none;">
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
             <div style="flex:1;min-width:0;"><label>Level</label><select id="spell-level" style="margin-bottom:0;"></select></div>
-            <div style="flex:1;min-width:0;"><label>Theme</label><input type="text" id="spell-theme" placeholder="e.g. Science..." style="margin-bottom:0;" /></div>
+            <div style="flex:1;min-width:0;"><label>Theme</label><input type="text" id="spell-theme" placeholder="e.g. Science..." style="margin-bottom:0;" / maxlength="80"></div>
             <button class="btn btn-primary btn-sm" onclick="generateSpellingWords()" id="spell-auto-btn" style="align-self:flex-end;"><span id="spell-auto-icon">🎲</span> 25 Words</button>
           </div>
           <div style="margin-top:10px;">
@@ -862,7 +892,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       <div id="grammar-flashcards" style="display:none;">
         <div class="grid-2" style="margin-bottom:10px;">
           <div><label>Level</label><select id="fc-level" style="margin-bottom:0;"></select></div>
-          <div><label>Topic / Subject</label><input type="text" id="fc-topic" placeholder="e.g. Animals, Colours, Science..." style="margin-bottom:0;"/></div>
+          <div><label>Topic / Subject</label><input type="text" id="fc-topic" placeholder="e.g. Animals, Colours, Science..." style="margin-bottom:0;"/ maxlength="100"></div>
           <div><label>Cards to generate</label><select id="fc-count" style="margin-bottom:0;">
             <option value="8">8 cards</option><option value="12" selected>12 cards</option><option value="16">16 cards</option>
           </select></div>
@@ -976,7 +1006,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
         <div id="scr-manual">
           <div style="display:flex;gap:7px;align-items:flex-end;flex-wrap:wrap;">
             <div style="flex:1;min-width:0;"><label>Add words to scramble</label>
-              <input type="text" id="scr-word-input" placeholder="Type word, Enter..." onkeydown="if(event.key==='Enter')addScrWord()" style="margin-bottom:0;" /></div>
+              <input type="text" id="scr-word-input" placeholder="Type word, Enter..." onkeydown="if(event.key==='Enter')addScrWord()" style="margin-bottom:0;" / maxlength="60"></div>
             <button class="btn btn-secondary btn-sm" onclick="addScrWord()" style="align-self:flex-end;">+ Add</button>
             <button class="btn-clear-all" onclick="clearScrWords()" style="align-self:flex-end;">🗑 Clear</button>
           </div>
@@ -994,7 +1024,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
               <option>Food &amp; Cooking</option><option>Sports</option><option>Technology</option>
               <option>Nature</option><option>Travel</option><option>Body &amp; Health</option>
             </select></div>
-            <div><label>Custom Theme</label><input type="text" id="scramble-theme" placeholder="Override..." style="margin-bottom:0;" /></div>
+            <div><label>Custom Theme</label><input type="text" id="scramble-theme" placeholder="Override..." style="margin-bottom:0;" / maxlength="80"></div>
             <div style="display:flex;gap:6px;align-items:flex-end;">
               <button class="btn btn-primary btn-sm" onclick="startScramble('auto')" id="scramble-load-btn" style="flex:1;"><span id="scramble-load-icon">🎲</span> Load 20</button>
               <button class="btn btn-secondary btn-sm" onclick="resetScrambleAuto()" title="Reset">🔄</button>
@@ -1017,7 +1047,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
             <div class="scr-display" id="scramble-display">?????</div>
             <div style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:10px;" id="scramble-hint">Hint: ...</div>
             <div style="display:flex;gap:7px;">
-              <input type="text" id="scramble-answer" placeholder="Unscramble..." onkeydown="if(event.key==='Enter')checkScramble()" style="margin-bottom:0;flex:1;min-width:0;" />
+              <input type="text" id="scramble-answer" placeholder="Unscramble..." onkeydown="if(event.key==='Enter')checkScramble()" style="margin-bottom:0;flex:1;min-width:0;" / maxlength="80">
               <button class="btn btn-primary btn-sm" onclick="checkScramble()">✓</button>
               <button class="btn btn-secondary btn-sm" onclick="revealScramble()">👁</button>
             </div>
@@ -1134,7 +1164,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
     <div class="card">
       <h2>💡 Explain It Simply</h2>
       <label>What concept or topic?</label>
-      <input type="text" id="explain-topic" placeholder="e.g. Photosynthesis, Pythagoras Theorem..." />
+      <input type="text" id="explain-topic" placeholder="e.g. Photosynthesis, Pythagoras Theorem..." / maxlength="120" required>
       <div class="grid-explain">
         <div><label>Level</label><select id="explain-level" style="margin-bottom:0;"></select></div>
         <div><label>Style</label>
@@ -1207,7 +1237,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
           <option>Smart Quiz</option><option>Word Wizards</option><option>Brain Teaser Hub</option>
           <option>Language Corner</option><option>Explain It</option><option>General Study</option>
         </select></div>
-        <div><label>Topic</label><input type="text" id="plan-task-name" placeholder="e.g. Maths Chapter 3..." style="margin-bottom:0;" /></div>
+        <div><label>Topic</label><input type="text" id="plan-task-name" placeholder="e.g. Maths Chapter 3..." style="margin-bottom:0;" / maxlength="120"></div>
         <div><label>Date</label><input type="date" id="plan-task-date" style="margin-bottom:0;" /></div>
         <div><label>Duration</label><select id="plan-task-duration" style="margin-bottom:0;">
           <option value="15">15 min</option><option value="20">20 min</option>
@@ -1565,7 +1595,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
     </div>
 
     <label>Student Name</label>
-    <input type="text" id="prof-name" placeholder="Enter your name..." />
+    <input type="text" id="prof-name" placeholder="Enter your name..." / maxlength="60">
     <label>School Level</label>
     <select id="prof-level" onchange="updateProfileSubjects()">
       <option value="Kinder 1">Kinder 1</option><option value="Kinder 2">Kinder 2</option>
@@ -1594,7 +1624,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
       </select>
     </div>
     <div style="display:flex;gap:7px;margin-bottom:8px;">
-      <input type="text" id="prof-subj-input" placeholder="Or type a custom subject..." style="margin-bottom:0;flex:1;min-width:0;" onkeydown="if(event.key==='Enter')addProfileSubject()" />
+      <input type="text" id="prof-subj-input" placeholder="Or type a custom subject..." style="margin-bottom:0;flex:1;min-width:0;" onkeydown="if(event.key==='Enter')addProfileSubject()" / maxlength="60">
       <button class="btn btn-secondary btn-sm" onclick="addProfileSubject()">+ Add</button>
     </div>
     <div id="prof-subj-tags" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;min-height:32px;background:#f5f7ff;border-radius:10px;padding:8px;"></div>
@@ -1736,6 +1766,7 @@ input[type=file]{font-size:14px;padding:8px 10px;border:1.5px dashed var(--borde
 
 <div class="toast" id="toast"></div>
 
+<!-- ===== BEGIN INLINE APP SCRIPT (extract to app.js to decouple) ===== -->
 <script>
 // ══════════════════════════════════════════════
 // ══════════════════════════════════════════════
@@ -1751,6 +1782,15 @@ const CONFIG = Object.freeze({
   AI_MODEL:        'claude-haiku-4-5-20251001',
   AI_DEFAULT_MAX:  1200,
   AI_BATCH_MAX:    800,
+
+  // ── Transport mode ──
+  // USE_PROXY=true  → calls your own backend (e.g. '/api/ai'); the API key
+  //                   lives server-side in an env var and NEVER touches the
+  //                   browser. This is the recommended, secure default.
+  // USE_PROXY=false → legacy direct-from-browser mode (personal/local use
+  //                   only) where the user supplies their own key at runtime.
+  USE_PROXY:       true,
+  AI_PROXY_URL:    '/api/ai-request',
   AI_API_URL:      'https://api.anthropic.com/v1/messages',
   AI_API_VERSION:  '2023-06-01',
   AI_CACHE_BETA:   'prompt-caching-2024-07-31',
@@ -1961,9 +2001,39 @@ function getSubjectMap() {
 
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function showToast(msg,dur=CONFIG.TOAST_MS){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;requestAnimationFrame(()=>t.classList.add('show'));setTimeout(()=>t.classList.remove('show'),dur);}
-function ls_get(k){try{return localStorage.getItem(k);}catch(e){return null;}}
-function ls_set(k,v){try{localStorage.setItem(k,v);}catch(e){}}
-function ls_del(k){try{localStorage.removeItem(k);}catch(e){}}
+// Guarded localStorage wrappers.
+// Every write is wrapped so QuotaExceededError or a security restriction
+// (e.g. Safari Private Mode, disabled storage) can never crash the app.
+function ls_get(k){
+  try{ return localStorage.getItem(k); }
+  catch(e){ return null; } // SecurityError / disabled storage → read-only fallback
+}
+function ls_set(k,v){
+  try{
+    localStorage.setItem(k,v);
+    return true;
+  }catch(e){
+    // QuotaExceededError is reported differently across engines:
+    //  - name === 'QuotaExceededError' (standard)
+    //  - code === 22 (most engines) or 1014 (Firefox NS_ERROR_DOM_QUOTA_REACHED)
+    const quotaHit = e && (
+      e.name === 'QuotaExceededError' ||
+      e.name === 'NS_ERROR_DOM_QUOTA_REACHED' ||
+      e.code === 22 || e.code === 1014
+    );
+    if(quotaHit){
+      if(typeof showToast==='function') showToast('⚠️ Storage full — some data was not saved.');
+    }else{
+      // SecurityError or other restriction (private mode / blocked cookies).
+      if(typeof showToast==='function') showToast('⚠️ Storage is unavailable on this device.');
+    }
+    return false;
+  }
+}
+function ls_del(k){
+  try{ localStorage.removeItem(k); }
+  catch(e){ /* nothing to recover; safe to ignore */ }
+}
 function setLoading(btnId,iconId,on,orig){const b=document.getElementById(btnId),ic=document.getElementById(iconId);if(!b)return;b.disabled=on;if(ic)ic.innerHTML=on?'<span class="spinner"></span>':orig;}
 function requireField(id,msg){const el=document.getElementById(id);if(!el||(el.value||'').trim()===''){showToast(msg||'⚠️ Please fill in the required field');return false;}return true;}
 
@@ -2086,7 +2156,7 @@ function updateProfileTokenCard(){
 // OPT: Avoids redundant API calls for identical inputs within a session.
 const _resultCache = new Map();
 const RESULT_CACHE_MAX = 30;
-function _cacheKey(...args){ return args.map(String).join(' '); }
+function _cacheKey(...args){ return args.map(String).join(''); }
 function _cacheGet(key){ return _resultCache.has(key)?_resultCache.get(key):null; }
 function _cacheSet(key,val){
   if(_resultCache.size>=RESULT_CACHE_MAX) _resultCache.delete(_resultCache.keys().next().value);
@@ -2123,16 +2193,28 @@ function getLangCategories() {
 
 const CACHED_SYSTEM_PROMPT = `You are MyStudyBuddy AI — an expert educational assistant for students from Kinder 1 through Secondary 5. You produce clear, age-appropriate, encouraging responses. Always return valid JSON when asked. Never add markdown fences unless the format explicitly requires it.`;
 
-// Main API call — supports cache_control for expensive repeated context
+// Main API call — supports cache_control for expensive repeated context.
+//
+// Transport modes (see CONFIG.USE_PROXY):
+//   • Proxy mode (recommended): POSTs { prompt, maxTokens, useCache } to your
+//     backend, which injects the API key from a server-side env var. No key,
+//     no x-api-key header, and no dangerous-direct-browser flag are sent from
+//     the browser. NEVER hardcode a key here.
+//   • Direct mode (personal/local only): sends a user-supplied key as x-api-key.
 async function callClaude(prompt, maxTokens=1200, useCache=false){
-  if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
-  
+  // In direct mode a runtime-supplied key is required. In proxy mode the key
+  // lives on the server, so no client-side key check applies.
+  if(!CONFIG.USE_PROXY && !apiKey){
+    showToast('⚠️ Please enter your API key first!');
+    throw new Error('No API key');
+  }
+
   const {sessionLimit} = getTokenLimits();
   if(sessionLimit > 0 && tokenStats.sessionUsed >= sessionLimit){
     showToast('⚠️ Session token limit reached. Reset in Profile.');
     throw new Error('Session token limit reached');
   }
-  
+
   // Build message content — add cache_control to large prompts when useCache=true
   const msgContent = useCache
     ? [
@@ -2141,26 +2223,48 @@ async function callClaude(prompt, maxTokens=1200, useCache=false){
       ]
     : prompt;
 
-  const headers = {
-    'Content-Type':'application/json',
-    'x-api-key':apiKey,
-    'anthropic-version':CONFIG.AI_API_VERSION,
-    'anthropic-dangerous-direct-browser-access':'true'
-  };
-  // Add beta header for cache_control support
-  if(useCache) headers['anthropic-beta'] = CONFIG.AI_CACHE_BETA;
+  let url, headers, body;
 
-  const res = await fetch(CONFIG.AI_API_URL,{
-    method:'POST',
-    headers,
-    body: JSON.stringify({
+  if(CONFIG.USE_PROXY){
+    // Secure path: hand off to our backend. The server owns the credential.
+    url = CONFIG.AI_PROXY_URL;
+    headers = { 'Content-Type':'application/json' };
+    body = JSON.stringify({ prompt, maxTokens, useCache });
+  }else{
+    // Direct-from-browser path (personal/local use only).
+    url = CONFIG.AI_API_URL;
+    headers = {
+      'Content-Type':'application/json',
+      'x-api-key':apiKey,
+      'anthropic-version':CONFIG.AI_API_VERSION,
+      'anthropic-dangerous-direct-browser-access':'true'
+    };
+    if(useCache) headers['anthropic-beta'] = CONFIG.AI_CACHE_BETA;
+    body = JSON.stringify({
       model:CONFIG.AI_MODEL,
       max_tokens: maxTokens,
       system: useCache ? undefined : CACHED_SYSTEM_PROMPT,
       messages:[{role:'user', content: msgContent}]
-    })
-  });
-  if(!res.ok){const e=await res.json();throw new Error(e.error?.message||'API error');}
+    });
+  }
+
+  const res = await fetch(url,{ method:'POST', headers, body });
+
+  if(!res.ok){
+    // Parse defensively — error bodies are not guaranteed to be JSON.
+    const e = await res.json().catch(()=>({}));
+    const message = e?.error?.message || `API error (${res.status})`;
+    // A 401 means the credential is bad: in direct mode, clear it so the user
+    // is re-prompted instead of looping on a dead key.
+    if(res.status === 401 && !CONFIG.USE_PROXY){
+      forgetApiKey();
+      showToast('🔑 Invalid API key — please re-enter it.');
+    }else if(res.status === 429){
+      showToast('⏳ Rate limited — please wait a moment and try again.');
+    }
+    throw new Error(message);
+  }
+
   const d=await res.json();
   // Track usage (cache_read_input_tokens are cheaper — track total)
   if(d.usage){
@@ -2168,8 +2272,6 @@ async function callClaude(prompt, maxTokens=1200, useCache=false){
     const out = d.usage.output_tokens||0;
     const cacheCreation = d.usage.cache_creation_input_tokens||0;
     addTokenUsage(inp + cacheCreation, out);
-    if(d.usage.cache_read_input_tokens > 0){
-          }
   }
   return d.content.map(b=>b.text||'').join('');
 }
@@ -2177,8 +2279,7 @@ async function callClaude(prompt, maxTokens=1200, useCache=false){
 // Batch API: send multiple prompts in one call, returns array of results
 async function callClaudeBatch(requests){
   // Returns map of id -> response text
-  if(!apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
-  if(!requests||!requests.length) return {};
+  if(!CONFIG.USE_PROXY && !apiKey){showToast('⚠️ Please enter your API key first!');throw new Error('No API key');}
 
   // True batch API requires server-side polling — we use parallel requests instead
   const results = {};
@@ -4000,10 +4101,10 @@ function renderLangPanel(){
       </div>
       <div style="font-weight:800;font-size:12px;margin-bottom:8px;">📝 My Saved Notes (type, speak or get from AI)</div>
       <div style="display:flex;gap:7px;margin-bottom:8px;flex-wrap:wrap;">
-        <input type="text" id="culture-note-title" placeholder="Note title..." style="flex:1;min-width:0;margin-bottom:0;"/>
+        <input type="text" id="culture-note-title" maxlength="120" placeholder="Note title..." style="flex:1;min-width:0;margin-bottom:0;"/>
         <button class="btn btn-secondary btn-sm" onclick="startCultureDictation()" title="Dictate note">🎙️</button>
       </div>
-      <textarea id="culture-note-body" placeholder="Type or dictate your cultural notes here..." rows="3" style="margin-bottom:8px;"></textarea>
+      <textarea id="culture-note-body" maxlength="4000" placeholder="Type or dictate your cultural notes here..." rows="3" style="margin-bottom:8px;"></textarea>
       <button class="btn btn-primary btn-sm" onclick="saveCultureNote()">💾 Save Note</button>
       <div style="margin-top:12px;">
         <div style="font-weight:800;font-size:11px;color:var(--text2);margin-bottom:5px;display:flex;justify-content:space-between;">
@@ -4018,7 +4119,7 @@ function renderLangPanel(){
       <div style="background:#f0f4ff;border-radius:12px;padding:13px;margin-bottom:10px;">
         <div style="font-weight:900;font-size:13px;color:var(--accent);margin-bottom:8px;">🎙️ Pronunciation Practice <span style="font-size:10px;background:#e6fff3;color:#007a40;padding:2px 8px;border-radius:50px;font-weight:800;">Local speech recognition</span></div>
         <div style="display:flex;gap:7px;margin-bottom:8px;">
-          <input type="text" id="pron-phrase" placeholder="Enter a word or phrase to practice..." style="flex:1;min-width:0;margin-bottom:0;"/>
+          <input type="text" id="pron-phrase" maxlength="120" placeholder="Enter a word or phrase to practice..." style="flex:1;min-width:0;margin-bottom:0;"/>
           <button class="btn btn-secondary btn-sm" onclick="setPronPhrase('random')" title="Random phrase">🎲</button>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px;">
@@ -4048,7 +4149,7 @@ function renderLangPanel(){
 
     <div id="lang-mode-podcast" style="display:none;">
       <div class="grid-2" style="margin-bottom:10px;">
-        <div><label>Topic</label><input type="text" id="podcast-topic" placeholder="e.g. Daily life, Food, Travel..." style="margin-bottom:0;"/></div>
+        <div><label>Topic</label><input type="text" id="podcast-topic" maxlength="120" placeholder="e.g. Daily life, Food, Travel..." style="margin-bottom:0;"/></div>
         <div><label>Format</label>
           <select id="podcast-format" style="margin-bottom:0;font-size:15px;">
             <option value="dialogue between 2 friends">💬 Dialogue (2 friends)</option>
@@ -4091,7 +4192,7 @@ function renderLangPanel(){
 
     <div id="lang-mode-readaloud" style="display:none;">
       <div class="grid-2" style="margin-bottom:10px;">
-        <div><label>Topic / Genre</label><input type="text" id="ra-topic" placeholder="e.g. Nature, Space, Friendship..." style="margin-bottom:0;" /></div>
+        <div><label>Topic / Genre</label><input type="text" id="ra-topic" maxlength="120" placeholder="e.g. Nature, Space, Friendship..." style="margin-bottom:0;" /></div>
         <div><label>Format</label><select id="ra-format" style="margin-bottom:0;font-size:15px;">
           <option value="story">📖 Story</option><option value="poem">🎭 Poetry</option><option value="news article">📰 Journalism</option>
         </select></div>
@@ -7176,9 +7277,9 @@ window.addEventListener('DOMContentLoaded',function(){
   DataLoader.prewarm();
   setTimeout(() => enrichTTFromPack(), 2000);
 });
-</script>
 
-<script>
+// ===== (next original <script> block) =====
+
 // ═══════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════
 (function initPWA() {
@@ -7284,5 +7385,8 @@ window.addEventListener('DOMContentLoaded',function(){
 
 })();
 </script>
+<!-- ===== END INLINE APP SCRIPT ===== -->
+
+
 </body>
 </html>

@@ -1,11 +1,11 @@
 // ═══════════════════════════════════════════════════════════
-// MyStudyBuddy Service Worker  v5.3
+// MyStudyBuddy Service Worker  v5.4
 // Strategy: Network-first with cache fallback.
 //   • Online  → fetch from network, update cache in background.
 //   • Offline → serve from cache; AI calls fail gracefully.
 // ═══════════════════════════════════════════════════════════
 
-const CACHE_NAME = 'studybuddy-v5.3';
+const CACHE_NAME = 'studybuddy-v5.4';
 
 // Files to pre-cache on install.
 // Only local assets — the app shell that must work offline.
